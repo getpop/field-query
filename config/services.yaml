@@ -6,7 +6,7 @@ services:
         bind:
             PoP\Translation\Contracts\TranslationAPIInterface: '@translation_api'
             PoP\FieldQuery\Schema\ErrorMessageStoreInterface: '@error_message_store'
-            PoP\QueryParsing\Parser\QueryParserInterface: '@query_parser'
+            PoP\QueryParsing\Parsers\QueryParserInterface: '@query_parser'
 
     error_message_store:
         class: \PoP\FieldQuery\Query\ErrorMessageStore
