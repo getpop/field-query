@@ -55,17 +55,19 @@ The syntax is heavily influenced by GraphQL. However, it differs that, because i
 
 ## Syntax
 
-The query describes a set of “fields”, where a field is the description of what data to retrieve, and how to do it. Similar to GraphQL, each field can contain the following elements:
+[Similar to GraphQL](https://graphql.org/learn/queries/#fields), the query describes a set of “fields”, where each field can contain the following elements:
 
-- The field name
-- Field arguments
-- Field alias
-- Field directives
+- **The field name:** What data to retrieve
+- **Field arguments:** How to filter the data, or format the results
+- **Field alias:** How to name the field in the response
+- **Field directives:** Change the behaviour of how to execute the operation
 
 In addition, a field can also contain the following elements:
 
-- Bookmarks
-- Indicator to skip output if the field value is null
+- **Bookmarks:** To keep loading data from an already-defined field
+- **Skip output if null:** To ignore the output if the value of the field is null
+
+Let's see these in detail.
 
 ### Retrieving properties from a node
 
