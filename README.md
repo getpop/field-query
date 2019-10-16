@@ -424,6 +424,8 @@ _**In PoP** ([example 1](https://nextapi.getpop.org/api/graphql/?query=users.--u
 /?query=users.--userData|posts.comments.author.--userData&fragments[userData]=id|name|url
 ```
 
+Please notice that, unlike [in GraphQL](https://graphql.org/learn/queries/#fragments), the fragment does not need to indicate on which schema type they operate ("on User"). 
+
 ### Directives
 
 A “directive” enables to modify the response from one or many fields, in any way. They must be surrounded by `<...>` and, if more than one directive is provided, separated by `,`. A directive can also receive arguments, with a syntax similar to field arguments: they are surrounded by `(...)`, and its pairs of `key:value` are separated by `,`.
