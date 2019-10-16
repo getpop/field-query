@@ -258,7 +258,7 @@ _Formatting output **in PoP** ([example](https://nextapi.getpop.org/api/graphql/
 
 ### Optional property name in field arguments
 
-Defining the argument name can be ignored if it can be deduced from the schema (for instance, the name can be deduced from the position of the property within the arguments, and fetching the corresponding name from the schema definition).
+Defining the argument name can be ignored if it can be deduced from the schema (for instance, the name can be deduced from the position of the property within the arguments in the schema definition).
 
 _**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|date(d/m/Y))):_
 
@@ -268,7 +268,7 @@ _**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.id|ti
 
 ### Aliases
 
-An “alias” defines under what name to output the field. The alias name must be prepended with `@`:
+An alias defines under what name to output the field. The alias name must be prepended with `@`:
 
 _**In GraphQL**:_
 
@@ -282,13 +282,13 @@ query {
 }
 ```
 
-_**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|date|date(d/m/Y))):_
+_**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|date|date(d/m/Y)@formattedDate)):_
 
 ```
 /?query=posts.id|title|date(d/m/Y)@formattedDate
 ```
 
-Please notice that aliases are optional, differently than GraphQL. [In GraphQL](https://graphql.org/learn/queries/#aliases), because the field arguments are not part of the field in the response, when querying the same field with different arguments it is required to use an alias to differentiate them. In PoP, however, field arguments are part of the field in the response, which is already enough to differentiate the fields.
+Please notice that aliases are optional, differently than in GraphQL. [In GraphQL](https://graphql.org/learn/queries/#aliases), because the field arguments are not part of the field in the response, when querying the same field with different arguments it is required to use an alias to differentiate them. In PoP, however, field arguments are part of the field in the response, which already differentiates the fields.
 
 _**In GraphQL**:_
 
