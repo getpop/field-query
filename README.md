@@ -282,7 +282,7 @@ query {
 }
 ```
 
-_**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|date|date(d/m/Y)@formattedDate)):_
+_**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|date(d/m/Y)@formattedDate)):_
 
 ```
 /?query=posts.id|title|date(d/m/Y)@formattedDate
