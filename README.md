@@ -390,11 +390,39 @@ _**In PoP** ([example 1](https://nextapi.getpop.org/api/graphql/?query=posts.id|
 
 ### Fragments
 
-We can use “fragments”, which must be prepended using `--`, to re-use query sections.
+Fragments enable to re-use query sections. Similar to variables, their resolution is defined in the request (`$_GET` or `$_POST`). 
 
-Example:
+The fragment name must be prepended with `--`, and the query they resolve to can be defined either directly under the fragment name, or under entry `fragments` and then the fragment name. 
 
-- [posts(limit:2).--fr1,users(id:1).posts.--fr1&fragments[fr1]=id|author.posts(limit:1).id|title](https://nextapi.getpop.org/api/graphql/?query=posts(limit:2).--fr1,users(id:1).posts.--fr1&fragments[fr1]=id|author.posts(limit:1).id|title)
+_**In GraphQL**:_
+
+```graphql
+query {
+  users {
+      ...userData
+      posts {
+          comments {
+              author {
+                  ...userData
+              }
+          }
+      }
+  }
+}
+
+fragment userData on User {
+    id
+    name
+    url
+}
+```
+
+_**In PoP** ([example 1](https://nextapi.getpop.org/api/graphql/?query=users.--userData|posts.comments.author.--userData&userData=id|name|url), [example 2](https://nextapi.getpop.org/api/graphql/?query=users.--userData|posts.comments.author.--userData&fragments[userData]=id|name|url)):_
+
+```
+/?query=users.--userData|posts.comments.author.--userData&userData=id|name|url
+/?query=users.--userData|posts.comments.author.--userData&fragments[userData]=id|name|url
+```
 
 ### Directives
 
@@ -433,6 +461,10 @@ Bookmark with alias:
 Variables:
 
 - [posts(searchfor:$term,limit:$limit).id|title&variables[limit]=3&term=template](https://nextapi.getpop.org/api/graphql/?query=posts(searchfor:$term,limit:$limit).id|title&variables[limit]=3&term=template)
+
+Fragments:
+
+- [posts(limit:2).--fr1,users(id:1).posts.--fr1&fragments[fr1]=id|author.posts(limit:1).id|title](https://nextapi.getpop.org/api/graphql/?query=posts(limit:2).--fr1,users(id:1).posts.--fr1&fragments[fr1]=id|author.posts(limit:1).id|title)
 
 ## Change log
 
