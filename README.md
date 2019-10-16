@@ -192,9 +192,9 @@ _**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.id|ti
 /?query=posts.id|title|author.id|name|url
 ```
 
-### Adding fields
+### Appending fields
 
-Combine different fields by joining them using `,`.
+Combine multiple fields by joining them using `,`.
 
 _**In GraphQL**:_
 
@@ -222,7 +222,7 @@ _**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.autho
 
 ### Field arguments
 
-Array of properties to filter the results (when applied to a property along a path), or modify the output (when applied to a property on a leaf node) from the field. These are enclosed using `()`, defined using `:` to separate the property name from the value (becoming `name:value`), and separated using `,`.
+Field arguments is an array of properties, to filter the results (when applied to a property along a path) or modify the output (when applied to a property on a leaf node) from the field. These are enclosed using `()`, defined using `:` to separate the property name from the value (becoming `name:value`), and separated using `,`.
 
 Values do not need be enclosed using quotes `"..."`.
 
