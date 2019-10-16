@@ -68,21 +68,25 @@ Differently than GraphQL, a field can also contain the following elements:
 - **Skip output if null:** To ignore the output if the value of the field is null
 - **Nested fields:** The response of a field can be used as input to another field, through its arguments or field directives
 
-### Field composition
-
 From the composing elements, only the field name is mandatory; all others are optional. A field is composed in this order:
 
 1. The field name
 2. Arguments: `(...)`
 3. Bookmark: `[...]`
-4. Alias: `@...`
+4. Alias: `@...` (if the bookmark is also present, it is placed inside)
 5. Skip output if null: `?`
-6. Directives and directive arguments: `<...(...)>`
+6. Directives: directive name and arguments: `<directiveName(...)>`
 
 The field looks like this:
 
 ```
 fieldName(fieldArgs)[@alias]?<fieldDirective(directiveArgs)>
+```
+
+To retrieve several fields in the same query, we join them using symbol `,`:
+
+```
+fieldName1@alias1,fieldName2(fieldArgs2)[@alias2]?<fieldDirective2>
 ```
 
 ### Retrieving properties from a node
