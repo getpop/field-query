@@ -67,6 +67,7 @@ Differently than GraphQL, a field can also contain the following elements:
 - **Bookmarks:** To keep loading data from an already-defined field
 - **Skip output if null:** To ignore the output if the value of the field is null
 - **Nested fields:** The response of a field can be used as input to another field, through its arguments or field directives
+- **Property names in the field arguments may be optional:** To simplify passing arguments to the field
 
 From the composing elements, only the field name is mandatory; all others are optional. A field is composed in this order:
 
@@ -83,7 +84,7 @@ The field looks like this:
 fieldName(fieldArgs)[@alias]?<fieldDirective(directiveArgs)>
 ```
 
-To retrieve several fields in the same query, we join them using symbol `,`:
+To retrieve several fields in the same query, we join them using `,`:
 
 ```
 fieldName1@alias1,fieldName2(fieldArgs2)[@alias2]?<fieldDirective2>
@@ -91,7 +92,7 @@ fieldName1@alias1,fieldName2(fieldArgs2)[@alias2]?<fieldDirective2>
 
 ### Retrieving properties from a node
 
-Separate the properties to fetch using symbol `|`.
+Separate the properties to fetch using `|`.
 
 _**In GraphQL**:_
 
@@ -110,7 +111,7 @@ _**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=id|__schema
 
 ### Retrieving nested properties
 
-To fetch relational or nested data, describe the path to the property using symbol `.`.
+To fetch relational or nested data, describe the path to the property using `.`.
 
 _**In GraphQL**:_
 
@@ -130,7 +131,7 @@ _**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.autho
 /?query=posts.author.id
 ```
 
-We can use symbol `|` to bring more than one property when reaching the node:
+We can use `|` to bring more than one property when reaching the node:
 
 _**In GraphQL**:_
 
@@ -178,7 +179,7 @@ _**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.id|ti
 
 ### Adding fields
 
-Combine different fields by joining them using symbol `,`.
+Combine different fields by joining them using `,`.
 
 _**In GraphQL**:_
 
@@ -206,7 +207,7 @@ _**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.autho
 
 ### Field arguments
 
-A field can have arguments: An array of `name:value` properties, appended next to the field name enclosed with `()` and separated with `,`, which modify the output (results, formatting, etc) from the field. 
+Array of `name:value` properties to filter the results (when applied to a property along a path), or modify the output (when applied to a property on a leaf node) from the field. These are enclosed using `()`, and separated using `,`.
 
 Examples: 
 
