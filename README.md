@@ -381,7 +381,7 @@ _API call **in GraphQL**:_
 }
 ```
 
-_**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|date($format)&format=d/m/Y))):_
+_**In PoP** ([example 1](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|date($format)&format=d/m/Y), [example 2](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|date($format)&variables[format]=d/m/Y)):_
 
 ```
 /?query=posts.id|title|date($format)&format=d/m/Y
