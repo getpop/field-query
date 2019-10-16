@@ -350,11 +350,13 @@ _**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=users.posts
 
 ### Bookmark with Alias
 
-Bookmarks can be combined with aliases by adding `@` to the name surrounded by `[...]`.
+When we need to define both a bookmark to a path, and an alias to output the field, these 2 must be combined: The alias, prepended with `@`, is placed within the bookmark delimiters `[...]`.
 
-Example:
+_**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=users.posts[@userposts].author.id|name,[userposts].comments.id|content)):_
 
-- [posts.comments[@postcomments].author.id|name,[postcomments].post.id|title](https://nextapi.getpop.org/api/graphql/?query=posts.comments[@postcomments].author.id|name,[postcomments].post.id|title)
+```
+/?query=users.posts[@userposts].author.id|name,[userposts].comments.id|content
+```
 
 ### Variables
 
@@ -397,6 +399,12 @@ Alias:
 Bookmark:
 
 - [posts.comments[comments].author.id|name,[comments].post.id|title](https://nextapi.getpop.org/api/graphql/?query=posts.comments[comments].author.id|name,[comments].post.id|title)
+
+
+
+Bookmark with alias:
+
+- [posts.comments[@postcomments].author.id|name,[postcomments].post.id|title](https://nextapi.getpop.org/api/graphql/?query=posts.comments[@postcomments].author.id|name,[postcomments].post.id|title)
 
 ## Change log
 
