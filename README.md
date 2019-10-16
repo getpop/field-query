@@ -50,15 +50,18 @@ $fieldDirectives = $fieldQueryInterpreter->getFieldDirectives($field);
 
 ## Why
 
-Because the GraphQL query is provided through the body of the request, by design it spans several lines, making it unsuitable for passing queries through URL params. A negative side effect of this is that it is difficult to cache the results from a GraphQL query in the server.
+The GraphQL query generally spans multiple lines, and it is provided through the body of the request instead of through URL params. As a result, it is difficult to cache the results from a GraphQL query in the server. In order to support server-side caching on GraphQL, we can attempt to provide the query through the URL instead, as to use standard mechanisms which cache a page based on the URL as its unique ID.
 
-In order to support URI-based server-side caching on GraphQL, we can attempt to provide the query through the URL instead. However, the GraphQL syntax is unsuitable for this purpose, since it would be hard to both write and read in a single line.
+The syntax described and implemented in this project is a re-imagining of the GraphQL syntax, supporting all the same elements (field arguments, variables, aliases, fragments, directives, etc), however designed to be easy to write, and easy to read and understand, in a single line, so it can be passed as a URL param.
 
-This syntax is a re-imagining of the GraphQL syntax, supporting all the same elements (field arguments, aliases, directives, etc), however designed to be easy to write, and easy to read and understand, in a single line.
+Being able to pass the query as a URL param has, in turn, several other advantages:
 
-## When/how to use it
+- It removes the need for a client-side library to convert the GraphQL query into the required format (such as [Relay](https://relay.dev/docs/en/graphql-in-relay)), leading to performance improvements and reduced amount of code to maintain
+- The GraphQL API becomes easier to consume (same as REST), and avoids depending on a special client (such as [GraphiQL](https://github.com/graphql/graphiql)) to visualize the results of the query
 
-PoP uses this syntax natively: In `data-fields` to load data for the components within the application itself (through the [Component Model](https://github.com/getpop/component-model)), and externally to load data from an API through URL param `query` (as done by [PoP API](https://github.com/getpop/api)).
+## Who uses it
+
+PoP uses this syntax natively: To load data in each component within the application itself (as done by the [Component Model](https://github.com/getpop/component-model)), and to load data from an API through URL param `query` (as done by the [PoP API](https://github.com/getpop/api)).
 
 A GraphQL server can implement this syntax as to support URI-based server-side caching. To achieve this, a service must translate the query from this syntax to the corresponding [GraphQL syntax](https://graphql.org/learn/queries/), and then pass the translated query to the GraphQL engine. (WIP: An implementation of this translation service, in PHP, is [under way](https://github.com/getpop/api-graphql/issues/1)).
 
