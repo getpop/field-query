@@ -75,8 +75,8 @@ Differently than GraphQL, a field can also contain the following elements:
 
 - **Property names in the field arguments may be optional:** To simplify passing arguments to the field
 - **Bookmarks:** To keep loading data from an already-defined field
-- **Skip output if null:** To ignore the output if the value of the field is null
 - **Operators and Nested fields:** The response of a field can be used as input to another field, through its arguments or field directives
+- **Skip output if null:** To ignore the output if the value of the field is null
 
 From the composing elements, only the field name is mandatory; all others are optional. A field is composed in this order:
 
@@ -462,7 +462,11 @@ _**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts(limit
 /?query=posts(limit:$limit).--postData|author.posts(limit:$limit).--postData&postData=id|title|--nestedPostData|date(format:$format)&nestedPostData=comments<include(if:$include)>.id|content&format=d/m/Y&include=true&limit=3
 ```
 
+### Operators and Nested fields
 
+
+
+### Skip output if null
 <!--
 ## Query examples
 
