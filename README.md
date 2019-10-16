@@ -60,12 +60,13 @@ The syntax is heavily influenced by GraphQL. However, it differs that, because i
 - **The field name:** What data to retrieve
 - **Field arguments:** How to filter the data, or format the results
 - **Field alias:** How to name the field in the response
-- **Field directives:** Change the behaviour of how to execute the operation
+- **Field directives:** To change the behaviour of how to execute the operation
 
-In addition, a field can also contain the following elements:
+Differently than GraphQL, a field can also contain the following elements:
 
 - **Bookmarks:** To keep loading data from an already-defined field
 - **Skip output if null:** To ignore the output if the value of the field is null
+- **Nested fields:** The response of a field can be used as input to another field, through its arguments or field directives
 
 Let's see these in detail.
 
