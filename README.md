@@ -342,10 +342,10 @@ _**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=users.posts
 
 Bookmarks help address this problem by creating a shortcut to a path, so we can conveniently keep loading data from that point on. To define the bookmark, its name is enclosed with `[...]` when iterating down the path, and to use it, its name is similarly enclosed with `[...]`:
 
-_**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=users.posts[userposts].author.id|[userposts].comments.id|content)):_
+_**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=users.posts[userposts].author.id|name,[userposts].comments.id|content)):_
 
 ```
-/?query=users.posts[userposts].author.id|[userposts].comments.id|content
+/?query=users.posts[userposts].author.id|name,[userposts].comments.id|content
 ```
 
 ### Bookmark with Alias
