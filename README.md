@@ -259,12 +259,48 @@ _**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.id|ti
 
 ### Aliases
 
-A field is, by default, output under its own definition (for instance, [posts(order:title|asc)](https://nextapi.getpop.org/api/graphql/?query=posts(order:title|asc).id|title|url|date) is output under property `posts(order:title|asc)`). An “alias”, which is a property name prepended with `@`, allows to change this property to anything we desire.
+An “alias” defines under what name to output the field. The alias name must be prepended with `@`:
 
-Examples:
+_**In GraphQL**:_
 
-- [posts(order:title|asc)@orderedposts](https://nextapi.getpop.org/api/graphql/?query=posts(order:title|asc)@orderedposts.id|title|url|date)
-- [posts.date(format:d/m/Y)@formatteddate](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|url|date(format:d/m/Y)@formatteddate)
+```graphql
+query {
+  posts {
+      id
+      title
+      formattedDate: date(format: "d/m/Y")
+  }
+}
+```
+
+_**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|date|date(d/m/Y))):_
+
+```
+/?query=posts.id|title|date(d/m/Y)@formattedDate
+```
+
+Please notice that aliases are optional, differently than GraphQL. [In GraphQL](https://graphql.org/learn/queries/#aliases), because the field arguments are not part of the field in the response, when querying the same field with different arguments it is required to use an alias to differentiate them. In PoP, however, field arguments are part of the field in the response, which is already enough to differentiate the fields.
+
+_**In GraphQL**:_
+
+```graphql
+query {
+  posts {
+      id
+      title
+      date: date
+      formattedDate: date(format: "d/m/Y")
+  }
+}
+```
+
+_**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|date|date(d/m/Y))):_
+
+```
+/?query=posts.id|title|date|date(d/m/Y)
+```
+
+
 
 ### Bookmarks
 
@@ -309,10 +345,16 @@ Examples:
 
 ## Query examples
 
+Field arguments:
+
 - Order posts by title: [posts(order:title|asc)](https://nextapi.getpop.org/api/graphql/?query=posts(order:title|asc).id|title|url|date)
 - Search "template" and limit it to 3 results: [posts(searchfor:template,limit:3)](https://nextapi.getpop.org/api/graphql/?query=posts(searchfor:template,limit:3).id|title|url|date)
 - Format a date: [posts.date(format:d/m/Y)](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|url|date(format:d/m/Y))
 
+Alias:
+
+- [posts(order:title|asc)@orderedposts](https://nextapi.getpop.org/api/graphql/?query=posts(order:title|asc)@orderedposts.id|title|url|date)
+- [posts.date(format:d/m/Y)@formatteddate](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|url|date(format:d/m/Y)@formatteddate)
 ## Change log
 
 Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
