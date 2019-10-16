@@ -317,7 +317,7 @@ _**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.id|ti
 
 ### Bookmarks
 
-When iterating down a field path, loading data from different sub-branches is solved elegantly in GraphQL:
+When iterating down a field path, loading data from different sub-branches is visually appealing in GraphQL:
 
 _**In GraphQL**:_
 
@@ -338,7 +338,7 @@ query {
 }
 ```
 
-In PoP, however, the query can easily become very verbose, because when combining fields with `,` it starts iterating the path again all the way from the root:
+In PoP, however, the query can become very verbose, because when combining fields with `,` it starts iterating the path again all the way from the root:
 
 _**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=users.posts.author.id|name,users.posts.comments.id|content)):_
 
