@@ -73,10 +73,10 @@ A GraphQL server can implement this syntax as to support URI-based server-side c
 
 Differently than GraphQL, a field can also contain the following elements:
 
+- **Property names in the field arguments may be optional:** To simplify passing arguments to the field
 - **Bookmarks:** To keep loading data from an already-defined field
 - **Skip output if null:** To ignore the output if the value of the field is null
-- **Nested fields:** The response of a field can be used as input to another field, through its arguments or field directives
-- **Property names in the field arguments may be optional:** To simplify passing arguments to the field
+- **Operators and Nested fields:** The response of a field can be used as input to another field, through its arguments or field directives
 
 From the composing elements, only the field name is mandatory; all others are optional. A field is composed in this order:
 
