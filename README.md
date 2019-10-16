@@ -102,7 +102,7 @@ query {
 }
 ```
 
-_**In PoP** ([example](https://nextapi.getpop.org/api/graphql//?query=id|__schema)):_
+_**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=id|__schema)):_
 
 ```
 /?query=id|__schema
@@ -110,7 +110,51 @@ _**In PoP** ([example](https://nextapi.getpop.org/api/graphql//?query=id|__schem
 
 ### Retrieving nested properties
 
-To fetch relational data (such as "the posts's author's name and email"), delineate the path to the properties using symbol `.`.
+To fetch relational or nested data, describe the path to the property using symbol `.`.
+
+_**In GraphQL**:_
+
+```graphql
+query {
+  posts {
+      author {
+          id
+          name
+          url
+      }
+  }
+}
+```
+
+_**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.author.id|name|url)):_
+
+```
+/?query=posts.author.id|name|url
+```
+
+Symbols `.` and `|` can be mixed together to bring properties along the path:
+
+_**In GraphQL**:_
+
+```graphql
+query {
+  posts {
+      id
+      title
+      author {
+          id
+          name
+          url
+      }
+  }
+}
+```
+
+_**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|author.id|name|url)):_
+
+```
+/?query=posts.id|title|author.id|name|url
+```
 
 
 ### Adding fields
