@@ -220,10 +220,10 @@ query {
 }
 ```
 
-_Filtering results **in PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts(searchfor:"template").id|title)):_
+_Filtering results **in PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts(searchfor:template).id|title)):_
 
 ```
-/?query=posts(search:"something").id|title
+/?query=posts(search:something).id|title
 ```
 
 _Formatting output **in GraphQL**:_
@@ -237,10 +237,10 @@ query {
 }
 ```
 
-_Formatting output **in PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.id|date(format:"d/m/Y"))):_
+_Formatting output **in PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.id|date(format:d/m/Y))):_
 
 ```
-/?query=posts.id|date(format:"d/m/Y")
+/?query=posts.id|date(format:d/m/Y)
 ```
 
 ### Optional property name in field arguments
