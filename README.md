@@ -30,12 +30,15 @@ $ composer require getpop/field-query dev-master
 }
 ```
 
-<!-- ## Usage
+## Usage
 
 ```php
-use PoP\FieldQuery\Query\FieldQueryInterpreterInterface;
+use PoP\FieldQuery\Facades\Query\FieldQueryInterpreterFacade;
 
-``` -->
+$fieldQueryInterpreter = FieldQueryInterpreterFacade::getInstance();
+$field = $fieldQueryInterpreter->getField($fieldName, $fieldArgs);
+// Other functions from FieldQueryInterpreter
+```
 
 ## Change log
 
