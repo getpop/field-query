@@ -360,11 +360,33 @@ _**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=users.posts
 
 ### Variables
 
-We can use “variables”, which are names prepended with `$`, to pass field argument values defined through URL parameters: Either under URL parameter with the variable name, or under URL parameter `variables` and then the variable name.
+Variables can be used within field arguments to input a value, not coded within the query itself. While [in GraphQL](https://graphql.org/learn/queries/#variables) the values to resolve to are defined within the body (in a separate dictionary than the query), in PoP these are retrieved from the request (`$_GET` or `$_POST`). 
 
-Example:
+The variable name must be prepended with `$`, and its value in the request can be defined either directly under the variable name, or under entry `variables` and then the variable name. 
 
-- [posts(searchfor:$term,limit:$limit).id|title&variables[limit]=3&term=template](https://nextapi.getpop.org/api/graphql/?query=posts(searchfor:$term,limit:$limit).id|title&variables[limit]=3&term=template)
+_API call **in GraphQL**:_
+
+```html
+{
+    "query":"query ($format: String) {
+        posts {
+            id
+            title
+            date(format: $format)
+        }
+    }",
+    "variables":"{
+        \"format\":\"d/m/Y\"
+    }"
+}
+```
+
+_**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|date($format)&format=d/m/Y))):_
+
+```
+/?query=posts.id|title|date($format)&format=d/m/Y
+/?query=posts.id|title|date($format)&variables[format]=d/m/Y
+```
 
 ### Fragments
 
@@ -405,6 +427,12 @@ Bookmark:
 Bookmark with alias:
 
 - [posts.comments[@postcomments].author.id|name,[postcomments].post.id|title](https://nextapi.getpop.org/api/graphql/?query=posts.comments[@postcomments].author.id|name,[postcomments].post.id|title)
+
+
+
+Variables:
+
+- [posts(searchfor:$term,limit:$limit).id|title&variables[limit]=3&term=template](https://nextapi.getpop.org/api/graphql/?query=posts(searchfor:$term,limit:$limit).id|title&variables[limit]=3&term=template)
 
 ## Change log
 
