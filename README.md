@@ -390,7 +390,7 @@ _**In PoP** ([example 1](https://nextapi.getpop.org/api/graphql/?query=posts.id|
 
 ### Fragments
 
-Fragments enable to re-use query sections. Similar to variables, their resolution is defined in the request (`$_GET` or `$_POST`). 
+Fragments enable to re-use query sections. Similar to variables, their resolution is defined in the request (`$_GET` or `$_POST`). Unlike [in GraphQL](https://graphql.org/learn/queries/#fragments), the fragment does not need to indicate on which schema type it operates.
 
 The fragment name must be prepended with `--`, and the query they resolve to can be defined either directly under the fragment name, or under entry `fragments` and then the fragment name. 
 
@@ -398,16 +398,16 @@ _**In GraphQL**:_
 
 ```graphql
 query {
-  users {
-      ...userData
-      posts {
-          comments {
-              author {
-                  ...userData
-              }
-          }
-      }
-  }
+    users {
+        ...userData
+        posts {
+            comments {
+                author {
+                    ...userData
+                }
+            }
+        }
+    }
 }
 
 fragment userData on User {
@@ -424,17 +424,42 @@ _**In PoP** ([example 1](https://nextapi.getpop.org/api/graphql/?query=users.--u
 /?query=users.--userData|posts.comments.author.--userData&fragments[userData]=id|name|url
 ```
 
-Please notice that, unlike [in GraphQL](https://graphql.org/learn/queries/#fragments), the fragment does not need to indicate on which schema type they operate ("on User"). 
-
 ### Directives
 
-A “directive” enables to modify the response from one or many fields, in any way. They must be surrounded by `<...>` and, if more than one directive is provided, separated by `,`. A directive can also receive arguments, with a syntax similar to field arguments: they are surrounded by `(...)`, and its pairs of `key:value` are separated by `,`.
+A directive enables to modify how the operation to fetch data is executed. Each field accepts many directives, each of them receiving its own arguments to customize its behaviour. The set of directives is surrounded by `<...>`, the directives within must be separated by `,`, and their arguments follows the same syntax as field arguments: they are surrounded by `(...)`, and its pairs of `name:value` are separated by `,`.
 
-Examples:
+As [in GraphQL](https://graphql.org/learn/queries/#directives), directives `"include"` and `"skip"` are already implemented.
 
-- [posts.id|title|url<include(if:$include)>&variables[include]=true](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|url<include(if:$include)>&variables[include]=true)
-- [posts.id|title|url<include(if:$include)>&variables[include]=](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|url<include(if:$include)>&variables[include]=)
+_**In GraphQL**:_
 
+```graphql
+query {
+    posts {
+        id
+        title
+        featuredimage @include(if: $addFeaturedImage) {
+            id
+            src
+        }
+    }
+}
+```
+
+_**In PoP** ([example 1](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|featuredimage<include(if:$include)>&include=true), [example 2](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|featuredimage<include(if:$include)>&include=), [example 3](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|featuredimage<skip(if:$skip)>&skip=true), [example 4](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|featuredimage<skip(if:$skip)>&skip=)):_
+
+```
+?query=posts.id|title|featuredimage<include(if:$include)>&include=true
+?query=posts.id|title|featuredimage<include(if:$include)>&include=
+?query=posts.id|title|featuredimage<skip(if:$skip)>&skip=true
+?query=posts.id|title|featuredimage<skip(if:$skip)>&skip=
+```
+
+### Combining several elements
+
+Fragments can also contain variables, directives and other fragments:
+
+
+<!--
 ## Query examples
 
 Field arguments:
@@ -467,6 +492,14 @@ Variables:
 Fragments:
 
 - [posts(limit:2).--fr1,users(id:1).posts.--fr1&fragments[fr1]=id|author.posts(limit:1).id|title](https://nextapi.getpop.org/api/graphql/?query=posts(limit:2).--fr1,users(id:1).posts.--fr1&fragments[fr1]=id|author.posts(limit:1).id|title)
+
+
+Directives:
+
+- [posts.id|title|url<include(if:$include)>&variables[include]=true](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|url<include(if:$include)>&variables[include]=true)
+- [posts.id|title|url<include(if:$include)>&variables[include]=](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|url<include(if:$include)>&variables[include]=)
+
+-->
 
 ## Change log
 
