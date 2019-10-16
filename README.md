@@ -428,8 +428,6 @@ _**In PoP** ([example 1](https://nextapi.getpop.org/api/graphql/?query=users.--u
 
 A directive enables to modify if/how the operation to fetch data is executed. Each field accepts many directives, each of them receiving its own arguments to customize its behaviour. The set of directives is surrounded by `<...>`, the directives within must be separated by `,`, and their arguments follows the same syntax as field arguments: they are surrounded by `(...)`, and its pairs of `name:value` are separated by `,`.
 
-As [in GraphQL](https://graphql.org/learn/queries/#directives), directives `"include"` and `"skip"` are already implemented.
-
 _**In GraphQL**:_
 
 ```graphql
