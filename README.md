@@ -67,11 +67,37 @@ In addition, a field can also contain the following elements:
 - Bookmarks
 - Indicator to skip output if the field value is null
 
+### Retrieving properties from a node
+
+Separate the properties to fetch using symbol `|`.
+
+_**In GraphQL:**_
+
+```graphql
+query {
+  id
+  __schema
+}
+```
+
+_**In PoP:** ([example](https://nextapi.getpop.org/api/graphql//?query=id|__schema)_
+
+```
+/?query=id|__schema
+```
+
+### Retrieving nested properties
+
+To fetch relational data (such as "the posts's author's name and email"), delineate the path to the properties using symbol `.`.
+
+
+### Adding fields
+
 On a first level, the query is compose like this:
 
 - Fields are separated with `,`
-- The field path is delineated with `.`
-- Properties on a node are grouped with `|`
+- The 
+- 
 
 For instance, the following GraphQL query:
 
