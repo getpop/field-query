@@ -49,9 +49,15 @@ $fieldDirectives = $fieldQueryInterpreter->getFieldDirectives($field);
 
 ## Description
 
-Syntax to retrieve data from the server for PoP applications. It can be used to load data for the components within the application itself (through the [Component Model](https://github.com/getpop/component-model)), or externally through an API (such as [PoP API](https://github.com/getpop/api), [GraphQL API](https://github.com/getpop/api-graphql)and [REST API](https://github.com/getpop/api-rest)).
+Syntax to retrieve data from the server for PoP applications, and to grant URI-based server-side caching capabilities to a GraphQL API. 
 
 The syntax is heavily influenced by GraphQL. However, it differs that, because in PoP the query can be provided as a URL parameter (instead of being provided through the body of the request, as in GraphQL), the syntax must be easy to write, and easy to understand, fitting in a single line.
+
+## When/how to use it
+
+For PoP, this syntax is used in `data-fields` to load data for the components within the application itself (through the [Component Model](https://github.com/getpop/component-model)), or externally for an API through URL param `query` (such as [PoP API](https://github.com/getpop/api), [GraphQL API](https://github.com/getpop/api-graphql) and [REST API](https://github.com/getpop/api-rest)).
+
+For GraphQL, a service must translate the query from this syntax to the corresponding [GraphQL syntax](https://graphql.org/learn/queries/), and then pass the translated query to the GraphQL engine. (WIP: An implementation of this translation service, in PHP, will be finished soon).
 
 ## Syntax
 
