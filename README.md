@@ -9,7 +9,7 @@
 [![Total Downloads][ico-downloads]][link-downloads]
 -->
 
-Component which provides the syntax for data-fields, and parses them to obtain their information
+Syntax to retrieve data from the server for PoP applications, and to grant URI-based server-side caching capabilities to a GraphQL API. 
 
 ## Install
 
@@ -47,9 +47,7 @@ $fieldDirectives = $fieldQueryInterpreter->getFieldDirectives($field);
 // Other functions from FieldQueryInterpreter
 ```
 
-## Description
-
-Syntax to retrieve data from the server for PoP applications, and to grant URI-based server-side caching capabilities to a GraphQL API. 
+## Influence
 
 The syntax is heavily influenced by GraphQL. However, it differs that, because in PoP the query can be provided as a URL parameter (instead of being provided through the body of the request, as in GraphQL), the syntax must be easy to write, and easy to understand, fitting in a single line.
 
