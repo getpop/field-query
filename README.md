@@ -119,6 +119,26 @@ query {
   posts {
       author {
           id
+      }
+  }
+}
+```
+
+_**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.author.id|name|url)):_
+
+```
+/?query=posts.author.id
+```
+
+We can use symbol `|` to bring more than one property when reaching the node:
+
+_**In GraphQL**:_
+
+```graphql
+query {
+  posts {
+      author {
+          id
           name
           url
       }
@@ -132,7 +152,7 @@ _**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.autho
 /?query=posts.author.id|name|url
 ```
 
-Symbols `.` and `|` can be mixed together to bring properties along the path:
+Symbols `.` and `|` can be mixed together to also bring properties along the path:
 
 _**In GraphQL**:_
 
