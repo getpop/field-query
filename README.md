@@ -209,15 +209,49 @@ _**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.autho
 
 Array of `name:value` properties to filter the results (when applied to a property along a path), or modify the output (when applied to a property on a leaf node) from the field. These are enclosed using `()`, and separated using `,`.
 
-Examples: 
+_Filtering results **in GraphQL**:_
 
-- Order posts by title: [posts(order:title|asc)](https://nextapi.getpop.org/api/graphql/?query=posts(order:title|asc).id|title|url|date)
-- Search "template" and limit it to 3 results: [posts(searchfor:template,limit:3)](https://nextapi.getpop.org/api/graphql/?query=posts(searchfor:template,limit:3).id|title|url|date)
-- Format a date: [posts.date(format:d/m/Y)](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|url|date(format:d/m/Y))
+```graphql
+query {
+  posts(search: "something") {
+      id
+      title
+  }
+}
+```
 
-Argument names can also be deduced from the schema. Then, only the `value` needs be provided: 
+_Filtering results **in PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts(searchfor:"template").id|title)):_
 
-- Format a date: [posts.date(d/m/Y)](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|url|date(d/m/Y))
+```
+/?query=posts(search:"something").id|title
+```
+
+_Formatting output **in GraphQL**:_
+
+```graphql
+query {
+  posts {
+      id
+      date(format: "d/m/Y")
+  }
+}
+```
+
+_Formatting output **in PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.id|date(format:"d/m/Y"))):_
+
+```
+/?query=posts.id|date(format:"d/m/Y")
+```
+
+### Optional property name in field arguments
+
+Defining the argument name can be ignored if it can be deduced from the schema. (For instance, we can enable to use the same order in which the arguents were defined in the schema).
+
+_**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.id|date("d/m/Y"))):_
+
+```
+/?query=posts.id|date("d/m/Y")
+```
 
 ### Aliases
 
@@ -268,6 +302,12 @@ Examples:
 
 - [posts.id|title|url<include(if:$include)>&variables[include]=true](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|url<include(if:$include)>&variables[include]=true)
 - [posts.id|title|url<include(if:$include)>&variables[include]=](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|url<include(if:$include)>&variables[include]=)
+
+## Query examples
+
+- Order posts by title: [posts(order:title|asc)](https://nextapi.getpop.org/api/graphql/?query=posts(order:title|asc).id|title|url|date)
+- Search "template" and limit it to 3 results: [posts(searchfor:template,limit:3)](https://nextapi.getpop.org/api/graphql/?query=posts(searchfor:template,limit:3).id|title|url|date)
+- Format a date: [posts.date(format:d/m/Y)](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|url|date(format:d/m/Y))
 
 ## Change log
 
