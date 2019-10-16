@@ -332,9 +332,9 @@ query {
 }
 ```
 
-In PoP, however, the query is a bit awkward, because when combining fields with `,` it starts iterating again all the way from the root, becoming very verbose:
+In PoP, however, the query can easily become very verbose, because when combining fields with `,` it starts iterating the path again all the way from the root:
 
-_**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.author.following.id|name,posts.author.followers.id|name):_
+_**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.author.following.id|name,posts.author.followers.id|name)):_
 
 ```
 /?query=posts.author.following.id|name,posts.author.followers.id|name
@@ -342,7 +342,7 @@ _**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.autho
 
 Bookmarks help address this problem by creating a shortcut to a path, so we can conveniently keep loading data from that point on. To define the bookmark, its name is enclosed with `[...]` when iterating down the path, and to use it, its name is similarly enclosed with `[...]`:
 
-_**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.author[postauthor].following.id|name,[postauthor].followers.id|name):_
+_**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.author[postauthor].following.id|name,[postauthor].followers.id|name)):_
 
 ```
 /?query=posts.author[postauthor].following.id|name,[postauthor].followers.id|name
