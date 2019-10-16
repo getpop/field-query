@@ -216,14 +216,15 @@ query {
   posts(search: "something") {
       id
       title
+      date
   }
 }
 ```
 
-_Filtering results **in PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts(searchfor:template).id|title)):_
+_Filtering results **in PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts(searchfor:template).id|title|date)):_
 
 ```
-/?query=posts(search:something).id|title
+/?query=posts(search:something).id|title|date
 ```
 
 _Formatting output **in GraphQL**:_
