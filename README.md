@@ -384,8 +384,8 @@ _API call **in GraphQL**:_
 _**In PoP** ([example 1](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|date($format)&format=d/m/Y), [example 2](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|date($format)&variables[format]=d/m/Y)):_
 
 ```
-/?query=posts.id|title|date($format)&format=d/m/Y
-/?query=posts.id|title|date($format)&variables[format]=d/m/Y
+1. /?query=posts.id|title|date($format)&format=d/m/Y
+2. /?query=posts.id|title|date($format)&variables[format]=d/m/Y
 ```
 
 ### Fragments
@@ -420,13 +420,13 @@ fragment userData on User {
 _**In PoP** ([example 1](https://nextapi.getpop.org/api/graphql/?query=users.--userData|posts.comments.author.--userData&userData=id|name|url), [example 2](https://nextapi.getpop.org/api/graphql/?query=users.--userData|posts.comments.author.--userData&fragments[userData]=id|name|url)):_
 
 ```
-/?query=users.--userData|posts.comments.author.--userData&userData=id|name|url
-/?query=users.--userData|posts.comments.author.--userData&fragments[userData]=id|name|url
+1. /?query=users.--userData|posts.comments.author.--userData&userData=id|name|url
+2. /?query=users.--userData|posts.comments.author.--userData&fragments[userData]=id|name|url
 ```
 
 ### Directives
 
-A directive enables to modify how the operation to fetch data is executed. Each field accepts many directives, each of them receiving its own arguments to customize its behaviour. The set of directives is surrounded by `<...>`, the directives within must be separated by `,`, and their arguments follows the same syntax as field arguments: they are surrounded by `(...)`, and its pairs of `name:value` are separated by `,`.
+A directive enables to modify if/how the operation to fetch data is executed. Each field accepts many directives, each of them receiving its own arguments to customize its behaviour. The set of directives is surrounded by `<...>`, the directives within must be separated by `,`, and their arguments follows the same syntax as field arguments: they are surrounded by `(...)`, and its pairs of `name:value` are separated by `,`.
 
 As [in GraphQL](https://graphql.org/learn/queries/#directives), directives `"include"` and `"skip"` are already implemented.
 
@@ -445,13 +445,13 @@ query {
 }
 ```
 
-_**In PoP** ([example 1](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|featuredimage<include(if:$include)>&include=true), [example 2](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|featuredimage<include(if:$include)>&include=), [example 3](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|featuredimage<skip(if:$skip)>&skip=true), [example 4](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|featuredimage<skip(if:$skip)>&skip=)):_
+_**In PoP** ([example 1](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|featuredimage<include(if:$include)>.id|src&include=true), [example 2](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|featuredimage<include(if:$include)>.id|src&include=), [example 3](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|featuredimage<skip(if:$skip)>.id|src&skip=true), [example 4](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|featuredimage<skip(if:$skip)>.id|src&skip=)):_
 
 ```
-?query=posts.id|title|featuredimage<include(if:$include)>&include=true
-?query=posts.id|title|featuredimage<include(if:$include)>&include=
-?query=posts.id|title|featuredimage<skip(if:$skip)>&skip=true
-?query=posts.id|title|featuredimage<skip(if:$skip)>&skip=
+1. ?query=posts.id|title|featuredimage<include(if:$include)>.id|src&include=true
+2. ?query=posts.id|title|featuredimage<include(if:$include)>.id|src&include=
+3. ?query=posts.id|title|featuredimage<skip(if:$skip)>.id|src&skip=true
+4. ?query=posts.id|title|featuredimage<skip(if:$skip)>.id|src&skip=
 ```
 
 ### Combining several elements
