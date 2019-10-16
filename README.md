@@ -454,9 +454,7 @@ _**In PoP** ([example 1](https://nextapi.getpop.org/api/graphql/?query=posts.id|
 
 ### Combining elements
 
-Different elements can be combined. For instance:
-
-A fragment can contain nested paths, variables, directives and other fragments:
+Different elements can be combined. For instance: A fragment can contain nested paths, variables, directives and other fragments:
 
 _**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts(limit:$limit).--postData|author.posts(limit:$limit).--postData&postData=id|title|--nestedPostData|date(format:$format)&nestedPostData=comments<include(if:$include)>.id|content&format=d/m/Y&include=true&limit=3)):_
 
