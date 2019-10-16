@@ -309,15 +309,44 @@ _**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.id|ti
 /?query=posts.id|title|date|date(d/m/Y)
 ```
 
-
-
 ### Bookmarks
 
-The query allows to iterate down a path using `.` (for instance: [posts.comments.author.id|name](https://nextapi.getpop.org/api/graphql/?query=posts.comments.author.id|name)). We can assign a “bookmark” to any specific level, as to start iterating from there once again. To use it, we place any name surrounded by `[...]` after the path level, and then the same name, also surrounded by `[...]`, as the root path level to iterate from there.
+When iterating down a field path, loading data from different sub-branches is solved elegantly in GraphQL:
 
-Example:
+_**In GraphQL**:_
 
-- [posts.comments[comments].author.id|name,[comments].post.id|title](https://nextapi.getpop.org/api/graphql/?query=posts.comments[comments].author.id|name,[comments].post.id|title)
+```graphql
+query {
+  posts {
+      author {
+          following {
+              id
+              name
+          }
+          followers {
+              id
+              name
+          }
+      }
+  }
+}
+```
+
+In PoP, however, the query is a bit awkward, because when combining fields with `,` it starts iterating again all the way from the root, becoming very verbose:
+
+_**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.author.following.id|name,posts.author.followers.id|name):_
+
+```
+/?query=posts.author.following.id|name,posts.author.followers.id|name
+```
+
+Bookmarks help address this problem by creating a shortcut to a path, so we can conveniently keep loading data from that point on. To define the bookmark, its name is enclosed with `[...]` when iterating down the path, and to use it, its name is similarly enclosed with `[...]`:
+
+_**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.author[postauthor].following.id|name,[postauthor].followers.id|name):_
+
+```
+/?query=posts.author[postauthor].following.id|name,[postauthor].followers.id|name
+```
 
 ### Bookmark with Alias
 
@@ -364,6 +393,11 @@ Alias:
 
 - [posts(order:title|asc)@orderedposts](https://nextapi.getpop.org/api/graphql/?query=posts(order:title|asc)@orderedposts.id|title|url|date)
 - [posts.date(format:d/m/Y)@formatteddate](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|url|date(format:d/m/Y)@formatteddate)
+
+Bookmark:
+
+- [posts.comments[comments].author.id|name,[comments].post.id|title](https://nextapi.getpop.org/api/graphql/?query=posts.comments[comments].author.id|name,[comments].post.id|title)
+
 ## Change log
 
 Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
