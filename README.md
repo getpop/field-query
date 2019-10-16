@@ -209,6 +209,8 @@ _**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.autho
 
 Array of properties to filter the results (when applied to a property along a path), or modify the output (when applied to a property on a leaf node) from the field. These are enclosed using `()`, defined using `:` to separate the property name from the value (becoming `name:value`), and separated using `,`.
 
+Values do not need be enclosed using quotes `"..."`.
+
 _Filtering results **in GraphQL**:_
 
 ```graphql
@@ -247,12 +249,12 @@ _Formatting output **in PoP** ([example](https://nextapi.getpop.org/api/graphql/
 
 ### Optional property name in field arguments
 
-Defining the argument name can be ignored if it can be deduced from the schema. (For instance, we can enable to use the same order in which the arguents were defined in the schema).
+Defining the argument name can be ignored if it can be deduced from the schema (for instance, the name can be deduced from the position of the property within the arguments, and fetching the corresponding name from the schema definition).
 
-_**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.id|date("d/m/Y"))):_
+_**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|date(d/m/Y))):_
 
 ```
-/?query=posts.id|date("d/m/Y")
+/?query=posts.id|title|date(d/m/Y)
 ```
 
 ### Aliases
