@@ -66,7 +66,7 @@ Being able to pass the query as a URL param has, in turn, several other advantag
 
 [PoP](https://github.com/leoloso/PoP) uses this syntax natively: To load data in each component within the application itself (as done by the [Component Model](https://github.com/getpop/component-model)), and to load data from an API through URL param `query` (as done by the [PoP API](https://github.com/getpop/api)).
 
-A GraphQL server can implement this syntax as to support URI-based server-side caching. To achieve this, a service must translate the query from this syntax to the corresponding [GraphQL syntax](https://graphql.org/learn/queries/), and then pass the translated query to the GraphQL engine. This development is currently [in progress](https://github.com/getpop/api-graphql/issues/1) for the [GraphQL API for PoP](https://github.com/getpop/api-graphql)).
+A GraphQL server can implement this syntax as to support URI-based server-side caching. To achieve this, a service must translate the query from this syntax to the corresponding [GraphQL syntax](https://graphql.org/learn/queries/), and then pass the translated query to the GraphQL engine. (This development is currently [in progress](https://github.com/getpop/api-graphql/issues/1) for the [GraphQL API for PoP](https://github.com/getpop/api-graphql).)
 
 ## Syntax
 
