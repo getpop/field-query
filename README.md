@@ -176,52 +176,33 @@ _**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.id|ti
 /?query=posts.id|title|author.id|name|url
 ```
 
-
 ### Adding fields
 
-On a first level, the query is compose like this:
+Combine different fields by joining them using symbol `,`.
 
-- Fields are separated with `,`
-- The 
-- 
-
-For instance, the following GraphQL query:
+_**In GraphQL**:_
 
 ```graphql
 query {
   posts {
-    id
-    title
-    url
-    content
-    comments {
-        id
-        content
-        date
-        author {
-        id
-        name
-        url
-        posts {
-            id
-            title
-            url
-        }
+      author {
+          id
+          name
+          url
       }
-    }
+      comments {
+          id
+          content
+      }
   }
 }
 ```
 
-Is equivalent to the following single-line query:
+_**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.author.id|name|url,posts.comments.id|content)):_
 
 ```
-posts.id|title|url|content|comments.id|content|date|author.id|name|url|posts.id|title|url
+/?query=posts.author.id|name|url,posts.comments.id|content
 ```
-
-Our endpoint therefore becomes:
-
-[/api/graphql/?query=posts.id|title|url|content|comments.id|content|date|author.id|name|url|posts.id|title|url](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|url|content|comments.id|content|date|author.id|name|url|posts.id|title|url)
 
 ### Field arguments
 
