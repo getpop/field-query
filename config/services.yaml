@@ -1,0 +1,12 @@
+parameters:
+    version: '0.1.0'
+
+services:
+    _defaults:
+        bind:
+            PoP\Translation\Contracts\TranslationAPIInterface: '@translation_api'
+            PoP\FieldQuery\Schema\ErrorMessageStoreInterface: '@error_message_store'
+
+    error_message_store:
+        class: \PoP\FieldQuery\Schema\ErrorMessageStore
+        public: true
