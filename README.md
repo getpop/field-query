@@ -124,7 +124,7 @@ query {
 }
 ```
 
-_**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.author.id|name|url)):_
+_**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.author.id)):_
 
 ```
 /?query=posts.author.id
