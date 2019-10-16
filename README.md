@@ -207,7 +207,7 @@ _**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.autho
 
 ### Field arguments
 
-Array of `name:value` properties to filter the results (when applied to a property along a path), or modify the output (when applied to a property on a leaf node) from the field. These are enclosed using `()`, and separated using `,`.
+Array of properties to filter the results (when applied to a property along a path), or modify the output (when applied to a property on a leaf node) from the field. These are enclosed using `()`, defined using `:` to separate the property name from the value (becoming `name:value`), and separated using `,`.
 
 _Filtering results **in GraphQL**:_
 
