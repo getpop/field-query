@@ -360,7 +360,7 @@ _**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=users.posts
 
 ### Variables
 
-Variables can be used within field arguments to input a value, not coded within the query itself. While [in GraphQL](https://graphql.org/learn/queries/#variables) the values to resolve to are defined within the body (in a separate dictionary than the query), in PoP these are retrieved from the request (`$_GET` or `$_POST`). 
+Variables can be used to input values to field arguments. While [in GraphQL](https://graphql.org/learn/queries/#variables) the values to resolve to are defined within the body (in a separate dictionary than the query), in PoP these are retrieved from the request (`$_GET` or `$_POST`). 
 
 The variable name must be prepended with `$`, and its value in the request can be defined either directly under the variable name, or under entry `variables` and then the variable name. 
 
