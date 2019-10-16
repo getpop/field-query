@@ -58,9 +58,9 @@ This syntax is a re-imagining of the GraphQL syntax, supporting all the same ele
 
 ## When/how to use it
 
-PoP uses this syntax nativelly: In `data-fields` to load data for the components within the application itself (through the [Component Model](https://github.com/getpop/component-model)), or externally for an API through URL param `query` (such as [PoP API](https://github.com/getpop/api)).
+PoP uses this syntax natively: In `data-fields` to load data for the components within the application itself (through the [Component Model](https://github.com/getpop/component-model)), and externally to load data from an API through URL param `query` (as done by [PoP API](https://github.com/getpop/api)).
 
-A GraphQL server can implement this syntax as to support URI-based server-side caching. To achieve this, a service must translate the query from this syntax to the corresponding [GraphQL syntax](https://graphql.org/learn/queries/), and then pass the translated query to the GraphQL engine. (WIP: An implementation of this translation service, in PHP, is under way).
+A GraphQL server can implement this syntax as to support URI-based server-side caching. To achieve this, a service must translate the query from this syntax to the corresponding [GraphQL syntax](https://graphql.org/learn/queries/), and then pass the translated query to the GraphQL engine. (WIP: An implementation of this translation service, in PHP, is [under way](https://github.com/getpop/api-graphql/issues/1)).
 
 ## Syntax
 
