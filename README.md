@@ -71,7 +71,7 @@ In addition, a field can also contain the following elements:
 
 Separate the properties to fetch using symbol `|`.
 
-_**In GraphQL:**_
+_**In GraphQL**:_
 
 ```graphql
 query {
@@ -80,7 +80,7 @@ query {
 }
 ```
 
-_**In PoP:** ([example](https://nextapi.getpop.org/api/graphql//?query=id|__schema)_
+_**In PoP** ([example](https://nextapi.getpop.org/api/graphql//?query=id|__schema)):_
 
 ```
 /?query=id|__schema
