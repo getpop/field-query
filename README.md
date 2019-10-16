@@ -317,15 +317,15 @@ _**In GraphQL**:_
 
 ```graphql
 query {
-  posts {
-      author {
-          following {
+  users {
+      posts {
+          author {
               id
               name
           }
-          followers {
+          comments {
               id
-              name
+              content
           }
       }
   }
@@ -334,18 +334,18 @@ query {
 
 In PoP, however, the query can easily become very verbose, because when combining fields with `,` it starts iterating the path again all the way from the root:
 
-_**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.author.following.id|name,posts.author.followers.id|name)):_
+_**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=users.posts.author.id|name,users.posts.comments.id|content)):_
 
 ```
-/?query=posts.author.following.id|name,posts.author.followers.id|name
+/?query=users.posts.author.id|name,users.posts.comments.id|content
 ```
 
 Bookmarks help address this problem by creating a shortcut to a path, so we can conveniently keep loading data from that point on. To define the bookmark, its name is enclosed with `[...]` when iterating down the path, and to use it, its name is similarly enclosed with `[...]`:
 
-_**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.author[postauthor].following.id|name,[postauthor].followers.id|name)):_
+_**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=users.posts[userposts].author.id|[userposts].comments.id|content)):_
 
 ```
-/?query=posts.author[postauthor].following.id|name,[postauthor].followers.id|name
+/?query=users.posts[userposts].author.id|[userposts].comments.id|content
 ```
 
 ### Bookmark with Alias
