@@ -19,7 +19,8 @@
     "prefer-stable": true,
     "require": {
         "php" : "~7.1",
-        "getpop/translation": "dev-master"
+        "getpop/translation": "dev-master",
+        "getpop/query-parsing": "dev-master"
     },
     "require-dev": {
         "phpunit/phpunit" : ">=7.0",
