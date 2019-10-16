@@ -36,6 +36,7 @@ $ composer require getpop/field-query dev-master
 use PoP\FieldQuery\Facades\Query\FieldQueryInterpreterFacade;
 
 $fieldQueryInterpreter = FieldQueryInterpreterFacade::getInstance();
+
 // To create a field from its elements
 $field = $fieldQueryInterpreter->getField($fieldName, $fieldArgs);
 
@@ -44,12 +45,16 @@ $fieldName = $fieldQueryInterpreter->getFieldName($field);
 $fieldArgs = $fieldQueryInterpreter->getFieldArgs($field);
 $fieldDirectives = $fieldQueryInterpreter->getFieldDirectives($field);
 // ...
-// Other functions from FieldQueryInterpreter
+// Other functions listed in FieldQueryInterpreterInterface
 ```
 
-## Influence
+## Why
 
-The syntax is heavily influenced by GraphQL. However, it differs in that, because in PoP the query can be provided as a URL parameter (instead of being provided through the body of the request, as in GraphQL), the syntax must be easy to write, and easy to understand, fitting in a single line.
+Because the GraphQL query is provided through the body of the request, by design it spans several lines, making it unsuitable for passing queries through URL params. A negative side effect of this is that it is difficult to cache the results from a GraphQL query in the server.
+
+In order to support URI-based server-side caching on GraphQL, we can attempt to provide the query through the URL instead. However, the GraphQL syntax is unsuitable for this purpose, since it would be hard to both write and read in a single line.
+
+This syntax is a re-imagining of the GraphQL syntax, supporting all the same elements (field arguments, aliases, directives, etc), however designed to be easy to write, and easy to read and understand, in a single line.
 
 ## When/how to use it
 
