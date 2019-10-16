@@ -23,10 +23,10 @@ $ composer require getpop/field-query dev-master
 
 ```javascript
 {
-    ...
-    "minimum-stability": "dev",
-    "prefer-stable": true,
-    ...
+  ...
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  ...
 }
 ```
 
@@ -127,9 +127,9 @@ _**In GraphQL**:_
 ```graphql
 query {
   posts {
-      author {
-          id
-      }
+    author {
+      id
+    }
   }
 }
 ```
@@ -147,11 +147,11 @@ _**In GraphQL**:_
 ```graphql
 query {
   posts {
-      author {
-          id
-          name
-          url
-      }
+    author {
+      id
+      name
+      url
+    }
   }
 }
 ```
@@ -169,13 +169,13 @@ _**In GraphQL**:_
 ```graphql
 query {
   posts {
+    id
+    title
+    author {
       id
-      title
-      author {
-          id
-          name
-          url
-      }
+      name
+      url
+    }
   }
 }
 ```
@@ -195,15 +195,15 @@ _**In GraphQL**:_
 ```graphql
 query {
   posts {
-      author {
-          id
-          name
-          url
-      }
-      comments {
-          id
-          content
-      }
+    author {
+      id
+      name
+      url
+    }
+    comments {
+      id
+      content
+    }
   }
 }
 ```
@@ -225,9 +225,9 @@ _Filtering results **in GraphQL**:_
 ```graphql
 query {
   posts(search: "something") {
-      id
-      title
-      date
+    id
+    title
+    date
   }
 }
 ```
@@ -243,9 +243,9 @@ _Formatting output **in GraphQL**:_
 ```graphql
 query {
   posts {
-      id
-      title
-      date(format: "d/m/Y")
+    id
+    title
+    date(format: "d/m/Y")
   }
 }
 ```
@@ -275,9 +275,9 @@ _**In GraphQL**:_
 ```graphql
 query {
   posts {
-      id
-      title
-      formattedDate: date(format: "d/m/Y")
+    id
+    title
+    formattedDate: date(format: "d/m/Y")
   }
 }
 ```
@@ -295,10 +295,10 @@ _**In GraphQL**:_
 ```graphql
 query {
   posts {
-      id
-      title
-      date: date
-      formattedDate: date(format: "d/m/Y")
+    id
+    title
+    date: date
+    formattedDate: date(format: "d/m/Y")
   }
 }
 ```
@@ -318,16 +318,16 @@ _**In GraphQL**:_
 ```graphql
 query {
   users {
-      posts {
-          author {
-              id
-              name
-          }
-          comments {
-              id
-              content
-          }
+    posts {
+      author {
+        id
+        name
       }
+      comments {
+        id
+        content
+      }
+    }
   }
 }
 ```
@@ -368,16 +368,16 @@ _API call **in GraphQL**:_
 
 ```html
 {
-    "query":"query ($format: String) {
-        posts {
-            id
-            title
-            date(format: $format)
-        }
-    }",
-    "variables":"{
-        \"format\":\"d/m/Y\"
-    }"
+  "query":"query ($format: String) {
+    posts {
+      id
+      title
+      date(format: $format)
+    }
+  }",
+  "variables":"{
+    \"format\":\"d/m/Y\"
+  }"
 }
 ```
 
@@ -398,22 +398,22 @@ _**In GraphQL**:_
 
 ```graphql
 query {
-    users {
-        ...userData
-        posts {
-            comments {
-                author {
-                    ...userData
-                }
-            }
+  users {
+    ...userData
+    posts {
+      comments {
+        author {
+          ...userData
         }
+      }
     }
+  }
 }
 
 fragment userData on User {
-    id
-    name
-    url
+  id
+  name
+  url
 }
 ```
 
@@ -432,14 +432,14 @@ _**In GraphQL**:_
 
 ```graphql
 query {
-    posts {
-        id
-        title
-        featuredimage @include(if: $addFeaturedImage) {
-            id
-            src
-        }
+  posts {
+    id
+    title
+    featuredimage @include(if: $addFeaturedImage) {
+      id
+      src
     }
+  }
 }
 ```
 
