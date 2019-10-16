@@ -233,15 +233,16 @@ _Formatting output **in GraphQL**:_
 query {
   posts {
       id
+      title
       date(format: "d/m/Y")
   }
 }
 ```
 
-_Formatting output **in PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.id|date(format:d/m/Y))):_
+_Formatting output **in PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|date(format:d/m/Y))):_
 
 ```
-/?query=posts.id|date(format:d/m/Y)
+/?query=posts.id|title|date(format:d/m/Y)
 ```
 
 ### Optional property name in field arguments
