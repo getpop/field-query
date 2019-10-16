@@ -9,7 +9,7 @@
 [![Total Downloads][ico-downloads]][link-downloads]
 -->
 
-Syntax to retrieve data from the server for PoP applications, and to grant URI-based server-side caching capabilities to a GraphQL API. 
+Syntax to query GraphQL through URL params, which grants a GraphQL API the capability to be cached on the server.
 
 ## Install
 
