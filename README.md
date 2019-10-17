@@ -505,11 +505,15 @@ _**In PoP** ():_
 ```
 1. ?query=posts.has-comments|not(has-comments())
 2. ?query=posts.has-comments|has-featuredimage|or([has-comments(),has-featuredimage()])
-3. ?query=posts.and([has-featuredimage(), var(loading-site)])
-4. ?query=posts.if(has-comments(),sprintf(Post %s has comments,[title()]),sprintf(Post with ID %s has no comments, [id()]))
-5. ?query=users.equals(name(), Leo)
+3. ?query=var(fetching-site),posts.has-featuredimage|and([has-featuredimage(), var(fetching-site)])
+4. ?query=posts.if(has-comments(),sprintf(Post with title '%s' has %s comments,[title(), comments-count()]),sprintf(Post with ID %s was created on %s, [id(),date(d/m/Y)]))@postDesc
+5. ?query=users.name|equals(name(), admin)
 6. ?query=posts.featuredimage|isNull(featuredimage())
 ```
+
+In order to include characters `(` and `)` as part of the query string, and avoid treating the string as a field to be executed, we must enclose it using quotes: `"..."`.
+
+?query=posts.sprintf("This post has %s comment(s)",[comments-count()])@postDesc
 
 ### Skip output if null
 
