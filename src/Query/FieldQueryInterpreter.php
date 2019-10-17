@@ -19,9 +19,9 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
     private $variablesFromRequestCache;
 
     // Services
-    private $translationAPI;
-    private $errorMessageStore;
-    private $queryParser;
+    protected $translationAPI;
+    protected $errorMessageStore;
+    protected $queryParser;
 
     public function __construct(
         TranslationAPIInterface $translationAPI,
