@@ -9,6 +9,7 @@ interface FieldQueryInterpreterInterface
     public function removeSkipOuputIfNullFromField(string $field): string;
     public function isFieldArgumentValueAField($fieldArgValue): bool;
     public function isFieldArgumentValueAVariable($fieldArgValue): bool;
+    public function isFieldArgumentValueAnArray($fieldArgValue): bool;
     public function createFieldArgValueAsFieldFromFieldName(string $fieldName): string;
     public function getFieldAlias(string $field): ?string;
     public function getFieldDirectives(string $field): ?string;

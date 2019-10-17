@@ -41,11 +41,9 @@ class FieldQueryUtils
         $fieldQueryInterpreter = FieldQueryInterpreterFacade::getInstance();
         $isOrContainsAField = array_map(
             function($fieldArgValue) use($fieldQueryInterpreter, $callback) {
-                // Check if it has the representation of an array as a string. If so, convert to array
-                $fieldArgValue = $fieldQueryInterpreter->maybeConvertFieldArgumentArrayValueFromStringToArray($fieldArgValue);
                 // Either the value is a field, or it is an array of fields
                 if (is_array($fieldArgValue)) {
-                    return self::isAnyFieldArgumentValueAField((array)$fieldArgValue);
+                    return self::isAnyFieldArgumentValueASomething((array)$fieldArgValue, $callback);
                 }
                 return $callback($fieldArgValue);
             },

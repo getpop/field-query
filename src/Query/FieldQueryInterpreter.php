@@ -199,6 +199,12 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
         return substr($fieldArgValue, 0, strlen(QuerySyntax::SYMBOL_VARIABLE_PREFIX)) == QuerySyntax::SYMBOL_VARIABLE_PREFIX;
     }
 
+    public function isFieldArgumentValueAnArray($fieldArgValue): bool
+    {
+        // If it starts with "[" and finishes with "]"
+        return substr($fieldArgValue, 0, strlen(QuerySyntax::SYMBOL_FIELDARGS_ARGVALUEARRAY_OPENING)) == QuerySyntax::SYMBOL_FIELDARGS_ARGVALUEARRAY_OPENING && substr($fieldArgValue, -1*strlen(QuerySyntax::SYMBOL_FIELDARGS_ARGVALUEARRAY_CLOSING)) == QuerySyntax::SYMBOL_FIELDARGS_ARGVALUEARRAY_CLOSING;
+    }
+
     public function createFieldArgValueAsFieldFromFieldName(string $fieldName): string
     {
         return $fieldName.QueryHelpers::getEmptyFieldArgs();
