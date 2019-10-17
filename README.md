@@ -519,9 +519,9 @@ _**In PoP** (<a href='https://nextapi.getpop.org/api/graphql/?query=posts.sprint
 
 ### Nested fields with directives
 
-The GraphQL spec [requires](https://graphql.org/learn/queries/#directives) to support directives `include` and `skip`, which receive a parameter `if` with a boolean value, mostly to be provided through a variable (as shown in section [Directives](#directives) above).
+Nested fields can execute a required operation against the queried object itself. This way, directives in PoP become much more useful, since they can evaluate their conditions against every and each object, which enables plenty of new features (such as client-directed content manipulation, fine-grained access control, enhanced validations, and others).
 
-In PoP, this behaviour becomes much more dynamic: Through nested fields, directives can execute a required operation against the queried object itself. For instance, directives `include` and `skip` can produce their output based on a condition from the object.
+For instance, the GraphQL spec [requires](https://graphql.org/learn/queries/#directives) to support directives `include` and `skip`, which receive a parameter `if` with a boolean value. While GraphQL expects this value to be provided through a variable (as shown in section [Directives](#directives) above), in PoP it can be retrieved from the object.
 
 _**In PoP** ([example 1](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|has-featuredimage|featuredimage<include(if:has-featuredimage())>.id|src), [example 2](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|featuredimage<skip(if:isNull(featuredimage()))>.id|src)):_
 
