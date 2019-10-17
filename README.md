@@ -500,14 +500,14 @@ The real benefit from having operators comes when they can receive the output fr
 
 In order to distinguish if the input to the field is a string or the name of a field, the field must have field arguments brackets `(...)` (if no arguments, then simply `()`). For instance, `"id"` means the string "id", and `"id()"` means to execute and pass the result from field "id".
 
-_**In PoP** (<a href="https://nextapi.getpop.org/api/graphql/?query=posts.has-comments|not(has-comments())">example 1</a>, <a href="https://nextapi.getpop.org/api/graphql/?query=posts.has-comments|has-featuredimage|or([has-comments(),has-featuredimage()])">example 2</a>, <a href="https://nextapi.getpop.org/api/graphql/?query=var(fetching-site),posts.has-featuredimage|and([has-featuredimage(), var(fetching-site)])">example 3</a>, <a href="https://nextapi.getpop.org/api/graphql/?query=posts.if(has-comments(),sprintf(Post with title '%s' has %s comments,[title(), comments-count()]),sprintf(Post with ID %s was created on %s, [id(),date(d/m/Y)]))@postDesc">example 4</a>, <a href="https://nextapi.getpop.org/api/graphql/?query=users.name|equals(name(), admin)">example 5</a>, <a href="https://nextapi.getpop.org/api/graphql/?query=posts.featuredimage|isNull(featuredimage())">example 6</a>):_
+_**In PoP** (<a href="https://nextapi.getpop.org/api/graphql/?query=posts.has-comments|not(has-comments())">example 1</a>, <a href="https://nextapi.getpop.org/api/graphql/?query=posts.has-comments|has-featuredimage|or([has-comments(),has-featuredimage()])">example 2</a>, <a href="https://nextapi.getpop.org/api/graphql/?query=var(fetching-site),posts.has-featuredimage|and([has-featuredimage(), var(fetching-site)])">example 3</a>, <a href="https://nextapi.getpop.org/api/graphql/?query=posts.if(has-comments(),sprintf(Post with title '%s' has %s comments,[title(), comments-count()]),sprintf(Post with ID %s was created on %s, [id(),date(d/m/Y)]))@postDesc">example 4</a>, <a href="https://nextapi.getpop.org/api/graphql/?query=users.name|equals(name(), leo)">example 5</a>, <a href="https://nextapi.getpop.org/api/graphql/?query=posts.featuredimage|isNull(featuredimage())">example 6</a>):_
 
 ```
 1. ?query=posts.has-comments|not(has-comments())
 2. ?query=posts.has-comments|has-featuredimage|or([has-comments(),has-featuredimage()])
 3. ?query=var(fetching-site),posts.has-featuredimage|and([has-featuredimage(), var(fetching-site)])
 4. ?query=posts.if(has-comments(),sprintf(Post with title '%s' has %s comments,[title(), comments-count()]),sprintf(Post with ID %s was created on %s, [id(),date(d/m/Y)]))@postDesc
-5. ?query=users.name|equals(name(), admin)
+5. ?query=users.name|equals(name(), leo)
 6. ?query=posts.featuredimage|isNull(featuredimage())
 ```
 
