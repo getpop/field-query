@@ -487,11 +487,11 @@ _**In PoP** (<a href="https://nextapi.getpop.org/api/graphql?query=not(true)">ex
 
 In the same fashion, helper functions can provide any required information, also behaving as fields. For instance, helper `context` provides the values in the system's state, and helper `var` can retrieve any specific variable from the system's state.
 
-_**In PoP** (<a href="https://nextapi.getpop.org/api/graphql?query=context">example 1</a>, <a href="https://nextapi.getpop.org/api/graphql?query=var(route),var(target),var(datastructure)">example 2</a>:_
+_**In PoP** (<a href="https://nextapi.getpop.org/api/graphql?query=context">example 1</a>, <a href="https://nextapi.getpop.org/api/graphql?query=var(route),var(target)@target,var(datastructure)">example 2</a>:_
 
 ```
 1. ?query=context
-2. ?query=var(route),var(target),var(datastructure)
+2. ?query=var(route),var(target)@target,var(datastructure)
 ```
 
 ### Nested fields
