@@ -473,12 +473,12 @@ _**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts(limit
 
 Standard operations, such as `and`, `or`, `if`, `isNull`, `contains`, `sprintf` and many others, can be made available on the API as fields. Then, the operator name stands for the field name, and it can accept all the other elements in the same format (arguments, aliases, etc).
 
-_**In PoP** (<a href="https://nextapi.getpop.org/api/graphql?query=not(true)">example 1</a>, <a href="https://nextapi.getpop.org/api/graphql?query=or([true, false])">example 2</a>, <a href="https://nextapi.getpop.org/api/graphql?query=and([true, false])">example 3</a>, <a href="https://nextapi.getpop.org/api/graphql?query=if(true,Show this text,Hide this text)">example 4</a>, <a href="https://nextapi.getpop.org/api/graphql?query=equals(first text, second text)">example 5</a>, <a href="https://nextapi.getpop.org/api/graphql?query=isNull()">example 6</a>, <a href="https://nextapi.getpop.org/api/graphql?query=sprintf(Hello %s, welcome to %s,[Leo, PoP])">example 7</a>):_
+_**In PoP** (<a href="https://nextapi.getpop.org/api/graphql?query=not(true)">example 1</a>, <a href="https://nextapi.getpop.org/api/graphql?query=or([1, 0])">example 2</a>, <a href="https://nextapi.getpop.org/api/graphql?query=and([1, 0])">example 3</a>, <a href="https://nextapi.getpop.org/api/graphql?query=if(true,Show this text,Hide this text)">example 4</a>, <a href="https://nextapi.getpop.org/api/graphql?query=equals(first text, second text)">example 5</a>, <a href="https://nextapi.getpop.org/api/graphql?query=isNull()">example 6</a>, <a href="https://nextapi.getpop.org/api/graphql?query=sprintf(Hello %s, welcome to %s,[Leo, PoP])">example 7</a>):_
 
 ```
 1. ?query=not(true)
-2. ?query=or([true, false])
-3. ?query=and([true, false])
+2. ?query=or([1, 0])
+3. ?query=and([1, 0])
 4. ?query=if(true,Show this text,Hide this text)
 5. ?query=equals(first text, second text)
 6. ?query=isNull()
@@ -496,10 +496,22 @@ _**In PoP** (<a href="https://nextapi.getpop.org/api/graphql?query=context">exam
 
 ### Nested fields
 
+The real benefit from having operators comes when they can receive the output from a field as their input. Since an operator is a field by itself, this can be generalized into “nested fields”: Passing the result of any field as an input to any other field's arguments. 
 
+In order to distinguish if the input to the field is a string or the name of a field, the field must either have field arguments `(...)` or, if not, the empty brackets `()`. Then, `"id"` means the string "id", and `"id()"` means to execute and pass the result from field "id".
+
+_**In PoP** ():_
+
+```
+1. ?query=posts.has-comments|not(has-comments())
+2. ?query=posts.has-comments|has-featuredimage|or([has-comments(),has-featuredimage()])
+3. ?query=posts.and([has-featuredimage(), var(loading-site)])
+4. ?query=posts.if(has-comments(),sprintf(Post %s has comments,[title()]),sprintf(Post with ID %s has no comments, [id()]))
+5. ?query=users.equals(name(), Leo)
+6. ?query=posts.featuredimage|isNull(featuredimage())
+```
 
 ### Skip output if null
-
 
 <!--
 ## Query examples
