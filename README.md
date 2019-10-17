@@ -473,7 +473,7 @@ _**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts(limit
 
 Standard operations, such as `and`, `or`, `if`, `isNull`, `contains`, `sprintf` and many others, can be made available on the API as fields. Then, the operator name stands for the field name, and it can accept all the other elements in the same format (arguments, aliases, etc).
 
-_**In PoP** ([example 1](https://nextapi.getpop.org/api/graphql?query=not(true)), [example 2](https://nextapi.getpop.org/api/graphql?query=or([true, false])), [example 3](https://nextapi.getpop.org/api/graphql?query=and([true, false])), [example 4](https://nextapi.getpop.org/api/graphql?query=if(true,Show this text,Hide this text)), [example 5](https://nextapi.getpop.org/api/graphql?query=equals(first text, second text)), [example 6](https://nextapi.getpop.org/api/graphql?query=isNull()), [example 7](https://nextapi.getpop.org/api/graphql?query=sprintf(Hello %s, welcome to %s,[Leo, PoP]))):_
+_**In PoP** (<a href="https://nextapi.getpop.org/api/graphql?query=not(true)">example 1</a>, <a href="https://nextapi.getpop.org/api/graphql?query=or([true, false])">example 2</a>, <a href="https://nextapi.getpop.org/api/graphql?query=and([true, false])">example 3</a>, <a href="https://nextapi.getpop.org/api/graphql?query=if(true,Show this text,Hide this text)">example 4</a>, <a href="https://nextapi.getpop.org/api/graphql?query=equals(first text, second text)">example 5</a>, <a href="https://nextapi.getpop.org/api/graphql?query=isNull()">example 6</a>, <a href="https://nextapi.getpop.org/api/graphql?query=sprintf(Hello %s, welcome to %s,[Leo, PoP])">example 7</a>):_
 
 ```
 1. ?query=not(true)
@@ -487,7 +487,7 @@ _**In PoP** ([example 1](https://nextapi.getpop.org/api/graphql?query=not(true))
 
 In the same fashion, helper functions can provide any required information, also behaving as fields. For instance, helper `context` provides the values in the system's state, and helper `var` can retrieve any specific variable from the system's state.
 
-_**In PoP** ([example 1](https://nextapi.getpop.org/api/graphql?query=context), [example 2](https://nextapi.getpop.org/api/graphql?query=var(route),var(target),var(datastructure))):_
+_**In PoP** (<a href="https://nextapi.getpop.org/api/graphql?query=context">example 1</a>, <a href="https://nextapi.getpop.org/api/graphql?query=var(route),var(target),var(datastructure)">example 2</a>:_
 
 ```
 1. ?query=context
