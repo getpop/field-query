@@ -523,14 +523,32 @@ Nested fields enable to execute an operation against the queried object itself. 
 
 For instance, the GraphQL spec [requires](https://graphql.org/learn/queries/#directives) to support directives `include` and `skip`, which receive a parameter `if` with a boolean value. While GraphQL expects this value to be provided through a variable (as shown in section [Directives](#directives) above), in PoP it can be retrieved from the object.
 
-_**In PoP** ([example 1](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|has-featuredimage|featuredimage<include(if:has-featuredimage())>.id|src), [example 2](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|featuredimage<skip(if:isNull(featuredimage()))>.id|src)):_
+_**In PoP** ([example 1](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|featuredimage<include(if:not(isNull(featuredimage())))>.id|src), [example 2](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|featuredimage<skip(if:isNull(featuredimage()))>.id|src)):_
 
 ```
-1. ?query=posts.id|title|has-featuredimage|featuredimage<include(if:has-featuredimage())>.id|src
+1. ?query=posts.id|title|featuredimage<include(if:not(isNull(featuredimage())))>.id|src
 2. ?query=posts.id|title|featuredimage<skip(if:isNull(featuredimage()))>.id|src
 ```
 
 ### Skip output if null
+
+Whenever the value from a field is null, its nested fields will not be retrieved. For instance, consider the following case, in which field `"featuredimage"` sometimes is null:
+
+_**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|featuredimage.id|src)):_
+
+```
+?query=posts.id|title|featuredimage.id|src
+```
+
+As we have seen in section [Nested fields with directives](#nested-fields-with-directives) above, by combining directives `include` and `skip` with nested fields, we can decide to not output a field when its value is null. However, the query to execute this behaviour includes a directive added in the middle of the query path, making it very verbose and less legible. Since this is a very common use case, it makes sense to generalize it and incorporate a simplified version of it into the syntax. 
+
+For this, PoP introduces symbol `?`, to be placed after the field name (and its field arguments, alias and bookmark), to indicate "if this value is null, do not output it". 
+
+_**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|featuredimage?.id|src)):_
+
+```
+?query=posts.id|title|featuredimage?.id|src
+```
 
 <!--
 ## Query examples
