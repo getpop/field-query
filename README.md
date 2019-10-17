@@ -517,6 +517,19 @@ _**In PoP** (<a href='https://nextapi.getpop.org/api/graphql/?query=posts.sprint
 
 ?query=posts.sprintf("This post has %s comment(s)",[comments-count()])@postDesc
 
+### Nested fields with directives
+
+The GraphQL spec [requires](https://graphql.org/learn/queries/#directives) to support directives `include` and `skip`, which receive a parameter `if` with a boolean value, mostly to be provided through a variable (as shown in section [Directives](#directives) above).
+
+In PoP, this behaviour becomes much more dynamic: Through nested fields, directives can execute a required operation against the queried object itself. For instance, directives `include` and `skip` can produce their output based on a condition from the object.
+
+_**In PoP** ([example 1](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|has-featuredimage|featuredimage<include(if:has-featuredimage())>.id|src), [example 2](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|featuredimage<skip(if:isNull(featuredimage()))>.id|src)):_
+
+```
+1. ?query=posts.id|title|has-featuredimage|featuredimage<include(if:has-featuredimage())>.id|src
+2. ?query=posts.id|title|featuredimage<skip(if:isNull(featuredimage()))>.id|src
+```
+
 ### Skip output if null
 
 <!--
