@@ -81,7 +81,8 @@ Differently than GraphQL, a field can also contain the following elements:
 
 - **Property names in the field arguments may be optional:** To simplify passing arguments to the field
 - **Bookmarks:** To keep loading data from an already-defined field
-- **Operators and Nested fields:** The response of a field can be used as input to another field, through its arguments or field directives
+- **Operators and Helpers:** Standard operations (`and`, `or`, `if`, `isNull`, etc) and helpers to access environment variables (among other use cases) can be already available as fields
+- **Nested fields:** The response of a field can be used as input to another field, through its arguments or field directives
 - **Skip output if null:** To ignore the output if the value of the field is null
 
 From the composing elements, only the field name is mandatory; all others are optional. A field is composed in this order:
@@ -468,11 +469,38 @@ _**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts(limit
 /?query=posts(limit:$limit).--postData|author.posts(limit:$limit).--postData&postData=id|title|--nestedPostData|date(format:$format)&nestedPostData=comments<include(if:$include)>.id|content&format=d/m/Y&include=true&limit=3
 ```
 
-### Operators and Nested fields
+### Operators and Helpers
+
+Standard operations, such as `and`, `or`, `if`, `isNull`, `contains`, `sprintf` and many others, can be made available on the API as fields. Then, the operator name stands for the field name, and it can accept all the other elements in the same format (arguments, aliases, etc).
+
+_**In PoP** ([example 1](https://nextapi.getpop.org/api/graphql?query=not(true)), [example 2](https://nextapi.getpop.org/api/graphql?query=or([true, false])), [example 3](https://nextapi.getpop.org/api/graphql?query=and([true, false])), [example 4](https://nextapi.getpop.org/api/graphql?query=if(true,Show this text,Hide this text)), [example 5](https://nextapi.getpop.org/api/graphql?query=equals(first text, second text)), [example 6](https://nextapi.getpop.org/api/graphql?query=isNull()), [example 7](https://nextapi.getpop.org/api/graphql?query=sprintf(Hello %s, welcome to %s,[Leo, PoP]))):_
+
+```
+1. ?query=not(true)
+2. ?query=or([true, false])
+3. ?query=and([true, false])
+4. ?query=if(true,Show this text,Hide this text)
+5. ?query=equals(first text, second text)
+6. ?query=isNull()
+7. ?query=sprintf(Hello %s, welcome to %s,[Leo, PoP])
+```
+
+In the same fashion, helper functions can provide any required information, also behaving as fields. For instance, helper `context` provides the values in the system's state, and helper `var` can retrieve any specific variable from the system's state.
+
+_**In PoP** ([example 1](https://nextapi.getpop.org/api/graphql?query=context), [example 2](https://nextapi.getpop.org/api/graphql?query=var(route),var(target),var(datastructure))):_
+
+```
+1. ?query=context
+2. ?query=var(route),var(target),var(datastructure)
+```
+
+### Nested fields
 
 
 
 ### Skip output if null
+
+
 <!--
 ## Query examples
 
