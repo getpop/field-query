@@ -473,7 +473,7 @@ _**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts(limit
 
 Standard operations, such as `and`, `or`, `if`, `isNull`, `contains`, `sprintf` and many others, can be made available on the API as fields. Then, the operator name stands for the field name, and it can accept all the other elements in the same format (arguments, aliases, etc).
 
-_**In PoP** (<a href="https://nextapi.getpop.org/api/graphql?query=not(true)">example 1</a>, <a href="https://nextapi.getpop.org/api/graphql?query=or([1, 0])">example 2</a>, <a href="https://nextapi.getpop.org/api/graphql?query=and([1, 0])">example 3</a>, <a href="https://nextapi.getpop.org/api/graphql?query=if(true,Show this text,Hide this text)">example 4</a>, <a href="https://nextapi.getpop.org/api/graphql?query=equals(first text, second text)">example 5</a>, <a href="https://nextapi.getpop.org/api/graphql?query=isNull()">example 6</a>, <a href="https://nextapi.getpop.org/api/graphql?query=sprintf(Hello %s, welcome to %s,[Leo, PoP])">example 7</a>):_
+_**In PoP** (<a href="https://nextapi.getpop.org/api/graphql?query=not(true)">example 1</a>, <a href="https://nextapi.getpop.org/api/graphql?query=or([1, 0])">example 2</a>, <a href="https://nextapi.getpop.org/api/graphql?query=and([1, 0])">example 3</a>, <a href="https://nextapi.getpop.org/api/graphql?query=if(true,Show this text,Hide this text)">example 4</a>, <a href="https://nextapi.getpop.org/api/graphql?query=equals(first text, second text)">example 5</a>, <a href="https://nextapi.getpop.org/api/graphql?query=isNull(),isNull(something)">example 6</a>, <a href="https://nextapi.getpop.org/api/graphql?query=sprintf(API %s is %s, [PoP, cool])">example 7</a>):_
 
 ```
 1. ?query=not(true)
@@ -481,13 +481,13 @@ _**In PoP** (<a href="https://nextapi.getpop.org/api/graphql?query=not(true)">ex
 3. ?query=and([1, 0])
 4. ?query=if(true,Show this text,Hide this text)
 5. ?query=equals(first text, second text)
-6. ?query=isNull()
-7. ?query=sprintf(Hello %s, welcome to %s,[Leo, PoP])
+6. ?query=isNull(),isNull(something)
+7. ?query=sprintf(API %s is %s, [PoP, cool])
 ```
 
 In the same fashion, helper functions can provide any required information, also behaving as fields. For instance, helper `context` provides the values in the system's state, and helper `var` can retrieve any specific variable from the system's state.
 
-_**In PoP** (<a href="https://nextapi.getpop.org/api/graphql?query=context">example 1</a>, <a href="https://nextapi.getpop.org/api/graphql?query=var(route),var(target)@target,var(datastructure)">example 2</a>:_
+_**In PoP** (<a href="https://nextapi.getpop.org/api/graphql?query=context">example 1</a>, <a href="https://nextapi.getpop.org/api/graphql?query=var(route),var(target)@target,var(datastructure)">example 2</a>):_
 
 ```
 1. ?query=context
