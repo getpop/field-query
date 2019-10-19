@@ -471,7 +471,7 @@ _**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts(limit
 
 ### Operators and Helpers
 
-Standard operations, such as `and`, `or`, `if`, `isNull`, `contains`, `sprintf` and many others, can be made available on the API as fields. Then, the operator name stands for the field name, and it can accept all the other elements in the same format (arguments, aliases, etc).
+Standard operations, such as `and`, `or`, `if`, `isNull`, `contains`, `sprintf` and many others, can be made available on the API as fields. Then, the operator name stands for the field name, and it can accept all the other elements in the same format (arguments, aliases, etc). To pass an argument value as an array, we enclose it between `[]`.
 
 _**In PoP** (<a href="https://nextapi.getpop.org/api/graphql?query=not(true)">example 1</a>, <a href="https://nextapi.getpop.org/api/graphql?query=or([1, 0])">example 2</a>, <a href="https://nextapi.getpop.org/api/graphql?query=and([1, 0])">example 3</a>, <a href="https://nextapi.getpop.org/api/graphql?query=if(true,Show this text,Hide this text)">example 4</a>, <a href="https://nextapi.getpop.org/api/graphql?query=equals(first text, second text)">example 5</a>, <a href="https://nextapi.getpop.org/api/graphql?query=isNull(),isNull(something)">example 6</a>, <a href="https://nextapi.getpop.org/api/graphql?query=sprintf(API %s is %s, [PoP, cool])">example 7</a>):_
 
