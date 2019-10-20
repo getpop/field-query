@@ -459,16 +459,6 @@ _**In PoP** ([example 1](https://nextapi.getpop.org/api/graphql/?query=posts.id|
 4. ?query=posts.id|title|featuredimage<skip(if:$skip)>.id|src&skip=
 ```
 
-### Combining elements
-
-Different elements can be combined. For instance: A fragment can contain nested paths, variables, directives and other fragments:
-
-_**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts(limit:$limit).--postData|author.posts(limit:$limit).--postData&postData=id|title|--nestedPostData|date(format:$format)&nestedPostData=comments<include(if:$include)>.id|content&format=d/m/Y&include=true&limit=3)):_
-
-```
-/?query=posts(limit:$limit).--postData|author.posts(limit:$limit).--postData&postData=id|title|--nestedPostData|date(format:$format)&nestedPostData=comments<include(if:$include)>.id|content&format=d/m/Y&include=true&limit=3
-```
-
 ### Operators and Helpers
 
 Standard operations, such as `and`, `or`, `if`, `isNull`, `contains`, `sprintf` and many others, can be made available on the API as fields. Then, the operator name stands for the field name, and it can accept all the other elements in the same format (arguments, aliases, etc). To pass an argument value as an array, we enclose it between `[]`.
@@ -548,6 +538,16 @@ _**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.id|ti
 
 ```
 ?query=posts.id|title|featuredimage?.id|src
+```
+
+### Combining elements
+
+Different elements can be combined. For instance: A fragment can contain nested paths, variables, directives and other fragments:
+
+_**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts(limit:$limit).--postData|author.posts(limit:$limit).--postData&postData=id|title|--nestedPostData|date(format:$format)&nestedPostData=comments<include(if:$include)>.id|content&format=d/m/Y&include=true&limit=3)):_
+
+```
+/?query=posts(limit:$limit).--postData|author.posts(limit:$limit).--postData&postData=id|title|--nestedPostData|date(format:$format)&nestedPostData=comments<include(if:$include)>.id|content&format=d/m/Y&include=true&limit=3
 ```
 
 <!--
