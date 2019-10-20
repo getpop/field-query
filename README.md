@@ -542,12 +542,48 @@ _**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.id|ti
 
 ### Combining elements
 
-Different elements can be combined. For instance: A fragment can contain nested paths, variables, directives and other fragments:
+Different elements can be combined, such as the following examples. 
+
+A fragment can contain nested paths, variables, directives and other fragments:
 
 _**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts(limit:$limit).--postData|author.posts(limit:$limit).--postData&postData=id|title|--nestedPostData|date(format:$format)&nestedPostData=comments<include(if:$include)>.id|content&format=d/m/Y&include=true&limit=3)):_
 
 ```
 /?query=posts(limit:$limit).--postData|author.posts(limit:$limit).--postData&postData=id|title|--nestedPostData|date(format:$format)&nestedPostData=comments<include(if:$include)>.id|content&format=d/m/Y&include=true&limit=3
+```
+
+A fragment can contain directives, which are transferred into the fragment resolution fields:
+
+_**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.id|--props<include(if:has-comments())>&fragments[props]=title|date)):_
+
+```
+/?query=posts.id|--props<include(if:has-comments())>&fragments[props]=title|date
+```
+
+If the field in the fragment resolution field already has its own directives, these are applied; otherwise, the directives from the fragment definition are applied:
+
+A fragment can contain directives, which are transferred into the fragment resolution fields:
+
+_**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.id|--props<include(if:has-comments())>&fragments[props]=title|url<include(if:not(has-comments()))>)):_
+
+```
+/?query=posts.id|--props<include(if:has-comments())>&fragments[props]=title|url<include(if:not(has-comments()))>
+```
+
+A fragment can contain the "Skip output if null" symbol, which is then transferred to all fragment resolution fields:
+
+_**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.id|--props?&fragments[props]=title|url|featuredimage)):_
+
+```
+/?query=posts.id|--props?&fragments[props]=title|url|featuredimage
+```
+
+Combining both directives and the skip output if null symbol with fragments:
+
+_**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.id|has-comments|--props?<include(if:has-comments())>&fragments[props]=title|url<include(if:has-comments())>|featuredimage)):_
+
+```
+/?query=posts.id|has-comments|--props?<include(if:has-comments())>&fragments[props]=title|url<include(if:has-comments())>|featuredimage
 ```
 
 <!--
