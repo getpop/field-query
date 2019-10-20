@@ -27,5 +27,5 @@ interface FieldQueryInterpreterInterface
     public function listField(string $field): array;
     public function getField(string $fieldName, array $fieldArgs = [], ?string $fieldAlias = null, ?bool $skipOutputIfNull = false, ?array $fieldDirectives = []): string;
     public function composeField(string $fieldName, string $fieldArgs = '', string $fieldAlias = '', string $skipOutputIfNull = '', string $fieldDirectives = ''): string;
-    public function getFieldDirectiveAsString(array $fieldDirectives): string;
+    public function getFieldDirectivesAsString(array $fieldDirectives): string;
 }

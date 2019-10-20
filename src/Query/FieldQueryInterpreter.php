@@ -461,27 +461,22 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
         return QuerySyntax::SYMBOL_SKIPOUTPUTIFNULL;
     }
 
-    protected function getFieldDirectivesAsString(?array $fieldDirectives = []): string
+    public function getFieldDirectivesAsString(?array $fieldDirectives = []): string
     {
         if (!$fieldDirectives) {
             return '';
         }
         return
             QuerySyntax::SYMBOL_FIELDDIRECTIVE_OPENING.
-            array_map(
+            implode(QuerySyntax::SYMBOL_QUERYFIELDS_SEPARATOR, array_map(
                 function($fieldDirective) {
-                    return $this->getFieldDirectiveAsString($fieldDirective);
+                    return $this->composeField(
+                        $fieldDirective[0],
+                        $fieldDirective[1]
+                    );
                 },
                 $fieldDirectives
-            ).
+            )).
             QuerySyntax::SYMBOL_FIELDDIRECTIVE_CLOSING;
-    }
-
-    public function getFieldDirectiveAsString(array $fieldDirectives): string
-    {
-        // The directive has the same structure as the field, so reuse the function
-        return QuerySyntax::SYMBOL_FIELDDIRECTIVE_OPENING.implode(QuerySyntax::SYMBOL_QUERYFIELDS_SEPARATOR, array_map(function($fieldDirective) {
-            return $this->getField($fieldDirective[0], $fieldDirective[1]);
-        }, $fieldDirectives)).QuerySyntax::SYMBOL_FIELDDIRECTIVE_CLOSING;
     }
 }
