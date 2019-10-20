@@ -562,8 +562,6 @@ _**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.id|--
 
 If the field in the fragment resolution field already has its own directives, these are applied; otherwise, the directives from the fragment definition are applied:
 
-A fragment can contain directives, which are transferred into the fragment resolution fields:
-
 _**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.id|--props<include(if:has-comments())>&fragments[props]=title|url<include(if:not(has-comments()))>)):_
 
 ```
