@@ -20,16 +20,16 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
 
     // Services
     protected $translationAPI;
-    protected $errorMessageStore;
+    protected $feedbackMessageStore;
     protected $queryParser;
 
     public function __construct(
         TranslationAPIInterface $translationAPI,
-        ErrorMessageStoreInterface $errorMessageStore,
+        FeedbackMessageStoreInterface $feedbackMessageStore,
         QueryParserInterface $queryParser
     ) {
         $this->translationAPI = $translationAPI;
-        $this->errorMessageStore = $errorMessageStore;
+        $this->feedbackMessageStore = $feedbackMessageStore;
         $this->queryParser = $queryParser;
     }
 
@@ -60,7 +60,7 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
         }
         // If the field name is missing, show an error
         if ($pos === 0) {
-            $this->errorMessageStore->addQueryError(sprintf(
+            $this->feedbackMessageStore->addQueryError(sprintf(
                 $this->translationAPI->__('Name in \'%s\' is missing', 'pop-component-model'),
                 $field
             ));
@@ -113,7 +113,7 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
         }
         // If there is only one of them, it's a query error, so discard the query bit
         if (($fieldArgsClosingSymbolPos === false && $fieldArgsOpeningSymbolPos !== false) || ($fieldArgsClosingSymbolPos !== false && $fieldArgsOpeningSymbolPos === false)) {
-            $this->errorMessageStore->addQueryError(sprintf(
+            $this->feedbackMessageStore->addQueryError(sprintf(
                 $this->translationAPI->__('Arguments \'%s\' must start with symbol \'%s\' and end with symbol \'%s\'', 'pop-component-model'),
                 $field,
                 QuerySyntax::SYMBOL_FIELDARGS_OPENING,
@@ -224,14 +224,14 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
         if ($aliasPrefixSymbolPos !== false) {
             if ($aliasPrefixSymbolPos === 0) {
                 // Only there is the alias, nothing to alias to
-                $this->errorMessageStore->addQueryError(sprintf(
+                $this->feedbackMessageStore->addQueryError(sprintf(
                     $this->translationAPI->__('The field to be aliased in \'%s\' is missing', 'pop-component-model'),
                     $field
                 ));
                 return null;
             } elseif ($aliasPrefixSymbolPos === strlen($field)-1) {
                 // Only the "@" was added, but the alias is missing
-                $this->errorMessageStore->addQueryError(sprintf(
+                $this->feedbackMessageStore->addQueryError(sprintf(
                     $this->translationAPI->__('Alias in \'%s\' is missing', 'pop-component-model'),
                     $field
                 ));
@@ -284,7 +284,7 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
         }
         // If there is only one of them, it's a query error, so discard the query bit
         if (($fieldDirectivesClosingSymbolPos === false && $fieldDirectivesOpeningSymbolPos !== false) || ($fieldDirectivesClosingSymbolPos !== false && $fieldDirectivesOpeningSymbolPos === false)) {
-            $this->errorMessageStore->addQueryError(sprintf(
+            $this->feedbackMessageStore->addQueryError(sprintf(
                 $this->translationAPI->__('Directive \'%s\' must start with symbol \'%s\' and end with symbol \'%s\'', 'pop-component-model'),
                 $field,
                 QuerySyntax::SYMBOL_FIELDDIRECTIVE_OPENING,

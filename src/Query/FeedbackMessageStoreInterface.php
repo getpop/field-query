@@ -1,7 +1,7 @@
 <?php
 namespace PoP\FieldQuery\Query;
 
-interface ErrorMessageStoreInterface
+interface FeedbackMessageStoreInterface
 {
     function addQueryError(string $error);
     function getQueryErrors(): array;

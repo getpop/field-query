@@ -1,7 +1,7 @@
 <?php
 namespace PoP\FieldQuery\Query;
 
-class ErrorMessageStore implements ErrorMessageStoreInterface
+class FeedbackMessageStore implements FeedbackMessageStoreInterface
 {
     protected $queryErrors = [];
 
