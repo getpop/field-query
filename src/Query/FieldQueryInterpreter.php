@@ -331,13 +331,13 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
         }
         return array_map(
             [$this, 'listFieldDirective'],
-            $this->queryParser->splitElements($fieldDirectives, QuerySyntax::SYMBOL_QUERYFIELDS_SEPARATOR, [QuerySyntax::SYMBOL_FIELDARGS_OPENING, QuerySyntax::SYMBOL_BOOKMARK_OPENING, QuerySyntax::SYMBOL_FIELDDIRECTIVE_OPENING], [QuerySyntax::SYMBOL_FIELDARGS_CLOSING, QuerySyntax::SYMBOL_BOOKMARK_CLOSING, QuerySyntax::SYMBOL_FIELDDIRECTIVE_CLOSING], QuerySyntax::SYMBOL_FIELDARGS_ARGVALUESTRING_OPENING, QuerySyntax::SYMBOL_FIELDARGS_ARGVALUESTRING_CLOSING)
+            $this->queryParser->splitElements($fieldDirectives, QuerySyntax::SYMBOL_FIELDDIRECTIVE_SEPARATOR, [QuerySyntax::SYMBOL_FIELDARGS_OPENING, QuerySyntax::SYMBOL_BOOKMARK_OPENING, QuerySyntax::SYMBOL_FIELDDIRECTIVE_OPENING], [QuerySyntax::SYMBOL_FIELDARGS_CLOSING, QuerySyntax::SYMBOL_BOOKMARK_CLOSING, QuerySyntax::SYMBOL_FIELDDIRECTIVE_CLOSING], QuerySyntax::SYMBOL_FIELDARGS_ARGVALUESTRING_OPENING, QuerySyntax::SYMBOL_FIELDARGS_ARGVALUESTRING_CLOSING)
         );
     }
 
     public function composeFieldDirectives(array $fieldDirectives): string
     {
-        return implode(QuerySyntax::SYMBOL_QUERYFIELDS_SEPARATOR, $fieldDirectives);
+        return implode(QuerySyntax::SYMBOL_FIELDDIRECTIVE_SEPARATOR, $fieldDirectives);
     }
 
     public function convertDirectiveToFieldDirective(array $fieldDirective): string
@@ -468,7 +468,7 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
         }
         return
             QuerySyntax::SYMBOL_FIELDDIRECTIVE_OPENING.
-            implode(QuerySyntax::SYMBOL_QUERYFIELDS_SEPARATOR, array_map(
+            implode(QuerySyntax::SYMBOL_FIELDDIRECTIVE_SEPARATOR, array_map(
                 function($fieldDirective) {
                     return $this->composeField(
                         $fieldDirective[0],
