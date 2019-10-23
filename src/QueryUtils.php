@@ -1,6 +1,6 @@
 <?php
-namespace PoP\FieldQuery\Query;
-use PoP\QueryParsing\Facades\Parsers\QueryParserFacade;
+namespace PoP\FieldQuery;
+use PoP\QueryParsing\Facades\QueryParserFacade;
 
 class QueryUtils
 {

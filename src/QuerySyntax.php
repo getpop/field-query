@@ -1,5 +1,5 @@
 <?php
-namespace PoP\FieldQuery\Query;
+namespace PoP\FieldQuery;
 
 class QuerySyntax {
     const SYMBOL_QUERYFIELDS_SEPARATOR = ',';

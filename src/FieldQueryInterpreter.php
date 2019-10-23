@@ -1,7 +1,7 @@
 <?php
-namespace PoP\FieldQuery\Query;
-use PoP\Translation\Contracts\TranslationAPIInterface;
-use PoP\QueryParsing\Parsers\QueryParserInterface;
+namespace PoP\FieldQuery;
+use PoP\Translation\TranslationAPIInterface;
+use PoP\QueryParsing\QueryParserInterface;
 
 class FieldQueryInterpreter implements FieldQueryInterpreterInterface
 {

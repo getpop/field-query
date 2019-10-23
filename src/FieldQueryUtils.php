@@ -1,5 +1,5 @@
 <?php
-namespace PoP\FieldQuery\Query;
+namespace PoP\FieldQuery;
 
 use PoP\ComponentModel\Facades\Schema\FieldQueryInterpreterFacade;
 

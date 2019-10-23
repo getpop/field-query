@@ -1,5 +1,5 @@
 <?php
-namespace PoP\FieldQuery\Query;
+namespace PoP\FieldQuery;
 
 class FeedbackMessageStore implements FeedbackMessageStoreInterface
 {
