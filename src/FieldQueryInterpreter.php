@@ -220,16 +220,16 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
 
     protected function doGetFieldAlias(string $field): ?string
     {
-        $aliasPrefixSymbolPos = QueryHelpers::findFieldAliasSymbolPosition($field);
-        if ($aliasPrefixSymbolPos !== false) {
-            if ($aliasPrefixSymbolPos === 0) {
+        $aliasSymbolPos = QueryHelpers::findFieldAliasSymbolPosition($field);
+        if ($aliasSymbolPos !== false) {
+            if ($aliasSymbolPos === 0) {
                 // Only there is the alias, nothing to alias to
                 $this->feedbackMessageStore->addQueryError(sprintf(
                     $this->translationAPI->__('The field to be aliased in \'%s\' is missing', 'pop-component-model'),
                     $field
                 ));
                 return null;
-            } elseif ($aliasPrefixSymbolPos === strlen($field)-1) {
+            } elseif ($aliasSymbolPos === strlen($field)-1) {
                 // Only the "@" was added, but the alias is missing
                 $this->feedbackMessageStore->addQueryError(sprintf(
                     $this->translationAPI->__('Alias in \'%s\' is missing', 'pop-component-model'),
@@ -239,7 +239,7 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
             }
 
             // Extract the alias, without the "@" symbol
-            $alias = substr($field, $aliasPrefixSymbolPos+strlen(QuerySyntax::SYMBOL_FIELDALIAS_PREFIX));
+            $alias = substr($field, $aliasSymbolPos+strlen(QuerySyntax::SYMBOL_FIELDALIAS_PREFIX));
 
             // If there is a "]", "?" or "<" after the alias, remove the string from then on
             // Everything before "]" (for if the alias is inside the bookmark)
