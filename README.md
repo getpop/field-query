@@ -568,6 +568,22 @@ _**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.id|--
 /?query=posts.id|--props<include(if:has-comments())>&fragments[props]=title|url<include(if:not(has-comments()))>
 ```
 
+A fragment can contain an alias, which is then transferred to all fragment resolution fields as an enumerated alias (`@aliasName1`, `@aliasName2`, etc):
+
+_**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.id|--props@prop&fragments[props]=title|url|featuredimage)):_
+
+```
+/?query=posts.id|--props@prop&fragments[props]=title|url|featuredimage
+```
+
+<!-- Combined with directives, we can query several fields at the same time without having them override their results:
+
+_**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.id|--props@original|--props@translated<translate(from:en,to:es)>&fragments[props]=title|content)):_
+
+```
+/?query=posts.id|--props@original|--props@translated<translate(from:en,to:es)>&fragments[props]=title|content
+``` -->
+
 A fragment can contain the "Skip output if null" symbol, which is then transferred to all fragment resolution fields:
 
 _**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.id|--props?&fragments[props]=title|url|featuredimage)):_
