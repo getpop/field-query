@@ -50,7 +50,9 @@ class QueryHelpers
             // Remove the opening and closing brackets
             $fieldArgsAsString = substr($fieldArgsAsString, strlen(QuerySyntax::SYMBOL_FIELDARGS_OPENING), strlen($fieldArgsAsString)-strlen(QuerySyntax::SYMBOL_FIELDARGS_OPENING)-strlen(QuerySyntax::SYMBOL_FIELDARGS_CLOSING));
             // Remove the white spaces before and after
-            if ($fieldArgsAsString = trim($fieldArgsAsString)) {
+            $fieldArgsAsString = trim($fieldArgsAsString);
+            // Use `strlen` to allow for "0" as value. Eg: <skip(0)> meaning false
+            if (!empty($fieldArgsAsString) || strlen($fieldArgsAsString)) {
                 $queryParser = QueryParserFacade::getInstance();
                 return $queryParser->splitElements($fieldArgsAsString, QuerySyntax::SYMBOL_FIELDARGS_ARGSEPARATOR, [QuerySyntax::SYMBOL_FIELDARGS_OPENING, QuerySyntax::SYMBOL_FIELDARGS_ARGVALUEARRAY_OPENING], [QuerySyntax::SYMBOL_FIELDARGS_CLOSING, QuerySyntax::SYMBOL_FIELDARGS_ARGVALUEARRAY_CLOSING], QuerySyntax::SYMBOL_FIELDARGS_ARGVALUESTRING_OPENING, QuerySyntax::SYMBOL_FIELDARGS_ARGVALUESTRING_CLOSING);
             }
