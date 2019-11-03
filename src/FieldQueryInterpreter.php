@@ -160,24 +160,24 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
      * @param array $fieldArgs
      * @return string
      */
-    protected function replaceArgsInFieldOrDirective(string $fieldOrDirective, array $fieldOrDirectiveArgs = []): string
+    protected function replaceFieldArgs(string $field, array $fieldArgs = []): string
     {
         // Return a new field, replacing its fieldArgs (if any) with the provided ones
         // Used when validating a field and removing the fieldArgs that threw a warning
         list(
             $fieldArgsOpeningSymbolPos,
             $fieldArgsClosingSymbolPos
-        ) = QueryHelpers::listFieldArgsSymbolPositions($fieldOrDirective);
+        ) = QueryHelpers::listFieldArgsSymbolPositions($field);
 
         // If it currently has fieldArgs, append the fieldArgs after the fieldName
         if ($fieldArgsOpeningSymbolPos !== false && $fieldArgsClosingSymbolPos !== false) {
-            $fieldName = $this->getFieldName($fieldOrDirective);
-            return substr($fieldOrDirective, 0, $fieldArgsOpeningSymbolPos).$this->getFieldOrDirectiveArgsAsString($fieldOrDirectiveArgs).substr($fieldOrDirective, $fieldArgsClosingSymbolPos+strlen(QuerySyntax::SYMBOL_FIELDDIRECTIVE_CLOSING));
+            $fieldName = $this->getFieldName($field);
+            return substr($field, 0, $fieldArgsOpeningSymbolPos).$this->getFieldArgsAsString($fieldArgs).substr($field, $fieldArgsClosingSymbolPos+strlen(QuerySyntax::SYMBOL_FIELDDIRECTIVE_CLOSING));
         }
 
         // Otherwise there are none. Then add the fieldArgs between the fieldName and whatever may come after (alias, directives, or nothing)
-        $fieldName = $this->getFieldName($fieldOrDirective);
-        return $fieldName.$this->getFieldOrDirectiveArgsAsString($fieldOrDirectiveArgs).substr($fieldOrDirective, strlen($fieldName));
+        $fieldName = $this->getFieldName($field);
+        return $fieldName.$this->getFieldArgsAsString($fieldArgs).substr($field, strlen($fieldName));
     }
 
     public function isFieldArgumentValueAField($fieldArgValue): bool
@@ -413,7 +413,7 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
     {
         return
             $fieldName.
-            $this->getFieldOrDirectiveArgsAsString($fieldArgs).
+            $this->getFieldArgsAsString($fieldArgs).
             $this->getFieldAliasAsString($fieldAlias).
             $this->getFieldSkipOutputIfNullAsString($skipOutputIfNull).
             $this->getFieldDirectivesAsString($fieldDirectives);
@@ -424,7 +424,7 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
         return $fieldName.$fieldArgs.$fieldAlias.$skipOutputIfNull.$fieldDirectives;
     }
 
-    protected function getFieldOrDirectiveArgsAsString(array $fieldArgs = []): string
+    protected function getFieldArgsAsString(array $fieldArgs = []): string
     {
         if (!$fieldArgs) {
             return '';
