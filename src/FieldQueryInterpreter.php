@@ -380,6 +380,11 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
         return $directive[1];
     }
 
+    public function getDirectiveOutputKey(string $fieldDirective): string
+    {
+        return $this->getFieldOutputKey($fieldDirective);
+    }
+
     public function getFieldOutputKey(string $field): string
     {
         if (!isset($this->fieldOutputKeysCache[$field])) {
