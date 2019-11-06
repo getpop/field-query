@@ -74,7 +74,7 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
         return $field;
     }
 
-    protected function getVariablesFromRequest(): array
+    public function getVariablesFromRequest(): array
     {
         if (is_null($this->variablesFromRequestCache)) {
             $this->variablesFromRequestCache = $this->doGetVariablesFromRequest();
