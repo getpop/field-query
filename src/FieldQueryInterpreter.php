@@ -435,19 +435,35 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
             return '';
         }
         $elems = [];
-        foreach ($fieldArgs as $key => $value) {
+        foreach ($fieldArgs as $fieldArgKey => $fieldArgValue) {
             // Convert from array to its representation of array in a string
-            if (is_array($value)) {
-                $value = $this->getArrayAsStringForQuery($value);
+            if (is_array($fieldArgValue)) {
+                $fieldArgValue = $this->getArrayAsStringForQuery($fieldArgValue);
             }
-            $elems[] = $key.QuerySyntax::SYMBOL_FIELDARGS_ARGKEYVALUESEPARATOR.$value;
+            $elems[] = $fieldArgKey.QuerySyntax::SYMBOL_FIELDARGS_ARGKEYVALUESEPARATOR.$fieldArgValue;
         }
         return QuerySyntax::SYMBOL_FIELDARGS_OPENING.implode(QuerySyntax::SYMBOL_FIELDARGS_ARGSEPARATOR, $elems).QuerySyntax::SYMBOL_FIELDARGS_CLOSING;
     }
 
-    protected function getArrayAsStringForQuery(array $value): string
+    protected function getArrayAsStringForQuery(array $fieldArgValue): string
     {
-        return QuerySyntax::SYMBOL_FIELDARGS_ARGVALUEARRAY_OPENING.implode(QuerySyntax::SYMBOL_FIELDARGS_ARGVALUEARRAY_SEPARATOR, $value).QuerySyntax::SYMBOL_FIELDARGS_ARGVALUEARRAY_CLOSING;
+        // Iterate through all the elements of the array and, if they are an array themselves, call this function recursively
+        $elems = [];
+        foreach ($fieldArgValue as $key => $value) {
+            // Add the keyValueDelimiter
+            if (is_array($value)) {
+                $elems[] = $key.QuerySyntax::SYMBOL_FIELDARGS_ARGVALUEARRAY_KEYVALUEDELIMITER.$this->getArrayAsStringForQuery($value);
+            } else {
+                $elems[] = $key.QuerySyntax::SYMBOL_FIELDARGS_ARGVALUEARRAY_KEYVALUEDELIMITER.$value;
+            }
+        }
+        return
+            QuerySyntax::SYMBOL_FIELDARGS_ARGVALUEARRAY_OPENING.
+            implode(
+                QuerySyntax::SYMBOL_FIELDARGS_ARGVALUEARRAY_SEPARATOR,
+                $elems
+            )
+            .QuerySyntax::SYMBOL_FIELDARGS_ARGVALUEARRAY_CLOSING;
     }
 
     protected function getFieldAliasAsString(?string $fieldAlias = null): string
