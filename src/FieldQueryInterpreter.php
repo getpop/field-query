@@ -196,13 +196,13 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
     public function isFieldArgumentValueAVariable($fieldArgValue): bool
     {
         // If it starts with "$", it is a variable
-        return substr($fieldArgValue, 0, strlen(QuerySyntax::SYMBOL_VARIABLE_PREFIX)) == QuerySyntax::SYMBOL_VARIABLE_PREFIX;
+        return is_string($fieldArgValue) && substr($fieldArgValue, 0, strlen(QuerySyntax::SYMBOL_VARIABLE_PREFIX)) == QuerySyntax::SYMBOL_VARIABLE_PREFIX;
     }
 
-    public function isFieldArgumentValueAnArray($fieldArgValue): bool
+    public function isFieldArgumentValueAnArrayRepresentedAsString($fieldArgValue): bool
     {
         // If it starts with "[" and finishes with "]"
-        return substr($fieldArgValue, 0, strlen(QuerySyntax::SYMBOL_FIELDARGS_ARGVALUEARRAY_OPENING)) == QuerySyntax::SYMBOL_FIELDARGS_ARGVALUEARRAY_OPENING && substr($fieldArgValue, -1*strlen(QuerySyntax::SYMBOL_FIELDARGS_ARGVALUEARRAY_CLOSING)) == QuerySyntax::SYMBOL_FIELDARGS_ARGVALUEARRAY_CLOSING;
+        return is_string($fieldArgValue) && substr($fieldArgValue, 0, strlen(QuerySyntax::SYMBOL_FIELDARGS_ARGVALUEARRAY_OPENING)) == QuerySyntax::SYMBOL_FIELDARGS_ARGVALUEARRAY_OPENING && substr($fieldArgValue, -1*strlen(QuerySyntax::SYMBOL_FIELDARGS_ARGVALUEARRAY_CLOSING)) == QuerySyntax::SYMBOL_FIELDARGS_ARGVALUEARRAY_CLOSING;
     }
 
     public function createFieldArgValueAsFieldFromFieldName(string $fieldName): string
