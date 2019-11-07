@@ -450,8 +450,9 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
 
     protected function maybeWrapStringInQuotes(string $value): string
     {
-        // If it doesn't have them yet, wrap the string between quotes for if there's a special symbol inside of it (eg: it if has a ",", it will split the element there when decoding again from string to array in `getField`)
-        if (!(substr($value,0,strlen(QuerySyntax::SYMBOL_FIELDARGS_ARGVALUESTRING_OPENING)) == QuerySyntax::SYMBOL_FIELDARGS_ARGVALUESTRING_OPENING && substr($value,-1*strlen(QuerySyntax::SYMBOL_FIELDARGS_ARGVALUESTRING_CLOSING)) == QuerySyntax::SYMBOL_FIELDARGS_ARGVALUESTRING_CLOSING)) {
+        // If it is not a function, then wrap the string between quotes to avoid special symbols inside of it generating troublt
+        // Eg: it if has a ",", it will split the element there when decoding again from string to array in `getField`
+        if (!$this->isFieldArgumentValueAField($value)) {
             $value = QuerySyntax::SYMBOL_FIELDARGS_ARGVALUESTRING_OPENING.$value.QuerySyntax::SYMBOL_FIELDARGS_ARGVALUESTRING_CLOSING;
         }
         return $value;
