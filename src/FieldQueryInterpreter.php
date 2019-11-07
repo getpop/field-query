@@ -439,10 +439,22 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
             // Convert from array to its representation of array in a string
             if (is_array($fieldArgValue)) {
                 $fieldArgValue = $this->getArrayAsStringForQuery($fieldArgValue);
+            } else {
+                // If it doesn't have them yet, wrap the string between quotes for if there's a special symbol inside of it (eg: it if has a ",", it will split the element there when decoding again from string to array in `getField`)
+                $fieldArgValue = $this->maybeWrapStringInQuotes($fieldArgValue);
             }
             $elems[] = $fieldArgKey.QuerySyntax::SYMBOL_FIELDARGS_ARGKEYVALUESEPARATOR.$fieldArgValue;
         }
         return QuerySyntax::SYMBOL_FIELDARGS_OPENING.implode(QuerySyntax::SYMBOL_FIELDARGS_ARGSEPARATOR, $elems).QuerySyntax::SYMBOL_FIELDARGS_CLOSING;
+    }
+
+    protected function maybeWrapStringInQuotes(string $value): string
+    {
+        // If it doesn't have them yet, wrap the string between quotes for if there's a special symbol inside of it (eg: it if has a ",", it will split the element there when decoding again from string to array in `getField`)
+        if (!(substr($value,0,strlen(QuerySyntax::SYMBOL_FIELDARGS_ARGVALUESTRING_OPENING)) == QuerySyntax::SYMBOL_FIELDARGS_ARGVALUESTRING_OPENING && substr($value,-1*strlen(QuerySyntax::SYMBOL_FIELDARGS_ARGVALUESTRING_CLOSING)) == QuerySyntax::SYMBOL_FIELDARGS_ARGVALUESTRING_CLOSING)) {
+            $value = QuerySyntax::SYMBOL_FIELDARGS_ARGVALUESTRING_OPENING.$value.QuerySyntax::SYMBOL_FIELDARGS_ARGVALUESTRING_CLOSING;
+        }
+        return $value;
     }
 
     protected function getArrayAsStringForQuery(array $fieldArgValue): string
@@ -455,9 +467,7 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
                 $elems[] = $key.QuerySyntax::SYMBOL_FIELDARGS_ARGVALUEARRAY_KEYVALUEDELIMITER.$this->getArrayAsStringForQuery($value);
             } else {
                 // If it doesn't have them yet, wrap the string between quotes for if there's a special symbol inside of it (eg: it if has a ",", it will split the element there when decoding again from string to array in `getField`)
-                if (!(substr($value,0,strlen(QuerySyntax::SYMBOL_FIELDARGS_ARGVALUESTRING_OPENING)) == QuerySyntax::SYMBOL_FIELDARGS_ARGVALUESTRING_OPENING && substr($value,-1*strlen(QuerySyntax::SYMBOL_FIELDARGS_ARGVALUESTRING_CLOSING)) == QuerySyntax::SYMBOL_FIELDARGS_ARGVALUESTRING_CLOSING)) {
-                    $value = QuerySyntax::SYMBOL_FIELDARGS_ARGVALUESTRING_OPENING.$value.QuerySyntax::SYMBOL_FIELDARGS_ARGVALUESTRING_CLOSING;
-                }
+                $value = $this->maybeWrapStringInQuotes($value);
                 $elems[] = $key.QuerySyntax::SYMBOL_FIELDARGS_ARGVALUEARRAY_KEYVALUEDELIMITER.$value;
             }
         }
