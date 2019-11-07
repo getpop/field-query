@@ -454,8 +454,10 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
             if (is_array($value)) {
                 $elems[] = $key.QuerySyntax::SYMBOL_FIELDARGS_ARGVALUEARRAY_KEYVALUEDELIMITER.$this->getArrayAsStringForQuery($value);
             } else {
-                // Add the string quotes for if there's a special symbol inside of it (eg: it if has a ",", it will split the element there when decoding again from string to array in `getField`)
-                $value = QuerySyntax::SYMBOL_FIELDARGS_ARGVALUESTRING_OPENING.$value.QuerySyntax::SYMBOL_FIELDARGS_ARGVALUESTRING_CLOSING;
+                // If it doesn't have them yet, wrap the string between quotes for if there's a special symbol inside of it (eg: it if has a ",", it will split the element there when decoding again from string to array in `getField`)
+                if (!(substr($value,0,strlen(QuerySyntax::SYMBOL_FIELDARGS_ARGVALUESTRING_OPENING)) == QuerySyntax::SYMBOL_FIELDARGS_ARGVALUESTRING_OPENING && substr($value,-1*strlen(QuerySyntax::SYMBOL_FIELDARGS_ARGVALUESTRING_CLOSING)) == QuerySyntax::SYMBOL_FIELDARGS_ARGVALUESTRING_CLOSING)) {
+                    $value = QuerySyntax::SYMBOL_FIELDARGS_ARGVALUESTRING_OPENING.$value.QuerySyntax::SYMBOL_FIELDARGS_ARGVALUESTRING_CLOSING;
+                }
                 $elems[] = $key.QuerySyntax::SYMBOL_FIELDARGS_ARGVALUEARRAY_KEYVALUEDELIMITER.$value;
             }
         }
