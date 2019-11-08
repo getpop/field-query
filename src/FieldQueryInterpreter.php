@@ -458,7 +458,7 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
         return $value;
     }
 
-    protected function getArrayAsStringForQuery(array $fieldArgValue): string
+    public function getArrayAsStringForQuery(array $fieldArgValue): string
     {
         // Iterate through all the elements of the array and, if they are an array themselves, call this function recursively
         $elems = [];

@@ -30,4 +30,5 @@ interface FieldQueryInterpreterInterface
     public function composeField(string $fieldName, string $fieldArgs = '', string $fieldAlias = '', string $skipOutputIfNull = '', string $fieldDirectives = ''): string;
     public function getFieldDirectivesAsString(array $fieldDirectives): string;
     public function getVariablesFromRequest(): array;
+    public function getArrayAsStringForQuery(array $fieldArgValue): string;
 }
