@@ -59,4 +59,8 @@ class QueryHelpers
         }
         return [];
     }
+
+    public static function getVariableQuery(string $variableName) {
+        return QuerySyntax::SYMBOL_VARIABLE_PREFIX.$variableName;
+    }
 }
