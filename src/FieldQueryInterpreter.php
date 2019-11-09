@@ -405,12 +405,18 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
 
     public function listField(string $field): array
     {
+        if ($fieldAlias = $this->getFieldAlias($field)) {
+            $fieldAlias = QuerySyntax::SYMBOL_FIELDALIAS_PREFIX.$fieldAlias;
+        }
+        if ($fieldDirectives = $this->getFieldDirectives($field)) {
+            $fieldDirectives = QuerySyntax::SYMBOL_FIELDDIRECTIVE_OPENING.$fieldDirectives.QuerySyntax::SYMBOL_FIELDDIRECTIVE_CLOSING;
+        }
         return [
             $this->getFieldName($field),
             $this->getFieldArgs($field),
-            $this->getFieldAlias($field),
+            $fieldAlias,
             $this->getFieldSkipOutputIfNullAsString($this->isSkipOuputIfNullField($field)),
-            $this->getFieldDirectives($field),
+            $fieldDirectives,
         ];
     }
 
