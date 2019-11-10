@@ -442,9 +442,14 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
             $this->getFieldDirectivesAsString($fieldDirectives);
     }
 
-    public function composeField(string $fieldName, string $fieldArgs = '', string $fieldAlias = '', string $skipOutputIfNull = '', string $fieldDirectives = ''): string
+    public function composeField(string $fieldName, ?string $fieldArgs = '', ?string $fieldAlias = '', ?string $skipOutputIfNull = '', ?string $fieldDirectives = ''): string
     {
         return $fieldName.$fieldArgs.$fieldAlias.$skipOutputIfNull.$fieldDirectives;
+    }
+
+    public function composeFieldDirective(string $directiveName, ?string $directiveArgs = '', ?string $directiveNestedDirectives = ''): string
+    {
+        return $directiveName.$directiveArgs.$directiveNestedDirectives;
     }
 
     protected function getFieldArgsAsString(array $fieldArgs = []): string
@@ -524,9 +529,10 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
             QuerySyntax::SYMBOL_FIELDDIRECTIVE_OPENING.
             implode(QuerySyntax::SYMBOL_FIELDDIRECTIVE_SEPARATOR, array_map(
                 function($fieldDirective) {
-                    return $this->composeField(
+                    return $this->composeFieldDirective(
                         $fieldDirective[0],
-                        $fieldDirective[1]
+                        $fieldDirective[1],
+                        $fieldDirective[2]
                     );
                 },
                 $fieldDirectives
