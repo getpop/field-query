@@ -24,6 +24,7 @@ interface FieldQueryInterpreterInterface
     public function getFieldDirective(string $directiveName, array $directiveArgs = []): string;
     public function getDirectiveName(array $directive): string;
     public function getDirectiveArgs(array $directive): ?string;
+    public function getDirectiveNestedDirectives(array $directive): ?string;
     public function getFieldOutputKey(string $field): string;
     public function getDirectiveOutputKey(string $fieldDirective): string;
     public function listField(string $field): array;

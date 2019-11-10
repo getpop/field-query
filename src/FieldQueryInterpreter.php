@@ -346,7 +346,8 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
     public function convertDirectiveToFieldDirective(array $fieldDirective): string
     {
         $directiveArgs = $this->getDirectiveArgs($fieldDirective) ?? '';
-        return $this->getDirectiveName($fieldDirective).$directiveArgs;
+        $nestedDirectives = $this->getDirectiveNestedDirectives($fieldDirective) ?? '';
+        return $this->getDirectiveName($fieldDirective).$directiveArgs.$nestedDirectives;
     }
 
     public function listFieldDirective(string $fieldDirective): array
@@ -355,7 +356,7 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
         return [
             $this->getFieldDirectiveName($fieldDirective),
             $this->getFieldDirectiveArgs($fieldDirective),
-            $this->getFieldDirectiveNestedDirectives($fieldDirective),
+            $this->getFieldDirectiveNestedDirectives($fieldDirective, true),
         ];
     }
 
@@ -387,6 +388,11 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
     public function getDirectiveArgs(array $directive): ?string
     {
         return $directive[1];
+    }
+
+    public function getDirectiveNestedDirectives(array $directive): ?string
+    {
+        return $directive[2];
     }
 
     public function getDirectiveOutputKey(string $fieldDirective): string
