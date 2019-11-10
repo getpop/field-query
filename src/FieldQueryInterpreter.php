@@ -462,7 +462,7 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
             // Convert from array to its representation of array in a string
             if (is_array($fieldArgValue)) {
                 $fieldArgValue = $this->getArrayAsStringForQuery($fieldArgValue);
-            } else {
+            } elseif (is_string($fieldArgValue)) {
                 // If it doesn't have them yet, wrap the string between quotes for if there's a special symbol inside of it (eg: it if has a ",", it will split the element there when decoding again from string to array in `getField`)
                 $fieldArgValue = $this->maybeWrapStringInQuotes($fieldArgValue);
             }
@@ -491,7 +491,9 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
                 $elems[] = $key.QuerySyntax::SYMBOL_FIELDARGS_ARGVALUEARRAY_KEYVALUEDELIMITER.$this->getArrayAsStringForQuery($value);
             } else {
                 // If it doesn't have them yet, wrap the string between quotes for if there's a special symbol inside of it (eg: it if has a ",", it will split the element there when decoding again from string to array in `getField`)
-                $value = $this->maybeWrapStringInQuotes($value);
+                if (is_string($value)) {
+                    $value = $this->maybeWrapStringInQuotes($value);
+                }
                 $elems[] = $key.QuerySyntax::SYMBOL_FIELDARGS_ARGVALUEARRAY_KEYVALUEDELIMITER.$value;
             }
         }
