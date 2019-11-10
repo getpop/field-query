@@ -12,7 +12,7 @@ interface FieldQueryInterpreterInterface
     public function isFieldArgumentValueAnArrayRepresentedAsString($fieldArgValue): bool;
     public function createFieldArgValueAsFieldFromFieldName(string $fieldName): string;
     public function getFieldAlias(string $field): ?string;
-    public function getFieldDirectives(string $field): ?string;
+    public function getFieldDirectives(string $field, bool $includeSyntaxDelimiters): ?string;
     public function getDirectives(string $field): array;
     public function extractFieldDirectives(string $fieldDirectives): array;
     public function composeFieldDirectives(array $fieldDirectives): string;
@@ -20,6 +20,7 @@ interface FieldQueryInterpreterInterface
     public function listFieldDirective(string $fieldDirective): array;
     public function getFieldDirectiveName(string $fieldDirective): string;
     public function getFieldDirectiveArgs(string $fieldDirective): ?string;
+    public function getFieldDirectiveNestedDirectives(string $fieldDirective, $includeSyntaxDelimiters = false): ?string;
     public function getFieldDirective(string $directiveName, array $directiveArgs = []): string;
     public function getDirectiveName(array $directive): string;
     public function getDirectiveArgs(array $directive): ?string;

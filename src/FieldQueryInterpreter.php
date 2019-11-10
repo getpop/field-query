@@ -263,12 +263,15 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
         return null;
     }
 
-    public function getFieldDirectives(string $field): ?string
+    public function getFieldDirectives(string $field, bool $includeSyntaxDelimiters = false): ?string
     {
         if (!isset($this->fieldDirectivesCache[$field])) {
             $this->fieldDirectivesCache[$field] = $this->doGetFieldDirectives($field);
         }
-        return $this->fieldDirectivesCache[$field];
+        // Add the syntax delimiters "<...>" only if the directive is not empty
+        return $this->fieldDirectivesCache[$field] && $includeSyntaxDelimiters ?
+            QuerySyntax::SYMBOL_FIELDDIRECTIVE_OPENING.$this->fieldDirectivesCache[$field].QuerySyntax::SYMBOL_FIELDDIRECTIVE_CLOSING :
+            $this->fieldDirectivesCache[$field];
     }
 
     protected function doGetFieldDirectives(string $field): ?string
@@ -309,7 +312,7 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
 
     protected function doGetDirectives(string $field): array
     {
-        $fieldDirectives = $this->getFieldDirectives($field);
+        $fieldDirectives = $this->getFieldDirectives($field, false);
         if (is_null($fieldDirectives)) {
             return [];
         }
@@ -348,10 +351,11 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
 
     public function listFieldDirective(string $fieldDirective): array
     {
-        // Each item is an array of 2 elements: 0 => name, 1 => args
+        // Each item is an array of up to 3 elements: 0 => name, 1 => args, 2 => nested directives
         return [
-            $this->getFieldName($fieldDirective),
-            $this->getFieldArgs($fieldDirective),
+            $this->getFieldDirectiveName($fieldDirective),
+            $this->getFieldDirectiveArgs($fieldDirective),
+            $this->getFieldDirectiveNestedDirectives($fieldDirective),
         ];
     }
 
@@ -363,6 +367,11 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
     public function getFieldDirectiveArgs(string $fieldDirective): ?string
     {
         return $this->getFieldArgs($fieldDirective);
+    }
+
+    public function getFieldDirectiveNestedDirectives(string $fieldDirective, $includeSyntaxDelimiters = false): ?string
+    {
+        return $this->getFieldDirectives($fieldDirective, $includeSyntaxDelimiters);
     }
 
     public function getFieldDirective(string $directiveName, array $directiveArgs = []): string
@@ -408,15 +417,12 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
         if ($fieldAlias = $this->getFieldAlias($field)) {
             $fieldAlias = QuerySyntax::SYMBOL_FIELDALIAS_PREFIX.$fieldAlias;
         }
-        if ($fieldDirectives = $this->getFieldDirectives($field)) {
-            $fieldDirectives = QuerySyntax::SYMBOL_FIELDDIRECTIVE_OPENING.$fieldDirectives.QuerySyntax::SYMBOL_FIELDDIRECTIVE_CLOSING;
-        }
         return [
             $this->getFieldName($field),
             $this->getFieldArgs($field),
             $fieldAlias,
             $this->getFieldSkipOutputIfNullAsString($this->isSkipOuputIfNullField($field)),
-            $fieldDirectives,
+            $this->getFieldDirectives($field, true),
         ];
     }
 
