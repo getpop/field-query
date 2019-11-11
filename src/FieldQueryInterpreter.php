@@ -193,10 +193,24 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
             strpos($fieldArgValue, QuerySyntax::SYMBOL_FIELDARGS_OPENING);
     }
 
+    public function isFieldArgumentValueAnExpression($fieldArgValue): bool
+    {
+        // If it starts and ends with "%", it is an expression
+        return is_string($fieldArgValue) && substr($fieldArgValue, 0, strlen(QuerySyntax::SYMBOL_EXPRESSION_OPENING)) == QuerySyntax::SYMBOL_EXPRESSION_OPENING  && substr($fieldArgValue, -1*strlen(QuerySyntax::SYMBOL_EXPRESSION_CLOSING)) == QuerySyntax::SYMBOL_EXPRESSION_CLOSING;
+    }
+
     public function isFieldArgumentValueAVariable($fieldArgValue): bool
     {
         // If it starts with "$", it is a variable
         return is_string($fieldArgValue) && substr($fieldArgValue, 0, strlen(QuerySyntax::SYMBOL_VARIABLE_PREFIX)) == QuerySyntax::SYMBOL_VARIABLE_PREFIX;
+    }
+
+    public function isFieldArgumentValueDynamic($fieldArgValue): bool
+    {
+        return
+            $this->isFieldArgumentValueAField($fieldArgValue) ||
+            $this->isFieldArgumentValueAnExpression($fieldArgValue) ||
+            $this->isFieldArgumentValueAVariable($fieldArgValue);
     }
 
     public function isFieldArgumentValueAnArrayRepresentedAsString($fieldArgValue): bool
@@ -475,7 +489,7 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
     {
         // If it is not a function, then wrap the string between quotes to avoid special symbols inside of it generating troublt
         // Eg: it if has a ",", it will split the element there when decoding again from string to array in `getField`
-        if (!$this->isFieldArgumentValueAField($value)) {
+        if (!$this->isFieldArgumentValueDynamic($value)) {
             $value = QuerySyntax::SYMBOL_FIELDARGS_ARGVALUESTRING_OPENING.$value.QuerySyntax::SYMBOL_FIELDARGS_ARGVALUESTRING_CLOSING;
         }
         return $value;

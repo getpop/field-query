@@ -14,17 +14,19 @@ class FieldQueryUtils
         );
     }
 
-    public static function isAnyFieldArgumentValueAFieldOrVariable(array $fieldArgValues): bool
+    public static function isAnyFieldArgumentValueDynamic(array $fieldArgValues): bool
     {
         $fieldQueryInterpreter = FieldQueryInterpreterFacade::getInstance();
         return self::isAnyFieldArgumentValueASomething(
             $fieldArgValues,
             function($fieldArgValue) use($fieldQueryInterpreter) {
-                return
-                    // Is it a field?
-                    $fieldQueryInterpreter->isFieldArgumentValueAField($fieldArgValue) ||
-                    // Is it a variable?
-                    $fieldQueryInterpreter->isFieldArgumentValueAVariable($fieldArgValue);
+                return $fieldQueryInterpreter->isFieldArgumentValueDynamic($fieldArgValue);
+                    // // Is it a field?
+                    // $fieldQueryInterpreter->isFieldArgumentValueAField($fieldArgValue) ||
+                    // // Is it a variable?
+                    // $fieldQueryInterpreter->isFieldArgumentValueAVariable($fieldArgValue) ||
+                    // // Is it a variable?
+                    // $fieldQueryInterpreter->isFieldArgumentValueAnExpression($fieldArgValue);
             }
         );
     }
