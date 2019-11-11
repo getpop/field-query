@@ -63,4 +63,8 @@ class QueryHelpers
     public static function getVariableQuery(string $variableName) {
         return QuerySyntax::SYMBOL_VARIABLE_PREFIX.$variableName;
     }
+
+    public static function getExpressionQuery(string $expressionName) {
+        return QuerySyntax::SYMBOL_EXPRESSION_OPENING.$expressionName.QuerySyntax::SYMBOL_EXPRESSION_CLOSING;
+    }
 }
