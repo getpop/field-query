@@ -68,10 +68,11 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
         }
         // Extract the query until the found position
         if ($pos !== false) {
-            return substr($field, 0, $pos);
+            return trim(substr($field, 0, $pos));
         }
         // No fieldArgs, no alias => The field is the fieldName
-        return $field;
+        // Do trim for it there is a space, passed from copy/pasting the query in the browser (eg: "if (...)")
+        return trim($field);
     }
 
     public function getVariablesFromRequest(): array
