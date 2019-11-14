@@ -83,8 +83,8 @@ Differently than GraphQL, a field can also contain the following elements:
 - **Bookmarks:** To keep loading data from an already-defined field
 - **Operators and Helpers:** Standard operations (`and`, `or`, `if`, `isNull`, etc) and helpers to access environment variables (among other use cases) can be already available as fields
 - **Nested fields:** The response of a field can be used as input to another field, through its arguments or field directives
-- **Nested directives:** A directive can modify the behaviour of other, nested directives
 - **Skip output if null:** To ignore the output if the value of the field is null
+- **Nested directives:** A directive can modify the behaviour of other, nested directives
 - **Expressions:** To pass values across directives
 
 From the composing elements, only the field name is mandatory; all others are optional. A field is composed in this order:
