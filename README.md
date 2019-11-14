@@ -83,6 +83,7 @@ Differently than GraphQL, a field can also contain the following elements:
 - **Bookmarks:** To keep loading data from an already-defined field
 - **Operators and Helpers:** Standard operations (`and`, `or`, `if`, `isNull`, etc) and helpers to access environment variables (among other use cases) can be already available as fields
 - **Nested fields:** The response of a field can be used as input to another field, through its arguments or field directives
+- **Nested directives:** A directive can modify the behaviour of other, nested directives
 - **Skip output if null:** To ignore the output if the value of the field is null
 - **Expressions:** To pass values across directives
 
@@ -132,7 +133,7 @@ Separate the properties to fetch using `|`.
 
 _**In GraphQL**:_
 
-```phpgraphql
+```graphql
 query {
   id
   __schema
@@ -153,7 +154,7 @@ To fetch relational or nested data, describe the path to the property using `.`.
 
 _**In GraphQL**:_
 
-```phpgraphql
+```graphql
 query {
   posts {
     author {
@@ -176,7 +177,7 @@ We can use `|` to bring more than one property when reaching the node:
 
 _**In GraphQL**:_
 
-```phpgraphql
+```graphql
 query {
   posts {
     author {
@@ -203,7 +204,7 @@ Symbols `.` and `|` can be mixed together to also bring properties along the pat
 
 _**In GraphQL**:_
 
-```phpgraphql
+```graphql
 query {
   posts {
     id
@@ -236,7 +237,7 @@ Combine multiple fields by joining them using `,`.
 
 _**In GraphQL**:_
 
-```phpgraphql
+```graphql
 query {
   posts {
     author {
@@ -275,7 +276,7 @@ Values do not need be enclosed using quotes `"..."`.
 
 _Filtering results **in GraphQL**:_
 
-```phpgraphql
+```graphql
 query {
   posts(search: "something") {
     id
@@ -299,7 +300,7 @@ _Filtering results **in PoP** ([example](https://nextapi.getpop.org/api/graphql/
 
 _Formatting output **in GraphQL**:_
 
-```phpgraphql
+```graphql
 query {
   posts {
     id
@@ -341,7 +342,7 @@ An alias defines under what name to output the field. The alias name must be pre
 
 _**In GraphQL**:_
 
-```phpgraphql
+```graphql
 query {
   posts {
     id
@@ -365,7 +366,7 @@ Please notice that aliases are optional, differently than in GraphQL. [In GraphQ
 
 _**In GraphQL**:_
 
-```phpgraphql
+```graphql
 query {
   posts {
     id
@@ -392,7 +393,7 @@ When iterating down a field path, loading data from different sub-branches is vi
 
 _**In GraphQL**:_
 
-```phpgraphql
+```graphql
 query {
   users {
     posts {
@@ -512,7 +513,7 @@ The fragment name must be prepended with `--`, and the query they resolve to can
 
 _**In GraphQL**:_
 
-```phpgraphql
+```graphql
 query {
   users {
     ...userData
@@ -568,7 +569,7 @@ A directive enables to modify if/how the operation to fetch data is executed. Ea
 
 _**In GraphQL**:_
 
-```phpgraphql
+```graphql
 query {
   posts {
     id
@@ -786,6 +787,66 @@ _**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.id|ti
     featuredimage?.
       id|
       src
+```
+
+### Nested directives and Expressions
+
+Directives can be nested: An outer directive can modify the behaviour of its inner, nested directive(s). It can pass values across to its nested directives through “expressions”, variables surrounded with `%...%` which can be created on runtime (coded as part of the query), or be defined in the directive itself.
+
+In the example below, directive `<forEach>` iterates through the elements of the array, for its nested directive `<applyFunction>` to do something with each of them. It passes the array item through pre-defined expression `%value%` (coded within the directive).
+
+_**In PoP** ([example](https://newapi.getpop.org/api/graphql/?query=echo(%5B%5Bbanana,apple%5D,%5Bstrawberry,grape,melon%5D%5D)@fruitJoin%3CforEach%3CapplyFunction(function:arrayJoin,addArguments:%5Barray:%value%,separator:%22---%22%5D)%3E%3E)):_
+
+```php
+?query=
+  echo([
+    [banana, apple],
+    [strawberry, grape, melon]
+  ])@fruitJoin<
+    forEach<
+      applyFunction(
+        function: arrayJoin,
+        addArguments: [
+          array: %value%,
+          separator: "---"
+        ]
+      )
+    >
+  >
+```
+
+In the example below, directive `<advancePointerInArray>` communicates to directive `<translate>` the language to translate to through expression `%translateTo%`, which is defined on-the-fly.
+
+_**In PoP** ([example](https://newapi.getpop.org/api/graphql/?query=echo([[text:%20Hello%20my%20friends,translateTo:%20fr],[text:%20How%20do%20you%20like%20this%20software%20so%20far?,translateTo:%20es],])@translated%3CforEach%3CadvancePointerInArray(path:%20text,appendExpressions:%20[toLang:extract(%value%,translateTo)])%3Ctranslate(from:%20en,to:%20%toLang%,oneLanguagePerField:%20true,override:%20true)%3E%3E%3E)):_
+
+```php
+?query=
+  echo([
+    [
+      text: Hello my friends,
+      translateTo: fr
+    ],
+    [
+      text: How do you like this software so far?,
+      translateTo: es
+    ],
+  ])@translated<
+    forEach<
+      advancePointerInArray(
+        path: text,
+        appendExpressions: [
+          toLang:extract(%value%,translateTo)
+        ]
+      )<
+        translate(
+          from: en,
+          to: %toLang%,
+          oneLanguagePerField: true,
+          override: true
+        )
+      >
+    >
+  >
 ```
 
 ### Combining elements
