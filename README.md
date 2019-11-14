@@ -741,11 +741,7 @@ _**In PoP** ([example 1](https://nextapi.getpop.org/api/graphql/?query=posts.id|
     id|
     title|
     featuredimage<
-      include(
-        if:not(
-          isNull(featuredimage())
-        )
-      )
+      include(if:not(isNull(featuredimage())))
     >.
       id|
       src
@@ -754,9 +750,7 @@ _**In PoP** ([example 1](https://nextapi.getpop.org/api/graphql/?query=posts.id|
     id|
     title|
     featuredimage<
-      skip(
-        if:isNull(featuredimage())
-      )
+      skip(if:isNull(featuredimage()))
     >.
       id|
       src
@@ -811,9 +805,7 @@ postData=
   date(format:$format)&
 nestedPostData=
   comments<
-    include(
-      if:$include
-    )
+    include(if:$include)
   >.
     id|
     content&
@@ -860,17 +852,13 @@ _**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.id|--
 fragments[props]=
   title|
   url<
-    include(
-      if:not(has-comments())
-    )
+    include(if:not(has-comments()))
   >&
 query=
   posts.
     id|
     --props<
-      include(
-        if:has-comments()
-      )
+      include(if:has-comments())
     >
 ```
 
@@ -923,9 +911,7 @@ _**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.id|ha
 fragments[props]=
   title|
   url<
-    include(
-      if:has-comments()
-    )
+    include(if:has-comments())
   >|
   featuredimage&
 query=
@@ -933,9 +919,7 @@ query=
     id|
     has-comments|
     --props?<
-      include(
-        if:has-comments()
-      )
+      include(if:has-comments())
     >
 ```
 
