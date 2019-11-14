@@ -638,9 +638,11 @@ query=
 
 ### Operators and Helpers
 
-Standard operations, such as `and`, `or`, `if`, `isNull`, `contains`, `sprintf` and many others, can be made available on the API as fields. Then, the operator name stands for the field name, and it can accept all the other elements in the same format (arguments, aliases, etc). To pass an argument value as an array, we enclose it between `[]`.
+Standard operations, such as `and`, `or`, `if`, `isNull`, `contains`, `sprintf` and many others, can be made available on the API as fields. Then, the operator name stands for the field name, and it can accept all the other elements in the same format (arguments, aliases, etc). 
 
-_**In PoP** (View in browser: <a href="https://nextapi.getpop.org/api/graphql?query=not(true)">query 1</a>, <a href="https://nextapi.getpop.org/api/graphql?query=or([1, 0])">query 2</a>, <a href="https://nextapi.getpop.org/api/graphql?query=and([1, 0])">query 3</a>, <a href="https://nextapi.getpop.org/api/graphql?query=if(true,Show this text,Hide this text)">query 4</a>, <a href="https://nextapi.getpop.org/api/graphql?query=equals(first text, second text)">query 5</a>, <a href="https://nextapi.getpop.org/api/graphql?query=isNull(),isNull(something)">query 6</a>, <a href="https://nextapi.getpop.org/api/graphql?query=sprintf(%s API is %s, [PoP, cool])">query 7</a>):_
+To pass an argument value as an array, we enclose it between `[]` and split its items with `,`. The format can be just `value` (numeric array) or `key:value` (indexed array).
+
+_**In PoP** (View in browser: <a href="https://nextapi.getpop.org/api/graphql?query=not(true)">query 1</a>, <a href="https://nextapi.getpop.org/api/graphql?query=or([1,0])">query 2</a>, <a href="https://nextapi.getpop.org/api/graphql?query=and([1,0])">query 3</a>, <a href="https://nextapi.getpop.org/api/graphql/?query=if(true,%20Show%20this%20text,%20Hide%20this%20text)">query 4</a>, <a href="https://nextapi.getpop.org/api/graphql/?query=equals(first%20text,%20second%20text)">query 5</a>, <a href="https://nextapi.getpop.org/api/graphql?query=isNull(),isNull(something)">query 6</a>, <a href="https://nextapi.getpop.org/api/graphql/?query=sprintf(%s%20is%20%s,%20[PoP%20API,cool])">query 7</a>, <a href="https://nextapi.getpop.org/api/graphql/?query=echo([name:%20PoP%20API,status:%20cool])">query 8</a>, <a href="https://nextapi.getpop.org/api/graphql/?query=arrayValues([name:%20PoP%20API,status:%20cool])">query 9</a>):_
 
 ```php
 1. /?query=not(true)
@@ -655,7 +657,21 @@ _**In PoP** (View in browser: <a href="https://nextapi.getpop.org/api/graphql?qu
 
 6. /?query=isNull(),isNull(something)
 
-7. /?query=sprintf(%s API is %s, [PoP, cool])
+7. /?query=sprintf(
+  %s is %s, [
+    PoP API, 
+    cool
+  ])
+
+8. /?query=echo([
+  name: PoP API,
+  status: cool
+])
+
+9. /?query=arrayValues([
+  name: PoP API,
+  status: cool
+])
 ```
 
 In the same fashion, helper functions can provide any required information, also behaving as fields. For instance, helper `context` provides the values in the system's state, and helper `var` can retrieve any specific variable from the system's state.
