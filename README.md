@@ -294,9 +294,7 @@ _Filtering results **in PoP** ([View query in browser](https://nextapi.getpop.or
 
 ```php
 /?query=
-  posts(
-    search:something
-  ).
+  posts(search:something).
     id|
     title|
     date
