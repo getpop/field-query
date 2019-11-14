@@ -32,7 +32,7 @@ $ composer require getpop/field-query dev-master
 
 ## Usage
 
-```phpphp
+```php
 use PoP\FieldQuery\Facades\Query\FieldQueryInterpreterFacade;
 
 $fieldQueryInterpreter = FieldQueryInterpreterFacade::getInstance();
@@ -104,7 +104,7 @@ fieldName(fieldArgs)[@alias]?<fieldDirective(directiveArgs)>
 
 To make it clearer to visualize, the query can be split into several lines:
 
-```phpphp
+```php
 fieldName(
   fieldArgs
 )[@alias]?<
@@ -124,7 +124,11 @@ To retrieve several fields in the same query, we join them using `,`:
 
 ```php
 fieldName1@alias1,
-fieldName2(fieldArgs2)[@alias2]?<fieldDirective2>
+fieldName2(
+  fieldArgs2
+)[@alias2]?<
+  fieldDirective2
+>
 ```
 
 ### Retrieving properties from a node
