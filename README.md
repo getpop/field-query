@@ -113,9 +113,11 @@ fieldName(
 >
 ```
 
-> **Note:**<br/>Firefox already handles the multi-line query: Copy/pasting it into the URL bar works perfectly. Chrome and Safari, though, require to strip all the whitespaces and line returns before pasting the query into the URL bar.
+> **Note:**<br/>Firefox already handles the multi-line query: Copy/pasting it into the URL bar works perfectly. To try it out, copy `https://newapi.getpop.org/api/graphql/` followed by the query presented in each example into Firefox's URL bar, and voilà, the query should execute.
 > 
-> (Conclusion: use Firefox!)
+> Chrome and Safari do not work as well: They require to strip all the whitespaces and line returns before pasting the query into the URL bar.
+> 
+> Conclusion: use Firefox!
 
 To retrieve several fields in the same query, we join them using `,`:
 
@@ -589,9 +591,7 @@ query=
     id|
     title|
     featuredimage<
-      include(
-        if: $include
-      )
+      include(if:$include)
     >.
       id|
       src
@@ -602,9 +602,7 @@ query=
     id|
     title|
     featuredimage<
-      include(
-        if: $include
-      )
+      include(if:$include)
     >.
       id|
       src
@@ -615,9 +613,7 @@ query=
     id|
     title|
     featuredimage<
-      skip(
-        if: $skip
-      )
+      skip(if:$skip)
     >.
       id|
       src
@@ -628,9 +624,7 @@ query=
     id|
     title|
     featuredimage<
-      skip(
-        if: $skip
-      )
+      skip(if:$skip)
     >.
       id|
       src
@@ -640,7 +634,7 @@ query=
 
 Standard operations, such as `and`, `or`, `if`, `isNull`, `contains`, `sprintf` and many others, can be made available on the API as fields. Then, the operator name stands for the field name, and it can accept all the other elements in the same format (arguments, aliases, etc). To pass an argument value as an array, we enclose it between `[]`.
 
-_**In PoP** (<a href="https://nextapi.getpop.org/api/graphql?query=not(true)">example 1</a>, <a href="https://nextapi.getpop.org/api/graphql?query=or([1, 0])">example 2</a>, <a href="https://nextapi.getpop.org/api/graphql?query=and([1, 0])">example 3</a>, <a href="https://nextapi.getpop.org/api/graphql?query=if(true,Show this text,Hide this text)">example 4</a>, <a href="https://nextapi.getpop.org/api/graphql?query=equals(first text, second text)">example 5</a>, <a href="https://nextapi.getpop.org/api/graphql?query=isNull(),isNull(something)">example 6</a>, <a href="https://nextapi.getpop.org/api/graphql?query=sprintf(API %s is %s, [PoP, cool])">example 7</a>):_
+_**In PoP** (<a href="https://nextapi.getpop.org/api/graphql?query=not(true)">example 1</a>, <a href="https://nextapi.getpop.org/api/graphql?query=or([1, 0])">example 2</a>, <a href="https://nextapi.getpop.org/api/graphql?query=and([1, 0])">example 3</a>, <a href="https://nextapi.getpop.org/api/graphql?query=if(true,Show this text,Hide this text)">example 4</a>, <a href="https://nextapi.getpop.org/api/graphql?query=equals(first text, second text)">example 5</a>, <a href="https://nextapi.getpop.org/api/graphql?query=isNull(),isNull(something)">example 6</a>, <a href="https://nextapi.getpop.org/api/graphql?query=sprintf(%s API is %s, [PoP, cool])">example 7</a>):_
 
 ```
 1. ?query=not(true)
@@ -649,7 +643,7 @@ _**In PoP** (<a href="https://nextapi.getpop.org/api/graphql?query=not(true)">ex
 4. ?query=if(true, Show this text, Hide this text)
 5. ?query=equals(first text, second text)
 6. ?query=isNull(),isNull(something)
-7. ?query=sprintf(API %s is %s, [PoP, cool])
+7. ?query=sprintf(%s API is %s, [PoP, cool])
 ```
 
 In the same fashion, helper functions can provide any required information, also behaving as fields. For instance, helper `context` provides the values in the system's state, and helper `var` can retrieve any specific variable from the system's state.
@@ -676,47 +670,37 @@ _**In PoP** (<a href="https://nextapi.getpop.org/api/graphql/?query=posts.has-co
 1. ?query=
   posts.
     has-comments|
-    not(
-      has-comments()
-    )
+    not(has-comments())
 2. ?query=
   posts.
     has-comments|
     has-featuredimage|
-    or(
-      [
-        has-comments(),
-        has-featuredimage()
-      ]
-    )
+    or([
+      has-comments(),
+      has-featuredimage()
+    ])
 3. ?query=
   var(fetching-site)|
   posts.
     has-featuredimage|
-    and(
-      [
-        has-featuredimage(),
-        var(fetching-site)
-      ]
-    )
+    and([
+      has-featuredimage(),
+      var(fetching-site)
+    ])
 4. ?query=
   posts.
   if (
     has-comments(),
     sprintf(
-      Post with title '%s' has %s comments,
-      [
-        title(), 
-        comments-count()
-      ]
-    ),
+      Post with title '%s' has %s comments, [
+      title(), 
+      comments-count()
+    ]),
     sprintf(
-      Post with ID %s was created on %s, 
-      [
-        id(),
-        date(d/m/Y)
-      ]
-    )
+      Post with ID %s was created on %s, [
+      id(),
+      date(d/m/Y)
+    ])
   )@postDesc
 5. ?query=users.
   name|
@@ -727,9 +711,7 @@ _**In PoP** (<a href="https://nextapi.getpop.org/api/graphql/?query=posts.has-co
 6. ?query=
   posts.
     featuredimage|
-    isNull(
-      featuredimage()
-    )
+    isNull(featuredimage())
 ```
 
 In order to include characters `(` and `)` as part of the query string, and avoid treating the string as a field to be executed, we must enclose it using quotes: `"..."`.
@@ -739,11 +721,9 @@ _**In PoP** (<a href='https://nextapi.getpop.org/api/graphql/?query=posts.sprint
 ?query=
   posts.
     sprintf(
-      "This post has %s comment(s)",
-      [
-        comments-count()
-      ]
-    )@postDesc
+      "This post has %s comment(s)", [
+      comments-count()
+    ])@postDesc
 
 ### Nested fields with directives
 
