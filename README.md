@@ -144,7 +144,7 @@ query {
 }
 ```
 
-_**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=id|__schema)):_
+_**In PoP** ([View query in browser](https://nextapi.getpop.org/api/graphql/?query=id|__schema)):_
 
 ```php
 /?query=
@@ -168,7 +168,7 @@ query {
 }
 ```
 
-_**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.author.id)):_
+_**In PoP** ([View query in browser](https://nextapi.getpop.org/api/graphql/?query=posts.author.id)):_
 
 ```php
 /?query=
@@ -193,7 +193,7 @@ query {
 }
 ```
 
-_**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.author.id|name|url)):_
+_**In PoP** ([View query in browser](https://nextapi.getpop.org/api/graphql/?query=posts.author.id|name|url)):_
 
 ```php
 /?query=
@@ -222,7 +222,7 @@ query {
 }
 ```
 
-_**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|author.id|name|url)):_
+_**In PoP** ([View query in browser](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|author.id|name|url)):_
 
 ```php
 /?query=
@@ -257,7 +257,7 @@ query {
 }
 ```
 
-_**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.author.id|name|url,posts.comments.id|content)):_
+_**In PoP** ([View query in browser](https://nextapi.getpop.org/api/graphql/?query=posts.author.id|name|url,posts.comments.id|content)):_
 
 ```php
 /?query=
@@ -290,7 +290,7 @@ query {
 }
 ```
 
-_Filtering results **in PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts(searchfor:template).id|title|date)):_
+_Filtering results **in PoP** ([View query in browser](https://nextapi.getpop.org/api/graphql/?query=posts(searchfor:template).id|title|date)):_
 
 ```php
 /?query=
@@ -314,7 +314,7 @@ query {
 }
 ```
 
-_Formatting output **in PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|date(format:d/m/Y))):_
+_Formatting output **in PoP** ([View query in browser](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|date(format:d/m/Y))):_
 
 ```php
 /?query=
@@ -330,7 +330,7 @@ _Formatting output **in PoP** ([example](https://nextapi.getpop.org/api/graphql/
 
 Defining the argument name can be ignored if it can be deduced from the schema (for instance, the name can be deduced from the position of the property within the arguments in the schema definition).
 
-_**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|date(d/m/Y))):_
+_**In PoP** ([View query in browser](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|date(d/m/Y))):_
 
 ```php
 /?query=
@@ -356,7 +356,7 @@ query {
 }
 ```
 
-_**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|date(d/m/Y)@formattedDate)):_
+_**In PoP** ([View query in browser](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|date(d/m/Y)@formattedDate)):_
 
 ```php
 /?query=
@@ -381,7 +381,7 @@ query {
 }
 ```
 
-_**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|date|date(d/m/Y))):_
+_**In PoP** ([View query in browser](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|date|date(d/m/Y))):_
 
 ```php
 /?query=posts.
@@ -416,7 +416,7 @@ query {
 
 In PoP, however, the query can become very verbose, because when combining fields with `,` it starts iterating the path again all the way from the root:
 
-_**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=users.posts.author.id|name,users.posts.comments.id|content)):_
+_**In PoP** ([View query in browser](https://nextapi.getpop.org/api/graphql/?query=users.posts.author.id|name,users.posts.comments.id|content)):_
 
 ```php
 /?query=
@@ -434,7 +434,7 @@ _**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=users.posts
 
 Bookmarks help address this problem by creating a shortcut to a path, so we can conveniently keep loading data from that point on. To define the bookmark, its name is enclosed with `[...]` when iterating down the path, and to use it, its name is similarly enclosed with `[...]`:
 
-_**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=users.posts[userposts].author.id|name,[userposts].comments.id|content)):_
+_**In PoP** ([View query in browser](https://nextapi.getpop.org/api/graphql/?query=users.posts[userposts].author.id|name,[userposts].comments.id|content)):_
 
 ```php
 /?query=
@@ -453,7 +453,7 @@ _**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=users.posts
 
 When we need to define both a bookmark to a path, and an alias to output the field, these 2 must be combined: The alias, prepended with `@`, is placed within the bookmark delimiters `[...]`.
 
-_**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=users.posts[@userposts].author.id|name,[userposts].comments.id|content)):_
+_**In PoP** ([View query in browser](https://nextapi.getpop.org/api/graphql/?query=users.posts[@userposts].author.id|name,[userposts].comments.id|content)):_
 
 ```php
 /?query=
@@ -490,7 +490,7 @@ _API call **in GraphQL**:_
 }
 ```
 
-_**In PoP** ([example 1](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|date($format)&format=d/m/Y), [example 2](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|date($format)&variables[format]=d/m/Y)):_
+_**In PoP** (View in browser: [query 1](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|date($format)&format=d/m/Y), [query 2](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|date($format)&variables[format]=d/m/Y)):_
 
 ```php
 1. /?
@@ -538,7 +538,7 @@ fragment userData on User {
 }
 ```
 
-_**In PoP** ([example 1](https://nextapi.getpop.org/api/graphql/?query=users.--userData|posts.comments.author.--userData&userData=id|name|url), [example 2](https://nextapi.getpop.org/api/graphql/?query=users.--userData|posts.comments.author.--userData&fragments[userData]=id|name|url)):_
+_**In PoP** (View in browser: [query 1](https://nextapi.getpop.org/api/graphql/?query=users.--userData|posts.comments.author.--userData&userData=id|name|url), [query 2](https://nextapi.getpop.org/api/graphql/?query=users.--userData|posts.comments.author.--userData&fragments[userData]=id|name|url)):_
 
 ```php
 1. /?
@@ -586,7 +586,7 @@ query {
 }
 ```
 
-_**In PoP** ([example 1](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|featuredimage<include(if:$include)>.id|src&include=true), [example 2](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|featuredimage<include(if:$include)>.id|src&include=false), [example 3](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|featuredimage<skip(if:$skip)>.id|src&skip=true), [example 4](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|featuredimage<skip(if:$skip)>.id|src&skip=false)):_
+_**In PoP** (View in browser: [query 1](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|featuredimage<include(if:$include)>.id|src&include=true), [query 2](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|featuredimage<include(if:$include)>.id|src&include=false), [query 3](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|featuredimage<skip(if:$skip)>.id|src&skip=true), [query 4](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|featuredimage<skip(if:$skip)>.id|src&skip=false)):_
 
 ```php
 1. /?
@@ -639,7 +639,7 @@ query=
 
 Standard operations, such as `and`, `or`, `if`, `isNull`, `contains`, `sprintf` and many others, can be made available on the API as fields. Then, the operator name stands for the field name, and it can accept all the other elements in the same format (arguments, aliases, etc). To pass an argument value as an array, we enclose it between `[]`.
 
-_**In PoP** (<a href="https://nextapi.getpop.org/api/graphql?query=not(true)">example 1</a>, <a href="https://nextapi.getpop.org/api/graphql?query=or([1, 0])">example 2</a>, <a href="https://nextapi.getpop.org/api/graphql?query=and([1, 0])">example 3</a>, <a href="https://nextapi.getpop.org/api/graphql?query=if(true,Show this text,Hide this text)">example 4</a>, <a href="https://nextapi.getpop.org/api/graphql?query=equals(first text, second text)">example 5</a>, <a href="https://nextapi.getpop.org/api/graphql?query=isNull(),isNull(something)">example 6</a>, <a href="https://nextapi.getpop.org/api/graphql?query=sprintf(%s API is %s, [PoP, cool])">example 7</a>):_
+_**In PoP** (View in browser: <a href="https://nextapi.getpop.org/api/graphql?query=not(true)">query 1</a>, <a href="https://nextapi.getpop.org/api/graphql?query=or([1, 0])">query 2</a>, <a href="https://nextapi.getpop.org/api/graphql?query=and([1, 0])">query 3</a>, <a href="https://nextapi.getpop.org/api/graphql?query=if(true,Show this text,Hide this text)">query 4</a>, <a href="https://nextapi.getpop.org/api/graphql?query=equals(first text, second text)">query 5</a>, <a href="https://nextapi.getpop.org/api/graphql?query=isNull(),isNull(something)">query 6</a>, <a href="https://nextapi.getpop.org/api/graphql?query=sprintf(%s API is %s, [PoP, cool])">query 7</a>):_
 
 ```php
 1. ?query=not(true)
@@ -653,7 +653,7 @@ _**In PoP** (<a href="https://nextapi.getpop.org/api/graphql?query=not(true)">ex
 
 In the same fashion, helper functions can provide any required information, also behaving as fields. For instance, helper `context` provides the values in the system's state, and helper `var` can retrieve any specific variable from the system's state.
 
-_**In PoP** (<a href="https://nextapi.getpop.org/api/graphql?query=context">example 1</a>, <a href="https://nextapi.getpop.org/api/graphql?query=var(route)|var(target)@target|var(datastructure)">example 2</a>):_
+_**In PoP** (View in browser: <a href="https://nextapi.getpop.org/api/graphql?query=context">query 1</a>, <a href="https://nextapi.getpop.org/api/graphql?query=var(route)|var(target)@target|var(datastructure)">query 2</a>):_
 
 ```php
 1. ?query=context
@@ -669,7 +669,7 @@ The real benefit from having operators comes when they can receive the output fr
 
 In order to distinguish if the input to the field is a string or the name of a field, the field must have field arguments brackets `(...)` (if no arguments, then simply `()`). For instance, `"id"` means the string "id", and `"id()"` means to execute and pass the result from field "id".
 
-_**In PoP** (<a href="https://nextapi.getpop.org/api/graphql/?query=posts.has-comments|not(has-comments())">example 1</a>, <a href="https://nextapi.getpop.org/api/graphql/?query=posts.has-comments|has-featuredimage|or([has-comments(),has-featuredimage()])">example 2</a>, <a href="https://nextapi.getpop.org/api/graphql/?query=var(fetching-site),posts.has-featuredimage|and([has-featuredimage(), var(fetching-site)])">example 3</a>, <a href="https://nextapi.getpop.org/api/graphql/?query=posts.if(has-comments(),sprintf(Post with title '%s' has %s comments,[title(), comments-count()]),sprintf(Post with ID %s was created on %s, [id(),date(d/m/Y)]))@postDesc">example 4</a>, <a href="https://nextapi.getpop.org/api/graphql/?query=users.name|equals(name(), leo)">example 5</a>, <a href="https://nextapi.getpop.org/api/graphql/?query=posts.featuredimage|isNull(featuredimage())">example 6</a>):_
+_**In PoP** (View in browser: <a href="https://nextapi.getpop.org/api/graphql/?query=posts.has-comments|not(has-comments())">query 1</a>, <a href="https://nextapi.getpop.org/api/graphql/?query=posts.has-comments|has-featuredimage|or([has-comments(),has-featuredimage()])">query 2</a>, <a href="https://nextapi.getpop.org/api/graphql/?query=var(fetching-site),posts.has-featuredimage|and([has-featuredimage(), var(fetching-site)])">query 3</a>, <a href="https://nextapi.getpop.org/api/graphql/?query=posts.if(has-comments(),sprintf(Post with title '%s' has %s comments,[title(), comments-count()]),sprintf(Post with ID %s was created on %s, [id(),date(d/m/Y)]))@postDesc">query 4</a>, <a href="https://nextapi.getpop.org/api/graphql/?query=users.name|equals(name(), leo)">query 5</a>, <a href="https://nextapi.getpop.org/api/graphql/?query=posts.featuredimage|isNull(featuredimage())">query 6</a>):_
 
 ```php
 1. ?query=
@@ -721,7 +721,7 @@ _**In PoP** (<a href="https://nextapi.getpop.org/api/graphql/?query=posts.has-co
 
 In order to include characters `(` and `)` as part of the query string, and avoid treating the string as a field to be executed, we must enclose it using quotes: `"..."`.
 
-_**In PoP** (<a href='https://nextapi.getpop.org/api/graphql/?query=posts.sprintf("This post has %s comment(s)",[comments-count()])@postDesc'>example</a>):_
+_**In PoP** (<a href='https://nextapi.getpop.org/api/graphql/?query=posts.sprintf("This post has %s comment(s)",[comments-count()])@postDesc'>View query in browser</a>):_
 
 ```php
 ?query=
@@ -738,7 +738,7 @@ Nested fields enable to execute an operation against the queried object itself. 
 
 For instance, the GraphQL spec [requires](https://graphql.org/learn/queries/#directives) to support directives `include` and `skip`, which receive a parameter `if` with a boolean value. While GraphQL expects this value to be provided through a variable (as shown in section [Directives](#directives) above), in PoP it can be retrieved from the object.
 
-_**In PoP** ([example 1](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|featuredimage<include(if:not(isNull(featuredimage())))>.id|src), [example 2](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|featuredimage<skip(if:isNull(featuredimage()))>.id|src)):_
+_**In PoP** (View in browser: [query 1](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|featuredimage<include(if:not(isNull(featuredimage())))>.id|src), [query 2](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|featuredimage<skip(if:isNull(featuredimage()))>.id|src)):_
 
 ```php
 1. ?query=
@@ -765,7 +765,7 @@ _**In PoP** ([example 1](https://nextapi.getpop.org/api/graphql/?query=posts.id|
 
 Whenever the value from a field is null, its nested fields will not be retrieved. For instance, consider the following case, in which field `"featuredimage"` sometimes is null:
 
-_**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|featuredimage.id|src)):_
+_**In PoP** ([View query in browser](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|featuredimage.id|src)):_
 
 ```php
 ?query=
@@ -781,7 +781,7 @@ As we have seen in section [Nested fields with directives](#nested-fields-with-d
 
 For this, PoP introduces symbol `?`, to be placed after the field name (and its field arguments, alias and bookmark), to indicate "if this value is null, do not output it". 
 
-_**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|featuredimage?.id|src)):_
+_**In PoP** ([View query in browser](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|featuredimage?.id|src)):_
 
 ```php
 ?query=
@@ -799,7 +799,7 @@ Directives can be nested: An outer directive can modify the behaviour of its inn
 
 In the example below, directive `<forEach>` iterates through the elements of the array, for its nested directive `<applyFunction>` to do something with each of them. It passes the array item through pre-defined expression `%value%` (coded within the directive).
 
-_**In PoP** ([example](https://newapi.getpop.org/api/graphql/?query=echo(%5B%5Bbanana,apple%5D,%5Bstrawberry,grape,melon%5D%5D)@fruitJoin%3CforEach%3CapplyFunction(function:arrayJoin,addArguments:%5Barray:%value%,separator:%22---%22%5D)%3E%3E)):_
+_**In PoP** ([View query in browser](https://newapi.getpop.org/api/graphql/?query=echo(%5B%5Bbanana,apple%5D,%5Bstrawberry,grape,melon%5D%5D)@fruitJoin%3CforEach%3CapplyFunction(function:arrayJoin,addArguments:%5Barray:%value%,separator:%22---%22%5D)%3E%3E)):_
 
 ```php
 ?query=
@@ -821,7 +821,7 @@ _**In PoP** ([example](https://newapi.getpop.org/api/graphql/?query=echo(%5B%5Bb
 
 In the example below, directive `<advancePointerInArray>` communicates to directive `<translate>` the language to translate to through expression `%translateTo%`, which is defined on-the-fly.
 
-_**In PoP** ([example](https://newapi.getpop.org/api/graphql/?query=echo([[text:%20Hello%20my%20friends,translateTo:%20fr],[text:%20How%20do%20you%20like%20this%20software%20so%20far?,translateTo:%20es],])@translated%3CforEach%3CadvancePointerInArray(path:%20text,appendExpressions:%20[toLang:extract(%value%,translateTo)])%3Ctranslate(from:%20en,to:%20%toLang%,oneLanguagePerField:%20true,override:%20true)%3E%3E%3E)):_
+_**In PoP** ([View query in browser](https://newapi.getpop.org/api/graphql/?query=echo([[text:%20Hello%20my%20friends,translateTo:%20fr],[text:%20How%20do%20you%20like%20this%20software%20so%20far?,translateTo:%20es],])@translated%3CforEach%3CadvancePointerInArray(path:%20text,appendExpressions:%20[toLang:extract(%value%,translateTo)])%3Ctranslate(from:%20en,to:%20%toLang%,oneLanguagePerField:%20true,override:%20true)%3E%3E%3E)):_
 
 ```php
 ?query=
@@ -859,7 +859,7 @@ Different elements can be combined, such as the following examples.
 
 A fragment can contain nested paths, variables, directives and other fragments:
 
-_**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts(limit:$limit).--postData|author.posts(limit:$limit).--postData&postData=id|title|--nestedPostData|date(format:$format)&nestedPostData=comments<include(if:$include)>.id|content&format=d/m/Y&include=true&limit=3)):_
+_**In PoP** ([View query in browser](https://nextapi.getpop.org/api/graphql/?query=posts(limit:$limit).--postData|author.posts(limit:$limit).--postData&postData=id|title|--nestedPostData|date(format:$format)&nestedPostData=comments<include(if:$include)>.id|content&format=d/m/Y&include=true&limit=3)):_
 
 ```php
 /?
@@ -893,7 +893,7 @@ query=
 
 A fragment can contain directives, which are transferred into the fragment resolution fields:
 
-_**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.id|--props<include(if:has-comments())>&fragments[props]=title|date)):_
+_**In PoP** ([View query in browser](https://nextapi.getpop.org/api/graphql/?query=posts.id|--props<include(if:has-comments())>&fragments[props]=title|date)):_
 
 ```php
 /?
@@ -910,7 +910,7 @@ query=
 
 If the field in the fragment resolution field already has its own directives, these are applied; otherwise, the directives from the fragment definition are applied:
 
-_**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.id|--props<include(if:has-comments())>&fragments[props]=title|url<include(if:not(has-comments()))>)):_
+_**In PoP** ([View query in browser](https://nextapi.getpop.org/api/graphql/?query=posts.id|--props<include(if:has-comments())>&fragments[props]=title|url<include(if:not(has-comments()))>)):_
 
 ```php
 /?
@@ -929,7 +929,7 @@ query=
 
 A fragment can contain an alias, which is then transferred to all fragment resolution fields as an enumerated alias (`@aliasName1`, `@aliasName2`, etc):
 
-_**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.id|--props@prop&fragments[props]=title|url|featuredimage)):_
+_**In PoP** ([View query in browser](https://nextapi.getpop.org/api/graphql/?query=posts.id|--props@prop&fragments[props]=title|url|featuredimage)):_
 
 ```php
 /?
@@ -945,7 +945,7 @@ query=
 
 <!-- Combined with directives, we can query several fields at the same time without having them override their results:
 
-_**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.id|--props@original|--props@translated<translate(from:en,to:es)>&fragments[props]=title|content)):_
+_**In PoP** ([View query in browser](https://nextapi.getpop.org/api/graphql/?query=posts.id|--props@original|--props@translated<translate(from:en,to:es)>&fragments[props]=title|content)):_
 
 ```php
 /?query=posts.id|--props@original|--props@translated<translate(from:en,to:es)>&fragments[props]=title|content
@@ -953,7 +953,7 @@ _**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.id|--
 
 A fragment can contain the "Skip output if null" symbol, which is then transferred to all fragment resolution fields:
 
-_**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.id|--props?&fragments[props]=title|url|featuredimage)):_
+_**In PoP** ([View query in browser](https://nextapi.getpop.org/api/graphql/?query=posts.id|--props?&fragments[props]=title|url|featuredimage)):_
 
 ```php
 /?
@@ -969,7 +969,7 @@ query=
 
 Combining both directives and the skip output if null symbol with fragments:
 
-_**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=posts.id|has-comments|--props?<include(if:has-comments())>&fragments[props]=title|url<include(if:has-comments())>|featuredimage)):_
+_**In PoP** ([View query in browser](https://nextapi.getpop.org/api/graphql/?query=posts.id|has-comments|--props?<include(if:has-comments())>&fragments[props]=title|url<include(if:has-comments())>|featuredimage)):_
 
 ```php
 /?
