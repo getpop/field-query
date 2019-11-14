@@ -755,9 +755,7 @@ _**In PoP** ([example 1](https://nextapi.getpop.org/api/graphql/?query=posts.id|
     title|
     featuredimage<
       skip(
-        if:isNull(
-          featuredimage()
-        )
+        if:isNull(featuredimage())
       )
     >.
       id|
@@ -810,9 +808,7 @@ postData=
   id|
   title|
   --nestedPostData|
-  date(
-    format:$format
-  )&
+  date(format:$format)&
 nestedPostData=
   comments<
     include(
@@ -824,9 +820,11 @@ nestedPostData=
 format=d/m/Y&
 include=true&
 limit=3&
+order=title&
 query=
   posts(
-    limit:$limit
+    limit:$limit,
+    order:$order
   ).
     --postData|
     author.
@@ -849,9 +847,7 @@ query=
   posts.
     id|
     --props<
-      include(
-        if:has-comments()
-      )
+      include(if:has-comments())
     >
 ```
 
