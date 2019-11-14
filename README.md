@@ -496,6 +496,7 @@ _**In PoP** (View in browser: [query 1](https://nextapi.getpop.org/api/graphql/?
       id|
       title|
       date($format)
+
 2. /?
   variables[format]=d/m/Y&
   query=
@@ -549,6 +550,7 @@ query=
       comments.
         author.
           --userData
+
 2. /?
 fragments[userData]=
   id|
@@ -596,6 +598,7 @@ query=
     >.
       id|
       src
+
 2. /?
 include=false&
 query=
@@ -607,6 +610,7 @@ query=
     >.
       id|
       src
+
 3. /?
 skip=true&
 query=
@@ -618,6 +622,7 @@ query=
     >.
       id|
       src
+
 4. /?
 skip=false&
 query=
@@ -639,11 +644,17 @@ _**In PoP** (View in browser: <a href="https://nextapi.getpop.org/api/graphql?qu
 
 ```php
 1. ?query=not(true)
+
 2. ?query=or([1, 0])
+
 3. ?query=and([1, 0])
+
 4. ?query=if(true, Show this text, Hide this text)
+
 5. ?query=equals(first text, second text)
+
 6. ?query=isNull(),isNull(something)
+
 7. ?query=sprintf(%s API is %s, [PoP, cool])
 ```
 
@@ -653,6 +664,7 @@ _**In PoP** (View in browser: <a href="https://nextapi.getpop.org/api/graphql?qu
 
 ```php
 1. ?query=context
+
 2. ?query=
   var(route)|
   var(target)@target|
@@ -672,6 +684,7 @@ _**In PoP** (View in browser: <a href="https://nextapi.getpop.org/api/graphql/?q
   posts.
     has-comments|
     not(has-comments())
+
 2. ?query=
   posts.
     has-comments|
@@ -680,6 +693,7 @@ _**In PoP** (View in browser: <a href="https://nextapi.getpop.org/api/graphql/?q
       has-comments(),
       has-featuredimage()
     ])
+
 3. ?query=
   var(fetching-site)|
   posts.
@@ -688,6 +702,7 @@ _**In PoP** (View in browser: <a href="https://nextapi.getpop.org/api/graphql/?q
       has-featuredimage(),
       var(fetching-site)
     ])
+
 4. ?query=
   posts.
   if (
@@ -703,12 +718,14 @@ _**In PoP** (View in browser: <a href="https://nextapi.getpop.org/api/graphql/?q
       date(d/m/Y)
     ])
   )@postDesc
+
 5. ?query=users.
   name|
   equals(
     name(), 
     leo
   )
+
 6. ?query=
   posts.
     featuredimage|
@@ -746,6 +763,7 @@ _**In PoP** (View in browser: [query 1](https://nextapi.getpop.org/api/graphql/?
     >.
       id|
       src
+
 2. ?query=
   posts.
     id|
