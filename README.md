@@ -643,19 +643,19 @@ Standard operations, such as `and`, `or`, `if`, `isNull`, `contains`, `sprintf` 
 _**In PoP** (View in browser: <a href="https://nextapi.getpop.org/api/graphql?query=not(true)">query 1</a>, <a href="https://nextapi.getpop.org/api/graphql?query=or([1, 0])">query 2</a>, <a href="https://nextapi.getpop.org/api/graphql?query=and([1, 0])">query 3</a>, <a href="https://nextapi.getpop.org/api/graphql?query=if(true,Show this text,Hide this text)">query 4</a>, <a href="https://nextapi.getpop.org/api/graphql?query=equals(first text, second text)">query 5</a>, <a href="https://nextapi.getpop.org/api/graphql?query=isNull(),isNull(something)">query 6</a>, <a href="https://nextapi.getpop.org/api/graphql?query=sprintf(%s API is %s, [PoP, cool])">query 7</a>):_
 
 ```php
-1. ?query=not(true)
+1. /?query=not(true)
 
-2. ?query=or([1, 0])
+2. /?query=or([1, 0])
 
-3. ?query=and([1, 0])
+3. /?query=and([1, 0])
 
-4. ?query=if(true, Show this text, Hide this text)
+4. /?query=if(true, Show this text, Hide this text)
 
-5. ?query=equals(first text, second text)
+5. /?query=equals(first text, second text)
 
-6. ?query=isNull(),isNull(something)
+6. /?query=isNull(),isNull(something)
 
-7. ?query=sprintf(%s API is %s, [PoP, cool])
+7. /?query=sprintf(%s API is %s, [PoP, cool])
 ```
 
 In the same fashion, helper functions can provide any required information, also behaving as fields. For instance, helper `context` provides the values in the system's state, and helper `var` can retrieve any specific variable from the system's state.
@@ -663,9 +663,9 @@ In the same fashion, helper functions can provide any required information, also
 _**In PoP** (View in browser: <a href="https://nextapi.getpop.org/api/graphql?query=context">query 1</a>, <a href="https://nextapi.getpop.org/api/graphql?query=var(route)|var(target)@target|var(datastructure)">query 2</a>):_
 
 ```php
-1. ?query=context
+1. /?query=context
 
-2. ?query=
+2. /?query=
   var(route)|
   var(target)@target|
   var(datastructure)
@@ -680,12 +680,12 @@ In order to distinguish if the input to the field is a string or the name of a f
 _**In PoP** (View in browser: <a href="https://nextapi.getpop.org/api/graphql/?query=posts.has-comments|not(has-comments())">query 1</a>, <a href="https://nextapi.getpop.org/api/graphql/?query=posts.has-comments|has-featuredimage|or([has-comments(),has-featuredimage()])">query 2</a>, <a href="https://nextapi.getpop.org/api/graphql/?query=var(fetching-site),posts.has-featuredimage|and([has-featuredimage(), var(fetching-site)])">query 3</a>, <a href="https://nextapi.getpop.org/api/graphql/?query=posts.if(has-comments(),sprintf(Post with title '%s' has %s comments,[title(), comments-count()]),sprintf(Post with ID %s was created on %s, [id(),date(d/m/Y)]))@postDesc">query 4</a>, <a href="https://nextapi.getpop.org/api/graphql/?query=users.name|equals(name(), leo)">query 5</a>, <a href="https://nextapi.getpop.org/api/graphql/?query=posts.featuredimage|isNull(featuredimage())">query 6</a>):_
 
 ```php
-1. ?query=
+1. /?query=
   posts.
     has-comments|
     not(has-comments())
 
-2. ?query=
+2. /?query=
   posts.
     has-comments|
     has-featuredimage|
@@ -694,7 +694,7 @@ _**In PoP** (View in browser: <a href="https://nextapi.getpop.org/api/graphql/?q
       has-featuredimage()
     ])
 
-3. ?query=
+3. /?query=
   var(fetching-site)|
   posts.
     has-featuredimage|
@@ -703,7 +703,7 @@ _**In PoP** (View in browser: <a href="https://nextapi.getpop.org/api/graphql/?q
       var(fetching-site)
     ])
 
-4. ?query=
+4. /?query=
   posts.
   if (
     has-comments(),
@@ -719,14 +719,14 @@ _**In PoP** (View in browser: <a href="https://nextapi.getpop.org/api/graphql/?q
     ])
   )@postDesc
 
-5. ?query=users.
+5. /?query=users.
   name|
   equals(
     name(), 
     leo
   )
 
-6. ?query=
+6. /?query=
   posts.
     featuredimage|
     isNull(featuredimage())
@@ -737,7 +737,7 @@ In order to include characters `(` and `)` as part of the query string, and avoi
 _**In PoP** (<a href='https://nextapi.getpop.org/api/graphql/?query=posts.sprintf("This post has %s comment(s)",[comments-count()])@postDesc'>View query in browser</a>):_
 
 ```php
-?query=
+/?query=
   posts.
     sprintf(
       "This post has %s comment(s)", [
@@ -754,7 +754,7 @@ For instance, the GraphQL spec [requires](https://graphql.org/learn/queries/#dir
 _**In PoP** (View in browser: [query 1](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|featuredimage<include(if:not(isNull(featuredimage())))>.id|src), [query 2](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|featuredimage<skip(if:isNull(featuredimage()))>.id|src)):_
 
 ```php
-1. ?query=
+1. /?query=
   posts.
     id|
     title|
@@ -764,7 +764,7 @@ _**In PoP** (View in browser: [query 1](https://nextapi.getpop.org/api/graphql/?
       id|
       src
 
-2. ?query=
+2. /?query=
   posts.
     id|
     title|
@@ -782,7 +782,7 @@ Whenever the value from a field is null, its nested fields will not be retrieved
 _**In PoP** ([View query in browser](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|featuredimage.id|src)):_
 
 ```php
-?query=
+/?query=
   posts.
     id|
     title|
@@ -798,7 +798,7 @@ For this, PoP introduces symbol `?`, to be placed after the field name (and its 
 _**In PoP** ([View query in browser](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|featuredimage?.id|src)):_
 
 ```php
-?query=
+/?query=
   posts.
     id|
     title|
@@ -816,7 +816,7 @@ In the example below, directive `<forEach>` iterates through the elements of the
 _**In PoP** ([View query in browser](https://newapi.getpop.org/api/graphql/?query=echo(%5B%5Bbanana,apple%5D,%5Bstrawberry,grape,melon%5D%5D)@fruitJoin%3CforEach%3CapplyFunction(function:arrayJoin,addArguments:%5Barray:%value%,separator:%22---%22%5D)%3E%3E)):_
 
 ```php
-?query=
+/?query=
   echo([
     [banana, apple],
     [strawberry, grape, melon]
@@ -838,7 +838,7 @@ In the example below, directive `<advancePointerInArray>` communicates to direct
 _**In PoP** ([View query in browser](https://newapi.getpop.org/api/graphql/?query=echo([[text:%20Hello%20my%20friends,translateTo:%20fr],[text:%20How%20do%20you%20like%20this%20software%20so%20far?,translateTo:%20es],])@translated%3CforEach%3CadvancePointerInArray(path:%20text,appendExpressions:%20[toLang:extract(%value%,translateTo)])%3Ctranslate(from:%20en,to:%20%toLang%,oneLanguagePerField:%20true,override:%20true)%3E%3E%3E)):_
 
 ```php
-?query=
+/?query=
   echo([
     [
       text: Hello my friends,
