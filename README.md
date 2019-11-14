@@ -319,9 +319,7 @@ _Formatting output **in PoP** ([View query in browser](https://nextapi.getpop.or
   posts.
     id|
     title|
-    date(
-        format:d/m/Y
-    )
+    date(format:d/m/Y)
 ```
 
 ### Optional property name in field arguments
