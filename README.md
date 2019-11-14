@@ -84,6 +84,7 @@ Differently than GraphQL, a field can also contain the following elements:
 - **Operators and Helpers:** Standard operations (`and`, `or`, `if`, `isNull`, etc) and helpers to access environment variables (among other use cases) can be already available as fields
 - **Nested fields:** The response of a field can be used as input to another field, through its arguments or field directives
 - **Skip output if null:** To ignore the output if the value of the field is null
+- **Expressions:** To pass values across directives
 
 From the composing elements, only the field name is mandatory; all others are optional. A field is composed in this order:
 
@@ -313,7 +314,9 @@ _Formatting output **in PoP** ([example](https://nextapi.getpop.org/api/graphql/
   posts.
     id|
     title|
-    date(format:d/m/Y)
+    date(
+        format:d/m/Y
+    )
 ```
 
 ### Optional property name in field arguments
@@ -453,7 +456,8 @@ _**In PoP** ([example](https://nextapi.getpop.org/api/graphql/?query=users.posts
         id|
         name,
     [userposts].
-      comments.id|content
+      comments.id|
+      content
 ```
 
 ### Variables
@@ -575,11 +579,12 @@ query {
 }
 ```
 
-_**In PoP** ([example 1](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|featuredimage<include(if:$include)>.id|src&include=true), [example 2](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|featuredimage<include(if:$include)>.id|src&include=), [example 3](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|featuredimage<skip(if:$skip)>.id|src&skip=true), [example 4](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|featuredimage<skip(if:$skip)>.id|src&skip=)):_
+_**In PoP** ([example 1](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|featuredimage<include(if:$include)>.id|src&include=true), [example 2](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|featuredimage<include(if:$include)>.id|src&include=false), [example 3](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|featuredimage<skip(if:$skip)>.id|src&skip=true), [example 4](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|featuredimage<skip(if:$skip)>.id|src&skip=false)):_
 
 ```
-1. ?query=
-  include=true&
+1. /?
+include=true&
+query=
   posts.
     id|
     title|
@@ -590,8 +595,9 @@ _**In PoP** ([example 1](https://nextapi.getpop.org/api/graphql/?query=posts.id|
     >.
       id|
       src
-2. ?query=
-  include=&
+2. /?
+include=false&
+query=
   posts.
     id|
     title|
@@ -602,8 +608,9 @@ _**In PoP** ([example 1](https://nextapi.getpop.org/api/graphql/?query=posts.id|
     >.
       id|
       src
-3. ?query=
-  skip=true&
+3. /?
+skip=true&
+query=
   posts.
     id|
     title|
@@ -614,8 +621,9 @@ _**In PoP** ([example 1](https://nextapi.getpop.org/api/graphql/?query=posts.id|
     >.
       id|
       src
-4. ?query=
-  skip=&
+4. /?
+skip=false&
+query=
   posts.
     id|
     title|
