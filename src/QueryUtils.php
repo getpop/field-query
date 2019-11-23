@@ -13,7 +13,7 @@ class QueryUtils
         // Split on that searching element: If it appears within the string, it will produce an array with at least 2 elements
         // The length of the first element equals the position of that symbol
         $fieldQueryInterpreter = QueryParserFacade::getInstance();
-        $symbolElems = $fieldQueryInterpreter->splitElements($haystack, $needle, $skipFromChars, $skipUntilChars, QuerySyntax::SYMBOL_FIELDARGS_ARGVALUESTRING_OPENING, QuerySyntax::SYMBOL_FIELDARGS_ARGVALUESTRING_CLOSING);
+        $symbolElems = $fieldQueryInterpreter->splitElements($haystack, $needle, $skipFromChars, $skipUntilChars, QuerySyntax::SYMBOL_FIELDARGS_ARGVALUESTRING_OPENING, QuerySyntax::SYMBOL_FIELDARGS_ARGVALUESTRING_CLOSING, true);
         if (count($symbolElems) >= 2) {
             return strlen($symbolElems[0]);
         }
