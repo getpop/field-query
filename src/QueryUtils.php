@@ -11,14 +11,14 @@ class QueryUtils
         if (substr($haystack, 0, strlen($needle)) == $needle) {
             return 0;
         }
-        // Split on that searching element: If it appears within the string, it will produce an array with at least 2 elements
+        // Split on that searching element: If it appears within the string, it will produce an array with exactly 2 elements (since using option "ONLY_FIRST_OCCURRENCE")
         // The length of the first element equals the position of that symbol
         $fieldQueryInterpreter = QueryParserFacade::getInstance();
         $options = [
             QueryParserOptions::ONLY_FIRST_OCCURRENCE => true,
         ];
         $symbolElems = $fieldQueryInterpreter->splitElements($haystack, $needle, $skipFromChars, $skipUntilChars, QuerySyntax::SYMBOL_FIELDARGS_ARGVALUESTRING_OPENING, QuerySyntax::SYMBOL_FIELDARGS_ARGVALUESTRING_CLOSING, $options);
-        if (count($symbolElems) >= 2) {
+        if (count($symbolElems) == 2) {
             return strlen($symbolElems[0]);
         }
         // Edge case: If the string finishes with the symbol, then the array count of splitting the elements will be 1
@@ -35,17 +35,16 @@ class QueryUtils
         if (substr($haystack, -1*strlen($needle)) == $needle) {
             return strlen($haystack)-strlen($needle);
         }
-        // Split on that searching element: If it appears within the string, it will produce an array with at least 2 elements
-        // The length of the string minus the length of the last element element equals the position of that symbol
+        // Split on that searching element: If it appears within the string, it will produce an array with exactly 2 elements (since using option "ONLY_FIRST_OCCURRENCE")
+        // The length of the first element equals the position of that symbol
         $fieldQueryInterpreter = QueryParserFacade::getInstance();
         $options = [
             QueryParserOptions::START_FROM_END => true,
             QueryParserOptions::ONLY_FIRST_OCCURRENCE => true,
         ];
         $symbolElems = $fieldQueryInterpreter->splitElements($haystack, $needle, $skipFromChars, $skipUntilChars, QuerySyntax::SYMBOL_FIELDARGS_ARGVALUESTRING_OPENING, QuerySyntax::SYMBOL_FIELDARGS_ARGVALUESTRING_CLOSING, $options);
-        $symbolElemCount = count($symbolElems);
-        if ($symbolElemCount >= 2) {
-            return strlen($haystack)-(strlen($symbolElems[$symbolElemCount-1])+strlen($needle));
+        if (count($symbolElems) == 2) {
+            return strlen($symbolElems[0]);
         }
         // Edge case: If the string starts with the symbol, then the array count of splitting the elements will be 1
         if (substr($haystack, 0, strlen($needle)) == $needle) {
