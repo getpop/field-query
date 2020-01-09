@@ -462,6 +462,15 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
         return $fieldName.$fieldArgs.$fieldAlias.$skipOutputIfNull.$fieldDirectives;
     }
 
+    public function composeDirective(string $directiveName, ?string $directiveArgs = '', ?string $directiveNestedDirectives = ''): array
+    {
+        return [
+            $directiveName,
+            $directiveArgs,
+            $directiveNestedDirectives,
+        ];
+    }
+
     public function composeFieldDirective(string $directiveName, ?string $directiveArgs = '', ?string $directiveNestedDirectives = ''): string
     {
         return $directiveName.$directiveArgs.$directiveNestedDirectives;
