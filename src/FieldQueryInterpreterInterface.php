@@ -14,7 +14,7 @@ interface FieldQueryInterpreterInterface
     public function isFieldArgumentValueAnArrayRepresentedAsString($fieldArgValue): bool;
     public function createFieldArgValueAsFieldFromFieldName(string $fieldName): string;
     public function getFieldAlias(string $field): ?string;
-    public function getFieldDirectives(string $field, bool $includeSyntaxDelimiters): ?string;
+    public function getFieldDirectives(string $field, bool $includeSyntaxDelimiters = false): ?string;
     public function getDirectives(string $field): array;
     public function extractFieldDirectives(string $fieldDirectives): array;
     public function composeFieldDirectives(array $fieldDirectives): string;
