@@ -467,7 +467,7 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
         return $directiveName.$directiveArgs.$directiveNestedDirectives;
     }
 
-    protected function getFieldArgsAsString(array $fieldArgs = []): string
+    public function getFieldArgsAsString(array $fieldArgs = []): string
     {
         if (!$fieldArgs) {
             return '';
