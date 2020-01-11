@@ -82,7 +82,7 @@ Differently than GraphQL, a field can also contain the following elements:
 - **Property names in the field arguments may be optional:** To simplify passing arguments to the field
 - **Bookmarks:** To keep loading data from an already-defined field
 - **Operators and Helpers:** Standard operations (`and`, `or`, `if`, `isNull`, etc) and helpers to access environment variables (among other use cases) can be already available as fields
-- **Nested fields:** The response of a field can be used as input to another field, through its arguments or field directives
+- **Composable fields:** The response of a field can be used as input to another field, through its arguments or field directives
 - **Skip output if null:** To ignore the output if the value of the field is null
 - **Nested directives:** A directive can modify the behaviour of other, nested directives
 - **Expressions:** To pass values across directives
@@ -687,9 +687,9 @@ _**In PoP** (View in browser: <a href="https://nextapi.getpop.org/api/graphql?qu
   var(datastructure)
 ```
 
-### Nested fields
+### Composable fields
 
-The real benefit from having operators comes when they can receive the output from a field as their input. Since an operator is a field by itself, this can be generalized into “nested fields”: Passing the result of any field as an argument value to another field. 
+The real benefit from having operators comes when they can receive the output from a field as their input. Since an operator is a field by itself, this can be generalized into “composable fields”: Passing the result of any field as an argument value to another field. 
 
 In order to distinguish if the input to the field is a string or the name of a field, the field must have field arguments brackets `(...)` (if no arguments, then simply `()`). For instance, `"id"` means the string "id", and `"id()"` means to execute and pass the result from field "id".
 
@@ -761,9 +761,9 @@ _**In PoP** (<a href='https://nextapi.getpop.org/api/graphql/?query=posts.sprint
     ])@postDesc
 ```
 
-### Nested fields with directives
+### Composable fields with directives
 
-Nested fields enable to execute an operation against the queried object itself. Making use of this capability, directives in PoP become much more useful, since they can evaluate their conditions against each and every object independently. This feature can give raise to a myriad of new features, such as client-directed content manipulation, fine-grained access control, enhanced validations, and many others.
+Composable fields enable to execute an operation against the queried object itself. Making use of this capability, directives in PoP become much more useful, since they can evaluate their conditions against each and every object independently. This feature can give raise to a myriad of new features, such as client-directed content manipulation, fine-grained access control, enhanced validations, and many others.
 
 For instance, the GraphQL spec [requires](https://graphql.org/learn/queries/#directives) to support directives `include` and `skip`, which receive a parameter `if` with a boolean value. While GraphQL expects this value to be provided through a variable (as shown in section [Directives](#directives) above), in PoP it can be retrieved from the object.
 
@@ -807,7 +807,7 @@ _**In PoP** ([View query in browser](https://nextapi.getpop.org/api/graphql/?que
       src
 ```
 
-As we have seen in section [Nested fields with directives](#nested-fields-with-directives) above, by combining directives `include` and `skip` with nested fields, we can decide to not output a field when its value is null. However, the query to execute this behaviour includes a directive added in the middle of the query path, making it very verbose and less legible. Since this is a very common use case, it makes sense to generalize it and incorporate a simplified version of it into the syntax. 
+As we have seen in section [Composable fields with directives](#composable-fields-with-directives) above, by combining directives `include` and `skip` with composable fields, we can decide to not output a field when its value is null. However, the query to execute this behaviour includes a directive added in the middle of the query path, making it very verbose and less legible. Since this is a very common use case, it makes sense to generalize it and incorporate a simplified version of it into the syntax. 
 
 For this, PoP introduces symbol `?`, to be placed after the field name (and its field arguments, alias and bookmark), to indicate "if this value is null, do not output it". 
 
