@@ -84,7 +84,7 @@ Differently than GraphQL, a field can also contain the following elements:
 - **Operators and Helpers:** Standard operations (`and`, `or`, `if`, `isNull`, etc) and helpers to access environment variables (among other use cases) can be already available as fields
 - **Composable fields:** The response of a field can be used as input to another field, through its arguments or field directives
 - **Skip output if null:** To ignore the output if the value of the field is null
-- **Nested directives:** A directive can modify the behaviour of other, nested directives
+- **Composable directives:** A directive can modify the behaviour of other, nested directives
 - **Expressions:** To pass values across directives
 
 From the composing elements, only the field name is mandatory; all others are optional. A field is composed in this order:
@@ -823,11 +823,11 @@ _**In PoP** ([View query in browser](https://nextapi.getpop.org/api/graphql/?que
       src
 ```
 
-### Nested directives and Expressions
+### Composable directives and Expressions
 
-Directives can be nested: An outer directive can modify the behaviour of its inner, nested directive(s). It can pass values across to its nested directives through “expressions”, variables surrounded with `%...%` which can be created on runtime (coded as part of the query), or be defined in the directive itself.
+Directives can be nested: An outer directive can modify the behaviour of its inner, nested directive(s). It can pass values across to its composed directives through “expressions”, variables surrounded with `%...%` which can be created on runtime (coded as part of the query), or be defined in the directive itself.
 
-In the example below, directive `<forEach>` iterates through the elements of the array, for its nested directive `<applyFunction>` to do something with each of them. It passes the array item through pre-defined expression `%value%` (coded within the directive).
+In the example below, directive `<forEach>` iterates through the elements of the array, for its composed directive `<applyFunction>` to do something with each of them. It passes the array item through pre-defined expression `%value%` (coded within the directive).
 
 _**In PoP** ([View query in browser](https://newapi.getpop.org/api/graphql/?query=echo(%5B%5Bbanana,apple%5D,%5Bstrawberry,grape,melon%5D%5D)@fruitJoin%3CforEach%3CapplyFunction(function:arrayJoin,addArguments:%5Barray:%value%,separator:%22---%22%5D)%3E%3E)):_
 

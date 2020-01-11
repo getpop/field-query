@@ -367,7 +367,7 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
 
     public function listFieldDirective(string $fieldDirective): array
     {
-        // Each item is an array of up to 3 elements: 0 => name, 1 => args, 2 => nested directives
+        // Each item is an array of up to 3 elements: 0 => name, 1 => args, 2 => composed directives
         return [
             $this->getFieldDirectiveName($fieldDirective),
             $this->getFieldDirectiveArgs($fieldDirective),
