@@ -140,16 +140,16 @@ _**In GraphQL**:_
 ```graphql
 query {
   id
-  __fullSchema
+  fullSchema
 }
 ```
 
-_**In PoP** ([View query in browser](https://nextapi.getpop.org/api/graphql/?query=id|__fullSchema)):_
+_**In PoP** ([View query in browser](https://nextapi.getpop.org/api/graphql/?query=id|fullSchema)):_
 
 ```php
 /?query=
   id|
-  __fullSchema
+  fullSchema
 ```
 
 ### Retrieving nested properties
