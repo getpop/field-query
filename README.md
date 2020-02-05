@@ -693,40 +693,40 @@ The real benefit from having operators comes when they can receive the output fr
 
 In order to distinguish if the input to the field is a string or the name of a field, the field must have field arguments brackets `(...)` (if no arguments, then simply `()`). For instance, `"id"` means the string "id", and `"id()"` means to execute and pass the result from field "id".
 
-_**In PoP** (View in browser: <a href="https://nextapi.getpop.org/api/graphql/?query=posts.has-comments|not(has-comments())">query 1</a>, <a href="https://nextapi.getpop.org/api/graphql/?query=posts.has-comments|has-featuredimage|or([has-comments(),has-featuredimage()])">query 2</a>, <a href="https://nextapi.getpop.org/api/graphql/?query=var(fetching-site),posts.has-featuredimage|and([has-featuredimage(), var(fetching-site)])">query 3</a>, <a href="https://nextapi.getpop.org/api/graphql/?query=posts.if(has-comments(),sprintf(Post with title '%s' has %s comments,[title(), comments-count()]),sprintf(Post with ID %s was created on %s, [id(),date(d/m/Y)]))@postDesc">query 4</a>, <a href="https://nextapi.getpop.org/api/graphql/?query=users.name|equals(name(), leo)">query 5</a>, <a href="https://nextapi.getpop.org/api/graphql/?query=posts.featuredimage|isNull(featuredimage())">query 6</a>):_
+_**In PoP** (View in browser: <a href="https://nextapi.getpop.org/api/graphql/?query=posts.hasComments|not(hasComments())">query 1</a>, <a href="https://nextapi.getpop.org/api/graphql/?query=posts.hasComments|hasFeaturedimage|or([hasComments(),hasFeaturedimage()])">query 2</a>, <a href="https://nextapi.getpop.org/api/graphql/?query=var(fetching-site),posts.hasFeaturedimage|and([hasFeaturedimage(), var(fetching-site)])">query 3</a>, <a href="https://nextapi.getpop.org/api/graphql/?query=posts.if(hasComments(),sprintf(Post with title '%s' has %s comments,[title(), commentsCount()]),sprintf(Post with ID %s was created on %s, [id(),date(d/m/Y)]))@postDesc">query 4</a>, <a href="https://nextapi.getpop.org/api/graphql/?query=users.name|equals(name(), leo)">query 5</a>, <a href="https://nextapi.getpop.org/api/graphql/?query=posts.featuredimage|isNull(featuredimage())">query 6</a>):_
 
 ```php
 1. /?query=
   posts.
-    has-comments|
-    not(has-comments())
+    hasComments|
+    not(hasComments())
 
 2. /?query=
   posts.
-    has-comments|
-    has-featuredimage|
+    hasComments|
+    hasFeaturedimage|
     or([
-      has-comments(),
-      has-featuredimage()
+      hasComments(),
+      hasFeaturedimage()
     ])
 
 3. /?query=
   var(fetching-site)|
   posts.
-    has-featuredimage|
+    hasFeaturedimage|
     and([
-      has-featuredimage(),
+      hasFeaturedimage(),
       var(fetching-site)
     ])
 
 4. /?query=
   posts.
   if (
-    has-comments(),
+    hasComments(),
     sprintf(
       Post with title '%s' has %s comments, [
       title(), 
-      comments-count()
+      commentsCount()
     ]),
     sprintf(
       Post with ID %s was created on %s, [
@@ -750,14 +750,14 @@ _**In PoP** (View in browser: <a href="https://nextapi.getpop.org/api/graphql/?q
 
 In order to include characters `(` and `)` as part of the query string, and avoid treating the string as a field to be executed, we must enclose it using quotes: `"..."`.
 
-_**In PoP** (<a href='https://nextapi.getpop.org/api/graphql/?query=posts.sprintf("This post has %s comment(s)",[comments-count()])@postDesc'>View query in browser</a>):_
+_**In PoP** (<a href='https://nextapi.getpop.org/api/graphql/?query=posts.sprintf("This post has %s comment(s)",[commentsCount()])@postDesc'>View query in browser</a>):_
 
 ```php
 /?query=
   posts.
     sprintf(
       "This post has %s comment(s)", [
-      comments-count()
+      commentsCount()
     ])@postDesc
 ```
 
@@ -923,7 +923,7 @@ query=
 
 A fragment can contain directives, which are transferred into the fragment resolution fields:
 
-_**In PoP** ([View query in browser](https://nextapi.getpop.org/api/graphql/?query=posts.id|--props<include(if:has-comments())>&fragments[props]=title|date)):_
+_**In PoP** ([View query in browser](https://nextapi.getpop.org/api/graphql/?query=posts.id|--props<include(if:hasComments())>&fragments[props]=title|date)):_
 
 ```php
 /?
@@ -934,26 +934,26 @@ query=
   posts.
     id|
     --props<
-      include(if:has-comments())
+      include(if:hasComments())
     >
 ```
 
 If the field in the fragment resolution field already has its own directives, these are applied; otherwise, the directives from the fragment definition are applied:
 
-_**In PoP** ([View query in browser](https://nextapi.getpop.org/api/graphql/?query=posts.id|--props<include(if:has-comments())>&fragments[props]=title|url<include(if:not(has-comments()))>)):_
+_**In PoP** ([View query in browser](https://nextapi.getpop.org/api/graphql/?query=posts.id|--props<include(if:hasComments())>&fragments[props]=title|url<include(if:not(hasComments()))>)):_
 
 ```php
 /?
 fragments[props]=
   title|
   url<
-    include(if:not(has-comments()))
+    include(if:not(hasComments()))
   >&
 query=
   posts.
     id|
     --props<
-      include(if:has-comments())
+      include(if:hasComments())
     >
 ```
 
@@ -999,22 +999,22 @@ query=
 
 Combining both directives and the skip output if null symbol with fragments:
 
-_**In PoP** ([View query in browser](https://nextapi.getpop.org/api/graphql/?query=posts.id|has-comments|--props?<include(if:has-comments())>&fragments[props]=title|url<include(if:has-comments())>|featuredimage)):_
+_**In PoP** ([View query in browser](https://nextapi.getpop.org/api/graphql/?query=posts.id|hasComments|--props?<include(if:hasComments())>&fragments[props]=title|url<include(if:hasComments())>|featuredimage)):_
 
 ```php
 /?
 fragments[props]=
   title|
   url<
-    include(if:has-comments())
+    include(if:hasComments())
   >|
   featuredimage&
 query=
   posts.
     id|
-    has-comments|
+    hasComments|
     --props?<
-      include(if:has-comments())
+      include(if:hasComments())
     >
 ```
 
