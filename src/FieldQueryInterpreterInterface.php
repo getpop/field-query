@@ -38,4 +38,5 @@ interface FieldQueryInterpreterInterface
     public function getVariablesFromRequest(): array;
     public function getArrayAsStringForQuery(array $fieldArgValue): string;
     public function getFieldArgsAsString(array $fieldArgs = []): string;
+    public function getDirectiveArgsAsString(array $directiveArgs = []): string;
 }

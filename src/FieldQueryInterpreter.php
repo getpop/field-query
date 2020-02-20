@@ -358,11 +358,11 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
         return implode(QuerySyntax::SYMBOL_FIELDDIRECTIVE_SEPARATOR, $fieldDirectives);
     }
 
-    public function convertDirectiveToFieldDirective(array $fieldDirective): string
+    public function convertDirectiveToFieldDirective(array $directive): string
     {
-        $directiveArgs = $this->getDirectiveArgs($fieldDirective) ?? '';
-        $nestedDirectives = $this->getDirectiveNestedDirectives($fieldDirective) ?? '';
-        return $this->getDirectiveName($fieldDirective).$directiveArgs.$nestedDirectives;
+        $directiveArgs = $this->getDirectiveArgs($directive) ?? '';
+        $nestedDirectives = $this->getDirectiveNestedDirectives($directive) ?? '';
+        return $this->getDirectiveName($directive).$directiveArgs.$nestedDirectives;
     }
 
     public function listFieldDirective(string $fieldDirective): array
@@ -498,6 +498,11 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
             $elems[] = $fieldArgKey.QuerySyntax::SYMBOL_FIELDARGS_ARGKEYVALUESEPARATOR.$fieldArgValue;
         }
         return QuerySyntax::SYMBOL_FIELDARGS_OPENING.implode(QuerySyntax::SYMBOL_FIELDARGS_ARGSEPARATOR, $elems).QuerySyntax::SYMBOL_FIELDARGS_CLOSING;
+    }
+
+    public function getDirectiveArgsAsString(array $directiveArgs = []): string
+    {
+        return $this->getFieldArgsAsString($directiveArgs);
     }
 
     protected function maybeWrapStringInQuotes(string $value): string
