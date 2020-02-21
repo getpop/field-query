@@ -476,6 +476,15 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
         ];
     }
 
+    public function getDirective(string $directiveName, array $directiveArgs = [], ?string $directiveNestedDirectives = ''): array
+    {
+        return $this->composeDirective(
+            $directiveName,
+            $this->getDirectiveArgsAsString($directiveArgs),
+            $directiveNestedDirectives
+        );
+    }
+
     public function composeFieldDirective(string $directiveName, ?string $directiveArgs = '', ?string $directiveNestedDirectives = ''): string
     {
         return $directiveName.$directiveArgs.$directiveNestedDirectives;
