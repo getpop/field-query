@@ -434,8 +434,10 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
     }
     protected function getNoAliasFieldOutputKey(string $field): string
     {
-        // Use fieldName+fieldArgs
-        return $this->getFieldName($field).$this->getFieldArgs($field);
+        // Use the same field (which doesn't have an alias)
+        return $field;
+        // // Use fieldName+fieldArgs
+        // return $this->getFieldName($field).$this->getFieldArgs($field);
     }
 
     public function listField(string $field): array
