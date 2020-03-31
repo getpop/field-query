@@ -7,6 +7,7 @@ interface FieldQueryInterpreterInterface
     public function getFieldArgs(string $field): ?string;
     public function isSkipOuputIfNullField(string $field): bool;
     public function removeSkipOuputIfNullFromField(string $field): string;
+    public function removeAliasFromField(string $field): string;
     public function isFieldArgumentValueAField($fieldArgValue): bool;
     public function isFieldArgumentValueAVariable($fieldArgValue): bool;
     public function isFieldArgumentValueAnExpression($fieldArgValue): bool;
@@ -14,6 +15,7 @@ interface FieldQueryInterpreterInterface
     public function isFieldArgumentValueAnArrayRepresentedAsString($fieldArgValue): bool;
     public function createFieldArgValueAsFieldFromFieldName(string $fieldName): string;
     public function getFieldAlias(string $field): ?string;
+    public function getFieldAliasPositionSpanInField(string $field): ?array;
     public function getFieldDirectives(string $field, bool $includeSyntaxDelimiters = false): ?string;
     public function getDirectives(string $field): array;
     public function extractFieldDirectives(string $fieldDirectives): array;

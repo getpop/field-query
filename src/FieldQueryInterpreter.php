@@ -10,6 +10,7 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
     private $fieldArgsCache = [];
     private $skipOutputIfNullCache = [];
     private $fieldAliasesCache = [];
+    private $fieldAliasPositionSpansCache = [];
     private $fieldDirectivesCache = [];
     private $directivesCache = [];
     private $extractedFieldDirectivesCache = [];
@@ -22,6 +23,9 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
     protected $translationAPI;
     protected $feedbackMessageStore;
     protected $queryParser;
+
+    public const ALIAS_POSITION_KEY = 'pos';
+    public const ALIAS_LENGTH_KEY = 'length';
 
     public function __construct(
         TranslationAPIInterface $translationAPI,
@@ -143,6 +147,20 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
     public function removeSkipOuputIfNullFromField(string $field): string
     {
         $pos = QueryHelpers::findSkipOutputIfNullSymbolPosition($field);
+        if ($pos !== false) {
+            // Replace the "?" with nothing
+            $field = str_replace(
+                QuerySyntax::SYMBOL_SKIPOUTPUTIFNULL,
+                '',
+                $field
+            );
+        }
+        return $field;
+    }
+
+    public function removeAliasFromField(string $field): string
+    {
+        $pos = QueryHelpers::findFieldAliasSymbolPosition($field);
         if ($pos !== false) {
             // Replace the "?" with nothing
             $field = str_replace(
@@ -276,6 +294,56 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
             return $alias;
         }
         return null;
+    }
+
+    /**
+     * Return an array with the position where the alias starts (including the "@") and its length
+     * Return null if the field has no alias
+     *
+     * @param string $field
+     * @return array|null
+     */
+    public function getFieldAliasPositionSpanInField(string $field): ?array
+    {
+        if (!isset($this->fieldAliasPositionSpansCache[$field])) {
+            $this->fieldAliasPositionSpansCache[$field] = $this->doGetFieldAliasPositionSpanInField($field);
+        }
+        return $this->fieldAliasPositionSpansCache[$field];
+    }
+
+    protected function doGetFieldAliasPositionSpanInField(string $field): ?array
+    {
+        $aliasSymbolPos = QueryHelpers::findFieldAliasSymbolPosition($field);
+        if ($aliasSymbolPos === false) {
+            // There is no alias
+            return null;
+        }
+
+        // Extract the alias, without the "@" symbol
+        $alias = substr($field, $aliasSymbolPos+strlen(QuerySyntax::SYMBOL_FIELDALIAS_PREFIX));
+
+        // If there is a "]", "?" or "<" after the alias, remove the string from then on
+        // Everything before "]" (for if the alias is inside the bookmark)
+        list (
+            $bookmarkOpeningSymbolPos,
+            $pos
+        ) = QueryHelpers::listFieldBookmarkSymbolPositions($alias);
+        // Everything before "?" (for "skip output if null")
+        if ($pos === false) {
+            $pos = QueryHelpers::findSkipOutputIfNullSymbolPosition($alias);
+        }
+        // Everything before "<" (for the field directive)
+        if ($pos === false) {
+            list($pos) = QueryHelpers::listFieldDirectivesSymbolPositions($alias);
+        }
+        if ($pos !== false) {
+            $alias = substr($alias, 0, $pos);
+        }
+        // Return an array with the position where the alias starts (including the "@") and its length
+        return [
+            self::ALIAS_POSITION_KEY => $aliasSymbolPos,
+            self::ALIAS_LENGTH_KEY => strlen($alias)+strlen(QuerySyntax::SYMBOL_FIELDALIAS_PREFIX),
+        ];
     }
 
     public function getFieldDirectives(string $field, bool $includeSyntaxDelimiters = false): ?string
