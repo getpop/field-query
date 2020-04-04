@@ -253,8 +253,8 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
 
     protected function doGetFieldAlias(string $field): ?string
     {
-        $aliasSymbolPos = QueryHelpers::findFieldAliasSymbolPosition($field);
-        if ($aliasSymbolPos !== false) {
+        if ($fieldAliasPositionSpan = $this->getFieldAliasPositionSpanInField($field)) {
+            $aliasSymbolPos = $fieldAliasPositionSpan[self::ALIAS_POSITION_KEY];
             if ($aliasSymbolPos === 0) {
                 // Only there is the alias, nothing to alias to
                 $this->feedbackMessageStore->addQueryError(sprintf(
@@ -272,26 +272,12 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
             }
 
             // Extract the alias, without the "@" symbol
-            $alias = substr($field, $aliasSymbolPos+strlen(QuerySyntax::SYMBOL_FIELDALIAS_PREFIX));
-
-            // If there is a "]", "?" or "<" after the alias, remove the string from then on
-            // Everything before "]" (for if the alias is inside the bookmark)
-            list (
-                $bookmarkOpeningSymbolPos,
-                $pos
-            ) = QueryHelpers::listFieldBookmarkSymbolPositions($alias);
-            // Everything before "?" (for "skip output if null")
-            if ($pos === false) {
-                $pos = QueryHelpers::findSkipOutputIfNullSymbolPosition($alias);
-            }
-            // Everything before "<" (for the field directive)
-            if ($pos === false) {
-                list($pos) = QueryHelpers::listFieldDirectivesSymbolPositions($alias);
-            }
-            if ($pos !== false) {
-                $alias = substr($alias, 0, $pos);
-            }
-            return $alias;
+            $aliasSymbolLength = $fieldAliasPositionSpan[self::ALIAS_LENGTH_KEY];
+            return substr(
+                $field,
+                $aliasSymbolPos+strlen(QuerySyntax::SYMBOL_FIELDALIAS_PREFIX),
+                $aliasSymbolLength-strlen(QuerySyntax::SYMBOL_FIELDALIAS_PREFIX)
+            );
         }
         return null;
     }
