@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace PoP\FieldQuery;
 use PoP\Translation\TranslationAPIInterface;
 use PoP\QueryParsing\QueryParserInterface;
