@@ -23,8 +23,8 @@ class QueryUtils
             return strlen($symbolElems[0]);
         }
         // Edge case: If the string finishes with the symbol, then the array count of splitting the elements will be 1
-        if (substr($haystack, -1*strlen($needle)) == $needle) {
-            return strlen($haystack)-strlen($needle);
+        if (substr($haystack, -1 * strlen($needle)) == $needle) {
+            return strlen($haystack) - strlen($needle);
         }
 
         return false;
@@ -33,8 +33,8 @@ class QueryUtils
     public static function findLastSymbolPosition(string $haystack, string $needle, $skipFromChars = '', $skipUntilChars = '')
     {
         // Edge case: If the string finishes with the symbol, then the array count of splitting the elements will be 1
-        if (substr($haystack, -1*strlen($needle)) == $needle) {
-            return strlen($haystack)-strlen($needle);
+        if (substr($haystack, -1 * strlen($needle)) == $needle) {
+            return strlen($haystack) - strlen($needle);
         }
         // Split on that searching element: If it appears within the string, it will produce an array with exactly 2 elements (since using option "ONLY_FIRST_OCCURRENCE")
         // The length of the first element equals the position of that symbol

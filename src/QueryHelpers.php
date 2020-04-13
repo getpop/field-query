@@ -41,14 +41,14 @@ class QueryHelpers
 
     public static function getEmptyFieldArgs(): string
     {
-        return QuerySyntax::SYMBOL_FIELDARGS_OPENING.QuerySyntax::SYMBOL_FIELDARGS_CLOSING;
+        return QuerySyntax::SYMBOL_FIELDARGS_OPENING . QuerySyntax::SYMBOL_FIELDARGS_CLOSING;
     }
 
     public static function getFieldArgElements(?string $fieldArgsAsString): array
     {
         if ($fieldArgsAsString) {
             // Remove the opening and closing brackets
-            $fieldArgsAsString = substr($fieldArgsAsString, strlen(QuerySyntax::SYMBOL_FIELDARGS_OPENING), strlen($fieldArgsAsString)-strlen(QuerySyntax::SYMBOL_FIELDARGS_OPENING)-strlen(QuerySyntax::SYMBOL_FIELDARGS_CLOSING));
+            $fieldArgsAsString = substr($fieldArgsAsString, strlen(QuerySyntax::SYMBOL_FIELDARGS_OPENING), strlen($fieldArgsAsString) - strlen(QuerySyntax::SYMBOL_FIELDARGS_OPENING) - strlen(QuerySyntax::SYMBOL_FIELDARGS_CLOSING));
             // Remove the white spaces before and after
             $fieldArgsAsString = trim($fieldArgsAsString);
             // Use `strlen` to allow for "0" as value. Eg: <skip(0)> meaning false
@@ -60,12 +60,14 @@ class QueryHelpers
         return [];
     }
 
-    public static function getVariableQuery(string $variableName) {
-        return QuerySyntax::SYMBOL_VARIABLE_PREFIX.$variableName;
+    public static function getVariableQuery(string $variableName)
+    {
+        return QuerySyntax::SYMBOL_VARIABLE_PREFIX . $variableName;
     }
 
-    public static function getExpressionQuery(string $expressionName) {
-        return QuerySyntax::SYMBOL_EXPRESSION_OPENING.$expressionName.QuerySyntax::SYMBOL_EXPRESSION_CLOSING;
+    public static function getExpressionQuery(string $expressionName)
+    {
+        return QuerySyntax::SYMBOL_EXPRESSION_OPENING . $expressionName . QuerySyntax::SYMBOL_EXPRESSION_CLOSING;
     }
 
     public static function splitFieldDirectives(string $fieldDirectives): array

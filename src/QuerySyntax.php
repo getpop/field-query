@@ -1,7 +1,8 @@
 <?php
 namespace PoP\FieldQuery;
 
-class QuerySyntax {
+class QuerySyntax
+{
     const SYMBOL_QUERYFIELDS_SEPARATOR = ',';
     const SYMBOL_FIELDPROPERTIES_SEPARATOR = '|';
     const SYMBOL_RELATIONALFIELDS_NEXTLEVEL = '.';

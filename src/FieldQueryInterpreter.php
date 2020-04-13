@@ -128,7 +128,7 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
         }
 
         // We have field args. Extract them, including the brackets
-        return substr($field, $fieldArgsOpeningSymbolPos, $fieldArgsClosingSymbolPos+strlen(QuerySyntax::SYMBOL_FIELDARGS_CLOSING)-$fieldArgsOpeningSymbolPos);
+        return substr($field, $fieldArgsOpeningSymbolPos, $fieldArgsClosingSymbolPos + strlen(QuerySyntax::SYMBOL_FIELDARGS_CLOSING) - $fieldArgsOpeningSymbolPos);
     }
 
     public function isSkipOuputIfNullField(string $field): bool
@@ -191,12 +191,12 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
         // If it currently has fieldArgs, append the fieldArgs after the fieldName
         if ($fieldArgsOpeningSymbolPos !== false && $fieldArgsClosingSymbolPos !== false) {
             $fieldName = $this->getFieldName($field);
-            return substr($field, 0, $fieldArgsOpeningSymbolPos).$this->getFieldArgsAsString($fieldArgs).substr($field, $fieldArgsClosingSymbolPos+strlen(QuerySyntax::SYMBOL_FIELDDIRECTIVE_CLOSING));
+            return substr($field, 0, $fieldArgsOpeningSymbolPos) . $this->getFieldArgsAsString($fieldArgs) . substr($field, $fieldArgsClosingSymbolPos + strlen(QuerySyntax::SYMBOL_FIELDDIRECTIVE_CLOSING));
         }
 
         // Otherwise there are none. Then add the fieldArgs between the fieldName and whatever may come after (alias, directives, or nothing)
         $fieldName = $this->getFieldName($field);
-        return $fieldName.$this->getFieldArgsAsString($fieldArgs).substr($field, strlen($fieldName));
+        return $fieldName . $this->getFieldArgsAsString($fieldArgs) . substr($field, strlen($fieldName));
     }
 
     public function isFieldArgumentValueAField($fieldArgValue): bool
@@ -206,7 +206,7 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
         return
             !empty($fieldArgValue) &&
             is_string($fieldArgValue) &&
-            substr($fieldArgValue, -1*strlen(QuerySyntax::SYMBOL_FIELDARGS_CLOSING)) == QuerySyntax::SYMBOL_FIELDARGS_CLOSING &&
+            substr($fieldArgValue, -1 * strlen(QuerySyntax::SYMBOL_FIELDARGS_CLOSING)) == QuerySyntax::SYMBOL_FIELDARGS_CLOSING &&
             // Please notice: if position is 0 (i.e. for a string "(something)") then it's not a field, since the fieldName is missing
             // Then it's ok asking for strpos: either `false` or `0` must both fail
             strpos($fieldArgValue, QuerySyntax::SYMBOL_FIELDARGS_OPENING);
@@ -215,7 +215,7 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
     public function isFieldArgumentValueAnExpression($fieldArgValue): bool
     {
         // If it starts and ends with "%", it is an expression
-        return is_string($fieldArgValue) && substr($fieldArgValue, 0, strlen(QuerySyntax::SYMBOL_EXPRESSION_OPENING)) == QuerySyntax::SYMBOL_EXPRESSION_OPENING  && substr($fieldArgValue, -1*strlen(QuerySyntax::SYMBOL_EXPRESSION_CLOSING)) == QuerySyntax::SYMBOL_EXPRESSION_CLOSING;
+        return is_string($fieldArgValue) && substr($fieldArgValue, 0, strlen(QuerySyntax::SYMBOL_EXPRESSION_OPENING)) == QuerySyntax::SYMBOL_EXPRESSION_OPENING  && substr($fieldArgValue, -1 * strlen(QuerySyntax::SYMBOL_EXPRESSION_CLOSING)) == QuerySyntax::SYMBOL_EXPRESSION_CLOSING;
     }
 
     public function isFieldArgumentValueAVariable($fieldArgValue): bool
@@ -235,12 +235,12 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
     public function isFieldArgumentValueAnArrayRepresentedAsString($fieldArgValue): bool
     {
         // If it starts with "[" and finishes with "]"
-        return is_string($fieldArgValue) && substr($fieldArgValue, 0, strlen(QuerySyntax::SYMBOL_FIELDARGS_ARGVALUEARRAY_OPENING)) == QuerySyntax::SYMBOL_FIELDARGS_ARGVALUEARRAY_OPENING && substr($fieldArgValue, -1*strlen(QuerySyntax::SYMBOL_FIELDARGS_ARGVALUEARRAY_CLOSING)) == QuerySyntax::SYMBOL_FIELDARGS_ARGVALUEARRAY_CLOSING;
+        return is_string($fieldArgValue) && substr($fieldArgValue, 0, strlen(QuerySyntax::SYMBOL_FIELDARGS_ARGVALUEARRAY_OPENING)) == QuerySyntax::SYMBOL_FIELDARGS_ARGVALUEARRAY_OPENING && substr($fieldArgValue, -1 * strlen(QuerySyntax::SYMBOL_FIELDARGS_ARGVALUEARRAY_CLOSING)) == QuerySyntax::SYMBOL_FIELDARGS_ARGVALUEARRAY_CLOSING;
     }
 
     public function createFieldArgValueAsFieldFromFieldName(string $fieldName): string
     {
-        return $fieldName.QueryHelpers::getEmptyFieldArgs();
+        return $fieldName . QueryHelpers::getEmptyFieldArgs();
     }
 
     public function getFieldAlias(string $field): ?string
@@ -262,7 +262,7 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
                     $field
                 ));
                 return null;
-            } elseif ($aliasSymbolPos === strlen($field)-1) {
+            } elseif ($aliasSymbolPos === strlen($field) - 1) {
                 // Only the "@" was added, but the alias is missing
                 $this->feedbackMessageStore->addQueryError(sprintf(
                     $this->translationAPI->__('Alias in \'%s\' is missing', 'pop-component-model'),
@@ -275,8 +275,8 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
             $aliasSymbolLength = $fieldAliasPositionSpan[self::ALIAS_LENGTH_KEY];
             return substr(
                 $field,
-                $aliasSymbolPos+strlen(QuerySyntax::SYMBOL_FIELDALIAS_PREFIX),
-                $aliasSymbolLength-strlen(QuerySyntax::SYMBOL_FIELDALIAS_PREFIX)
+                $aliasSymbolPos + strlen(QuerySyntax::SYMBOL_FIELDALIAS_PREFIX),
+                $aliasSymbolLength - strlen(QuerySyntax::SYMBOL_FIELDALIAS_PREFIX)
             );
         }
         return null;
@@ -306,7 +306,7 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
         }
 
         // Extract the alias, without the "@" symbol
-        $alias = substr($field, $aliasSymbolPos+strlen(QuerySyntax::SYMBOL_FIELDALIAS_PREFIX));
+        $alias = substr($field, $aliasSymbolPos + strlen(QuerySyntax::SYMBOL_FIELDALIAS_PREFIX));
 
         // If there is a "]", "?" or "<" after the alias, remove the string from then on
         // Everything before "]" (for if the alias is inside the bookmark)
@@ -328,7 +328,7 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
         // Return an array with the position where the alias starts (including the "@") and its length
         return [
             self::ALIAS_POSITION_KEY => $aliasSymbolPos,
-            self::ALIAS_LENGTH_KEY => strlen($alias)+strlen(QuerySyntax::SYMBOL_FIELDALIAS_PREFIX),
+            self::ALIAS_LENGTH_KEY => strlen($alias) + strlen(QuerySyntax::SYMBOL_FIELDALIAS_PREFIX),
         ];
     }
 
@@ -339,7 +339,7 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
         }
         // Add the syntax delimiters "<...>" only if the directive is not empty
         return $this->fieldDirectivesCache[$field] && $includeSyntaxDelimiters ?
-            QuerySyntax::SYMBOL_FIELDDIRECTIVE_OPENING.$this->fieldDirectivesCache[$field].QuerySyntax::SYMBOL_FIELDDIRECTIVE_CLOSING :
+            QuerySyntax::SYMBOL_FIELDDIRECTIVE_OPENING . $this->fieldDirectivesCache[$field] . QuerySyntax::SYMBOL_FIELDDIRECTIVE_CLOSING :
             $this->fieldDirectivesCache[$field];
     }
 
@@ -366,7 +366,7 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
         }
 
         // We have a field directive. Extract it
-        $fieldDirectiveOpeningSymbolStrPos = $fieldDirectivesOpeningSymbolPos+strlen(QuerySyntax::SYMBOL_FIELDDIRECTIVE_OPENING);
+        $fieldDirectiveOpeningSymbolStrPos = $fieldDirectivesOpeningSymbolPos + strlen(QuerySyntax::SYMBOL_FIELDDIRECTIVE_OPENING);
         $fieldDirectiveClosingStrPos = $fieldDirectivesClosingSymbolPos - $fieldDirectiveOpeningSymbolStrPos;
         return substr($field, $fieldDirectiveOpeningSymbolStrPos, $fieldDirectiveClosingStrPos);
     }
@@ -416,7 +416,7 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
     {
         $directiveArgs = $this->getDirectiveArgs($directive) ?? '';
         $nestedDirectives = $this->getDirectiveNestedDirectives($directive) ?? '';
-        return $this->getDirectiveName($directive).$directiveArgs.$nestedDirectives;
+        return $this->getDirectiveName($directive) . $directiveArgs . $nestedDirectives;
     }
 
     public function listFieldDirective(string $fieldDirective): array
@@ -489,13 +489,13 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
     protected function getNoAliasFieldOutputKey(string $field): string
     {
         // Use fieldName+fieldArgs
-        return $this->getFieldName($field).$this->getFieldArgs($field);
+        return $this->getFieldName($field) . $this->getFieldArgs($field);
     }
 
     public function listField(string $field): array
     {
         if ($fieldAlias = $this->getFieldAlias($field)) {
-            $fieldAlias = QuerySyntax::SYMBOL_FIELDALIAS_PREFIX.$fieldAlias;
+            $fieldAlias = QuerySyntax::SYMBOL_FIELDALIAS_PREFIX . $fieldAlias;
         }
         return [
             $this->getFieldName($field),
@@ -509,16 +509,16 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
     public function getField(string $fieldName, array $fieldArgs = [], ?string $fieldAlias = null, ?bool $skipOutputIfNull = false, ?array $fieldDirectives = []): string
     {
         return
-            $fieldName.
-            $this->getFieldArgsAsString($fieldArgs).
-            $this->getFieldAliasAsString($fieldAlias).
-            $this->getFieldSkipOutputIfNullAsString($skipOutputIfNull).
+            $fieldName .
+            $this->getFieldArgsAsString($fieldArgs) .
+            $this->getFieldAliasAsString($fieldAlias) .
+            $this->getFieldSkipOutputIfNullAsString($skipOutputIfNull) .
             $this->getFieldDirectivesAsString($fieldDirectives);
     }
 
     public function composeField(string $fieldName, ?string $fieldArgs = '', ?string $fieldAlias = '', ?string $skipOutputIfNull = '', ?string $fieldDirectives = ''): string
     {
-        return $fieldName.$fieldArgs.$fieldAlias.$skipOutputIfNull.$fieldDirectives;
+        return $fieldName . $fieldArgs . $fieldAlias . $skipOutputIfNull . $fieldDirectives;
     }
 
     public function composeDirective(string $directiveName, ?string $directiveArgs = '', ?string $directiveNestedDirectives = ''): array
@@ -541,7 +541,7 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
 
     public function composeFieldDirective(string $directiveName, ?string $directiveArgs = '', ?string $directiveNestedDirectives = ''): string
     {
-        return $directiveName.$directiveArgs.$directiveNestedDirectives;
+        return $directiveName . $directiveArgs . $directiveNestedDirectives;
     }
 
     public function getFieldArgsAsString(array $fieldArgs = []): string
@@ -558,9 +558,9 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
                 // If it doesn't have them yet, wrap the string between quotes for if there's a special symbol inside of it (eg: it if has a ",", it will split the element there when decoding again from string to array in `getField`)
                 $fieldArgValue = $this->maybeWrapStringInQuotes($fieldArgValue);
             }
-            $elems[] = $fieldArgKey.QuerySyntax::SYMBOL_FIELDARGS_ARGKEYVALUESEPARATOR.$fieldArgValue;
+            $elems[] = $fieldArgKey . QuerySyntax::SYMBOL_FIELDARGS_ARGKEYVALUESEPARATOR . $fieldArgValue;
         }
-        return QuerySyntax::SYMBOL_FIELDARGS_OPENING.implode(QuerySyntax::SYMBOL_FIELDARGS_ARGSEPARATOR, $elems).QuerySyntax::SYMBOL_FIELDARGS_CLOSING;
+        return QuerySyntax::SYMBOL_FIELDARGS_OPENING . implode(QuerySyntax::SYMBOL_FIELDARGS_ARGSEPARATOR, $elems) . QuerySyntax::SYMBOL_FIELDARGS_CLOSING;
     }
 
     public function getDirectiveArgsAsString(array $directiveArgs = []): string
@@ -573,7 +573,7 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
         // If it is not a function, then wrap the string between quotes to avoid special symbols inside of it generating troublt
         // Eg: it if has a ",", it will split the element there when decoding again from string to array in `getField`
         if (!$this->isFieldArgumentValueDynamic($value)) {
-            $value = QuerySyntax::SYMBOL_FIELDARGS_ARGVALUESTRING_OPENING.$value.QuerySyntax::SYMBOL_FIELDARGS_ARGVALUESTRING_CLOSING;
+            $value = QuerySyntax::SYMBOL_FIELDARGS_ARGVALUESTRING_OPENING . $value . QuerySyntax::SYMBOL_FIELDARGS_ARGVALUESTRING_CLOSING;
         }
         return $value;
     }
@@ -585,22 +585,22 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
         foreach ($fieldArgValue as $key => $value) {
             // Add the keyValueDelimiter
             if (is_array($value)) {
-                $elems[] = $key.QuerySyntax::SYMBOL_FIELDARGS_ARGVALUEARRAY_KEYVALUEDELIMITER.$this->getArrayAsStringForQuery($value);
+                $elems[] = $key . QuerySyntax::SYMBOL_FIELDARGS_ARGVALUEARRAY_KEYVALUEDELIMITER . $this->getArrayAsStringForQuery($value);
             } else {
                 // If it doesn't have them yet, wrap the string between quotes for if there's a special symbol inside of it (eg: it if has a ",", it will split the element there when decoding again from string to array in `getField`)
                 if (is_string($value)) {
                     $value = $this->maybeWrapStringInQuotes($value);
                 }
-                $elems[] = $key.QuerySyntax::SYMBOL_FIELDARGS_ARGVALUEARRAY_KEYVALUEDELIMITER.$value;
+                $elems[] = $key . QuerySyntax::SYMBOL_FIELDARGS_ARGVALUEARRAY_KEYVALUEDELIMITER . $value;
             }
         }
         return
-            QuerySyntax::SYMBOL_FIELDARGS_ARGVALUEARRAY_OPENING.
+            QuerySyntax::SYMBOL_FIELDARGS_ARGVALUEARRAY_OPENING .
             implode(
                 QuerySyntax::SYMBOL_FIELDARGS_ARGVALUEARRAY_SEPARATOR,
                 $elems
             )
-            .QuerySyntax::SYMBOL_FIELDARGS_ARGVALUEARRAY_CLOSING;
+            . QuerySyntax::SYMBOL_FIELDARGS_ARGVALUEARRAY_CLOSING;
     }
 
     protected function getFieldAliasAsString(?string $fieldAlias = null): string
@@ -608,7 +608,7 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
         if (!$fieldAlias) {
             return '';
         }
-        return QuerySyntax::SYMBOL_FIELDALIAS_PREFIX.$fieldAlias;
+        return QuerySyntax::SYMBOL_FIELDALIAS_PREFIX . $fieldAlias;
     }
 
     protected function getFieldSkipOutputIfNullAsString(?bool $skipOutputIfNull = false): string
@@ -625,9 +625,9 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
             return '';
         }
         return
-            QuerySyntax::SYMBOL_FIELDDIRECTIVE_OPENING.
+            QuerySyntax::SYMBOL_FIELDDIRECTIVE_OPENING .
             implode(QuerySyntax::SYMBOL_FIELDDIRECTIVE_SEPARATOR, array_map(
-                function($fieldDirective) {
+                function ($fieldDirective) {
                     return $this->composeFieldDirective(
                         $fieldDirective[0],
                         $fieldDirective[1],
@@ -635,7 +635,7 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
                     );
                 },
                 $fieldDirectives
-            )).
+            )) .
             QuerySyntax::SYMBOL_FIELDDIRECTIVE_CLOSING;
     }
 }

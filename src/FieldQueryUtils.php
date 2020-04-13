@@ -19,7 +19,7 @@ class FieldQueryUtils
         $fieldQueryInterpreter = FieldQueryInterpreterFacade::getInstance();
         return self::isAnyFieldArgumentValueASomething(
             $fieldArgValues,
-            function($fieldArgValue) use($fieldQueryInterpreter) {
+            function ($fieldArgValue) use ($fieldQueryInterpreter) {
                 return $fieldQueryInterpreter->isFieldArgumentValueDynamic($fieldArgValue);
                     // // Is it a field?
                     // $fieldQueryInterpreter->isFieldArgumentValueAField($fieldArgValue) ||
@@ -41,7 +41,7 @@ class FieldQueryUtils
     public static function isAnyFieldArgumentValueASomething(array $fieldArgValues, callable $callback): bool
     {
         $isOrContainsAField = array_map(
-            function($fieldArgValue) use($callback) {
+            function ($fieldArgValue) use ($callback) {
                 // Either the value is a field, or it is an array of fields
                 if (is_array($fieldArgValue)) {
                     return self::isAnyFieldArgumentValueASomething((array)$fieldArgValue, $callback);
