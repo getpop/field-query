@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace PoP\FieldQuery;
 
-use PoP\ComponentModel\Feedback\Tokens;
-
 class FeedbackMessageStore implements FeedbackMessageStoreInterface
 {
     protected $queryErrors = [];
