@@ -13,6 +13,6 @@ interface FeedbackMessageStoreInterface
      * @param array|null $location array with keys "line" and "column"
      * @return void
      */
-    function addQueryError(string $error, ?array $location = null);
-    function getQueryErrors(): array;
+    public function addQueryError(string $error, ?array $location = null);
+    public function getQueryErrors(): array;
 }

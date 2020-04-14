@@ -18,18 +18,7 @@ Syntax to query GraphQL through URL params, which grants a GraphQL API the capab
 Via Composer
 
 ```php bash
-$ composer require getpop/field-query dev-master
-```
-
-**Note:** Your `composer.json` file must have the configuration below to accept minimum stability `"dev"` (there are no releases for PoP yet, and the code is installed directly from the `master` branch):
-
-```phpjavascript
-{
-  ...
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  ...
-}
+composer require getpop/field-query
 ```
 
 ## Usage
