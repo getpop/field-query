@@ -9,20 +9,15 @@ class FeedbackMessageStore implements FeedbackMessageStoreInterface
     protected $queryErrors = [];
 
     /**
-     * $location is optional. If provided, it is an array with keys "line" and "column"
+     * $extensions is optional. It is used by GraphQL to pass the location with "line" and "column" (as a string)
      *
      * @param string $error
-     * @param array|null $location array with keys "line" and "column"
+     * @param array $extensions Adding extra information (eg: location error for GraphQL)
      * @return void
      */
-    public function addQueryError(string $error, ?array $location = null)
+    public function addQueryError(string $error, array $extensions = [])
     {
-        if ($location) {
-            $key = QueryUtils::convertLocationArrayIntoString($location['line'], $location['column']);
-            $this->queryErrors[$key] = $error;
-        } else {
-            $this->queryErrors[] = $error;
-        }
+        $this->queryErrors[$error] = $extensions;
     }
     public function getQueryErrors(): array
     {
