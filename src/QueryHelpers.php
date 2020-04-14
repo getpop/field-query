@@ -19,9 +19,7 @@ class QueryHelpers
                 ],
                 [
                     QuerySyntax::SYMBOL_FIELDDIRECTIVE_CLOSING
-                ],
-                QuerySyntax::SYMBOL_FIELDARGS_ARGVALUESTRING_OPENING,
-                QuerySyntax::SYMBOL_FIELDARGS_ARGVALUESTRING_CLOSING
+                ]
             ),
             QueryUtils::findLastSymbolPosition(
                 $field,
@@ -31,9 +29,7 @@ class QueryHelpers
                 ],
                 [
                     QuerySyntax::SYMBOL_FIELDDIRECTIVE_CLOSING
-                ],
-                QuerySyntax::SYMBOL_FIELDARGS_ARGVALUESTRING_OPENING,
-                QuerySyntax::SYMBOL_FIELDARGS_ARGVALUESTRING_CLOSING
+                ]
             ),
         ];
     }
