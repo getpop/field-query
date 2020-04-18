@@ -566,7 +566,7 @@ query {
   posts {
     id
     title
-    featuredimage @include(if: $addFeaturedImage) {
+    featuredImage @include(if: $addFeaturedImage) {
       id
       src
     }
@@ -574,7 +574,7 @@ query {
 }
 ```
 
-_**In PoP** (View in browser: [query 1](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|featuredimage<include(if:$include)>.id|src&include=true), [query 2](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|featuredimage<include(if:$include)>.id|src&include=false), [query 3](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|featuredimage<skip(if:$skip)>.id|src&skip=true), [query 4](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|featuredimage<skip(if:$skip)>.id|src&skip=false)):_
+_**In PoP** (View in browser: [query 1](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|featuredImage<include(if:$include)>.id|src&include=true), [query 2](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|featuredImage<include(if:$include)>.id|src&include=false), [query 3](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|featuredImage<skip(if:$skip)>.id|src&skip=true), [query 4](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|featuredImage<skip(if:$skip)>.id|src&skip=false)):_
 
 ```php
 1. /?
@@ -583,7 +583,7 @@ query=
   posts.
     id|
     title|
-    featuredimage<
+    featuredImage<
       include(if:$include)
     >.
       id|
@@ -595,7 +595,7 @@ query=
   posts.
     id|
     title|
-    featuredimage<
+    featuredImage<
       include(if:$include)
     >.
       id|
@@ -607,7 +607,7 @@ query=
   posts.
     id|
     title|
-    featuredimage<
+    featuredImage<
       skip(if:$skip)
     >.
       id|
@@ -619,7 +619,7 @@ query=
   posts.
     id|
     title|
-    featuredimage<
+    featuredImage<
       skip(if:$skip)
     >.
       id|
@@ -683,7 +683,7 @@ The real benefit from having operators comes when they can receive the output fr
 
 In order to distinguish if the input to the field is a string or the name of a field, the field must have field arguments brackets `(...)` (if no arguments, then simply `()`). For instance, `"id"` means the string "id", and `"id()"` means to execute and pass the result from field "id".
 
-_**In PoP** (View in browser: <a href="https://nextapi.getpop.org/api/graphql/?query=posts.hasComments|not(hasComments())">query 1</a>, <a href="https://nextapi.getpop.org/api/graphql/?query=posts.hasComments|hasFeaturedImage|or([hasComments(),hasFeaturedImage()])">query 2</a>, <a href="https://nextapi.getpop.org/api/graphql/?query=var(fetching-site),posts.hasFeaturedImage|and([hasFeaturedImage(), var(fetching-site)])">query 3</a>, <a href="https://nextapi.getpop.org/api/graphql/?query=posts.if(hasComments(),sprintf(Post with title '%s' has %s comments,[title(), commentsCount()]),sprintf(Post with ID %s was created on %s, [id(),date(d/m/Y)]))@postDesc">query 4</a>, <a href="https://nextapi.getpop.org/api/graphql/?query=users.name|equals(name(), leo)">query 5</a>, <a href="https://nextapi.getpop.org/api/graphql/?query=posts.featuredimage|isNull(featuredimage())">query 6</a>):_
+_**In PoP** (View in browser: <a href="https://nextapi.getpop.org/api/graphql/?query=posts.hasComments|not(hasComments())">query 1</a>, <a href="https://nextapi.getpop.org/api/graphql/?query=posts.hasComments|hasFeaturedImage|or([hasComments(),hasFeaturedImage()])">query 2</a>, <a href="https://nextapi.getpop.org/api/graphql/?query=var(fetching-site),posts.hasFeaturedImage|and([hasFeaturedImage(), var(fetching-site)])">query 3</a>, <a href="https://nextapi.getpop.org/api/graphql/?query=posts.if(hasComments(),sprintf(Post with title '%s' has %s comments,[title(), commentsCount()]),sprintf(Post with ID %s was created on %s, [id(),date(d/m/Y)]))@postDesc">query 4</a>, <a href="https://nextapi.getpop.org/api/graphql/?query=users.name|equals(name(), leo)">query 5</a>, <a href="https://nextapi.getpop.org/api/graphql/?query=posts.featuredImage|isNull(featuredImage())">query 6</a>):_
 
 ```php
 1. /?query=
@@ -734,8 +734,8 @@ _**In PoP** (View in browser: <a href="https://nextapi.getpop.org/api/graphql/?q
 
 6. /?query=
   posts.
-    featuredimage|
-    isNull(featuredimage())
+    featuredImage|
+    isNull(featuredImage())
 ```
 
 In order to include characters `(` and `)` as part of the query string, and avoid treating the string as a field to be executed, we must enclose it using quotes: `"..."`.
@@ -757,15 +757,15 @@ Composable fields enable to execute an operation against the queried object itse
 
 For instance, the GraphQL spec [requires](https://graphql.org/learn/queries/#directives) to support directives `include` and `skip`, which receive a parameter `if` with a boolean value. While GraphQL expects this value to be provided through a variable (as shown in section [Directives](#directives) above), in PoP it can be retrieved from the object.
 
-_**In PoP** (View in browser: [query 1](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|featuredimage<include(if:not(isNull(featuredimage())))>.id|src), [query 2](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|featuredimage<skip(if:isNull(featuredimage()))>.id|src)):_
+_**In PoP** (View in browser: [query 1](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|featuredImage<include(if:not(isNull(featuredImage())))>.id|src), [query 2](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|featuredImage<skip(if:isNull(featuredImage()))>.id|src)):_
 
 ```php
 1. /?query=
   posts.
     id|
     title|
-    featuredimage<
-      include(if:not(isNull(featuredimage())))
+    featuredImage<
+      include(if:not(isNull(featuredImage())))
     >.
       id|
       src
@@ -774,8 +774,8 @@ _**In PoP** (View in browser: [query 1](https://nextapi.getpop.org/api/graphql/?
   posts.
     id|
     title|
-    featuredimage<
-      skip(if:isNull(featuredimage()))
+    featuredImage<
+      skip(if:isNull(featuredImage()))
     >.
       id|
       src
@@ -783,16 +783,16 @@ _**In PoP** (View in browser: [query 1](https://nextapi.getpop.org/api/graphql/?
 
 ### Skip output if null
 
-Whenever the value from a field is null, its nested fields will not be retrieved. For instance, consider the following case, in which field `"featuredimage"` sometimes is null:
+Whenever the value from a field is null, its nested fields will not be retrieved. For instance, consider the following case, in which field `"featuredImage"` sometimes is null:
 
-_**In PoP** ([View query in browser](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|featuredimage.id|src)):_
+_**In PoP** ([View query in browser](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|featuredImage.id|src)):_
 
 ```php
 /?query=
   posts.
     id|
     title|
-    featuredimage.
+    featuredImage.
       id|
       src
 ```
@@ -801,14 +801,14 @@ As we have seen in section [Composable fields with directives](#composable-field
 
 For this, PoP introduces symbol `?`, to be placed after the field name (and its field arguments, alias and bookmark), to indicate "if this value is null, do not output it". 
 
-_**In PoP** ([View query in browser](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|featuredimage?.id|src)):_
+_**In PoP** ([View query in browser](https://nextapi.getpop.org/api/graphql/?query=posts.id|title|featuredImage?.id|src)):_
 
 ```php
 /?query=
   posts.
     id|
     title|
-    featuredimage?.
+    featuredImage?.
       id|
       src
 ```
@@ -949,14 +949,14 @@ query=
 
 A fragment can contain an alias, which is then transferred to all fragment resolution fields as an enumerated alias (`@aliasName1`, `@aliasName2`, etc):
 
-_**In PoP** ([View query in browser](https://nextapi.getpop.org/api/graphql/?query=posts.id|--props@prop&fragments[props]=title|url|featuredimage)):_
+_**In PoP** ([View query in browser](https://nextapi.getpop.org/api/graphql/?query=posts.id|--props@prop&fragments[props]=title|url|featuredImage)):_
 
 ```php
 /?
 fragments[props]=
   title|
   url|
-  featuredimage&
+  featuredImage&
 query=
   posts.
     id|
@@ -973,14 +973,14 @@ _**In PoP** ([View query in browser](https://nextapi.getpop.org/api/graphql/?que
 
 A fragment can contain the "Skip output if null" symbol, which is then transferred to all fragment resolution fields:
 
-_**In PoP** ([View query in browser](https://nextapi.getpop.org/api/graphql/?query=posts.id|--props?&fragments[props]=title|url|featuredimage)):_
+_**In PoP** ([View query in browser](https://nextapi.getpop.org/api/graphql/?query=posts.id|--props?&fragments[props]=title|url|featuredImage)):_
 
 ```php
 /?
 fragments[props]=
   title|
   url|
-  featuredimage&
+  featuredImage&
 query=
   posts.
     id|
@@ -989,7 +989,7 @@ query=
 
 Combining both directives and the skip output if null symbol with fragments:
 
-_**In PoP** ([View query in browser](https://nextapi.getpop.org/api/graphql/?query=posts.id|hasComments|--props?<include(if:hasComments())>&fragments[props]=title|url<include(if:hasComments())>|featuredimage)):_
+_**In PoP** ([View query in browser](https://nextapi.getpop.org/api/graphql/?query=posts.id|hasComments|--props?<include(if:hasComments())>&fragments[props]=title|url<include(if:hasComments())>|featuredImage)):_
 
 ```php
 /?
@@ -998,7 +998,7 @@ fragments[props]=
   url<
     include(if:hasComments())
   >|
-  featuredimage&
+  featuredImage&
 query=
   posts.
     id|
