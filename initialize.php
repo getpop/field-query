@@ -1,2 +1,2 @@
 <?php
-\PoP\FieldQuery\Component::init();
+//\PoP\FieldQuery\Component::initialize();
