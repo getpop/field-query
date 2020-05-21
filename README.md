@@ -22,6 +22,14 @@ composer require getpop/field-query
 
 ## Usage
 
+Initialize the component:
+
+``` php
+\PoP\FieldQuery\Component::initialize();
+```
+
+Use it:
+
 ```php
 use PoP\FieldQuery\Facades\Query\FieldQueryInterpreterFacade;
 
