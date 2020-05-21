@@ -26,7 +26,7 @@ class Component extends AbstractComponent
     /**
      * Initialize services
      */
-    protected static function doInitialize()
+    protected static function doInitialize(): void
     {
         parent::doInitialize();
         self::initYAMLServices(dirname(__DIR__));
