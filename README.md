@@ -25,7 +25,9 @@ composer require getpop/field-query
 Initialize the component:
 
 ``` php
-\PoP\FieldQuery\Component::initialize();
+\PoP\Root\ComponentLoader::initializeComponents([
+    \PoP\FieldQuery\Component::class,
+]);
 ```
 
 Use it:
