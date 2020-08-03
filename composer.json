@@ -18,13 +18,13 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "php" : "~7.1",
+        "php": "~7.2",
         "getpop/translation": "~0.1",
         "getpop/query-parsing": "~0.1"
     },
     "require-dev": {
         "phpstan/phpstan": "^0.12",
-        "phpunit/phpunit": ">=9.2",
+        "phpunit/phpunit": ">=8.5",
         "squizlabs/php_codesniffer": "^3.0"
     },
     "autoload": {
