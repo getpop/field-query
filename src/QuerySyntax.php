@@ -6,6 +6,7 @@ namespace PoP\FieldQuery;
 
 class QuerySyntax
 {
+    const SYMBOL_OPERATIONS_SEPARATOR = ';';
     const SYMBOL_QUERYFIELDS_SEPARATOR = ',';
     const SYMBOL_FIELDPROPERTIES_SEPARATOR = '|';
     const SYMBOL_RELATIONALFIELDS_NEXTLEVEL = '.';
