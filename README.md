@@ -323,10 +323,10 @@ In the GraphQL server, the previous query is resolved as this one (with `self` b
       url,
   self.
     self.
-        posts.
-            comments.
-            id|
-            content
+      posts.
+        comments.
+        id|
+        content
 ```
 
 ### Field arguments
