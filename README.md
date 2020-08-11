@@ -272,6 +272,63 @@ _**In PoP** ([View query in browser](https://nextapi.getpop.org/api/graphql/?que
       content
 ```
 
+### Appending fields with strict execution order
+
+_This is a syntax + functionality feature._ Combine multiple fields by joining them using `;`, telling the data-loading engine to resolve the fields on the right side of the `;` only after resolving all the fields on the left side.
+
+The closest equivalent in GraphQL is the same as the previous case with `,`, however this syntax does not modify the behavior of the server.
+
+_**In GraphQL**:_
+
+```graphql
+query {
+  posts {
+    author {
+      id
+      name
+      url
+    }
+    comments {
+      id
+      content
+    }
+  }
+}
+```
+
+_**In PoP** ([View query in browser](https://nextapi.getpop.org/api/graphql/?query=posts.author.id|name|url;posts.comments.id|content)):_
+
+```php
+/?query=
+  posts.
+    author.
+      id|
+      name|
+      url;
+      
+  posts.
+    comments.
+      id|
+      content
+```
+
+In the GraphQL server, the previous query is resolved as this one (with `self` being used to delay when a field is resolved):
+
+```php
+/?query=
+  posts.
+    author.
+      id|
+      name|
+      url,
+  self.
+    self.
+        posts.
+            comments.
+            id|
+            content
+```
+
 ### Field arguments
 
 Field arguments is an array of properties, to filter the results (when applied to a property along a path) or modify the output (when applied to a property on a leaf node) from the field. These are enclosed using `()`, defined using `:` to separate the property name from the value (becoming `name:value`), and separated using `,`.
