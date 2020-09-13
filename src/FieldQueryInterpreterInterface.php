@@ -43,7 +43,8 @@ interface FieldQueryInterpreterInterface
         array $fieldArgs = [],
         ?string $fieldAlias = null,
         ?bool $skipOutputIfNull = false,
-        ?array $fieldDirectives = []
+        ?array $fieldDirectives = [],
+        bool $addFieldArgSymbolsIfEmpty = false
     ): string;
     public function composeField(
         string $fieldName,
@@ -70,6 +71,9 @@ interface FieldQueryInterpreterInterface
     public function getFieldDirectivesAsString(array $fieldDirectives): string;
     public function getVariablesFromRequest(): array;
     public function getArrayAsStringForQuery(array $fieldArgValue): string;
-    public function getFieldArgsAsString(array $fieldArgs = []): string;
+    public function getFieldArgsAsString(
+        array $fieldArgs = [],
+        bool $addFieldArgSymbolsIfEmpty = false
+    ): string;
     public function getDirectiveArgsAsString(array $directiveArgs = []): string;
 }

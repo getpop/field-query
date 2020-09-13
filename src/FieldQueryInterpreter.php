@@ -601,11 +601,12 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
         array $fieldArgs = [],
         ?string $fieldAlias = null,
         ?bool $skipOutputIfNull = false,
-        ?array $fieldDirectives = []
+        ?array $fieldDirectives = [],
+        bool $addFieldArgSymbolsIfEmpty = false
     ): string {
         return
             $fieldName .
-            $this->getFieldArgsAsString($fieldArgs) .
+            $this->getFieldArgsAsString($fieldArgs, $addFieldArgSymbolsIfEmpty) .
             $this->getFieldAliasAsString($fieldAlias) .
             $this->getFieldSkipOutputIfNullAsString($skipOutputIfNull) .
             $this->getFieldDirectivesAsString($fieldDirectives);
@@ -653,9 +654,16 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
         return $directiveName . $directiveArgs . $directiveNestedDirectives;
     }
 
-    public function getFieldArgsAsString(array $fieldArgs = []): string
-    {
+    public function getFieldArgsAsString(
+        array $fieldArgs = [],
+        bool $addFieldArgSymbolsIfEmpty = false
+    ): string {
         if (!$fieldArgs) {
+            if ($addFieldArgSymbolsIfEmpty) {
+                return
+                    QuerySyntax::SYMBOL_FIELDARGS_OPENING .
+                    QuerySyntax::SYMBOL_FIELDARGS_CLOSING;
+            }
             return '';
         }
         $elems = [];
