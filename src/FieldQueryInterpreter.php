@@ -690,8 +690,27 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
         return $this->getFieldArgsAsString($directiveArgs);
     }
 
+    protected function isStringWrappedInQuotes(string $value): bool
+    {
+        return
+            substr(
+                $value,
+                0,
+                strlen(QuerySyntax::SYMBOL_FIELDARGS_ARGVALUESTRING_OPENING)
+            ) == QuerySyntax::SYMBOL_FIELDARGS_ARGVALUESTRING_OPENING
+            && substr(
+                $value,
+                -1 * strlen(QuerySyntax::SYMBOL_FIELDARGS_ARGVALUESTRING_CLOSING)
+            ) == QuerySyntax::SYMBOL_FIELDARGS_ARGVALUESTRING_CLOSING;
+    }
+
     protected function maybeWrapStringInQuotes(string $value): string
     {
+        // Check if it has the quotes already
+        if ($this->isStringWrappedInQuotes($value)) {
+            return $value;
+        }
+
         // If it is not a function, then wrap the string between quotes to avoid
         // special symbols inside of it generating trouble
         // Eg: it if has a ",", it will split the element there when decoding again from string to array in `getField`
