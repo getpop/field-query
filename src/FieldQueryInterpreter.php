@@ -177,20 +177,6 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
         return $field;
     }
 
-    public function removeAliasFromField(string $field): string
-    {
-        $pos = QueryHelpers::findFieldAliasSymbolPosition($field);
-        if ($pos !== false) {
-            // Replace the "?" with nothing
-            $field = str_replace(
-                QuerySyntax::SYMBOL_SKIPOUTPUTIFNULL,
-                '',
-                $field
-            );
-        }
-        return $field;
-    }
-
     /**
      * Replace the fieldArgs in the field
      *

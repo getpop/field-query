@@ -10,7 +10,6 @@ interface FieldQueryInterpreterInterface
     public function getFieldArgs(string $field): ?string;
     public function isSkipOuputIfNullField(string $field): bool;
     public function removeSkipOuputIfNullFromField(string $field): string;
-    public function removeAliasFromField(string $field): string;
     public function isFieldArgumentValueAField($fieldArgValue): bool;
     public function isFieldArgumentValueAVariable($fieldArgValue): bool;
     public function isFieldArgumentValueAnExpression($fieldArgValue): bool;
