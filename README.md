@@ -1117,6 +1117,25 @@ Directives:
 
 -->
 
+## PHP versions
+
+Requirements:
+
+- PHP 7.4+ for development
+- PHP 7.1+ for production
+
+### Supported PHP features
+
+Same as the [Supported PHP features for `getpop/root`](https://github.com/getpop/root/#supported-php-features)
+
+### Downgrading code to PHP 7.1
+
+Via [Rector](https://github.com/rectorphp/rector) (dry-run mode):
+
+```bash
+composer downgrade-code
+```
+
 ## Standards
 
 [PSR-1](https://www.php-fig.org/psr/psr-1), [PSR-4](https://www.php-fig.org/psr/psr-4) and [PSR-12](https://www.php-fig.org/psr/psr-12).
