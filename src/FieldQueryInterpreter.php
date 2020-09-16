@@ -24,9 +24,9 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
     private $variablesFromRequestCache;
 
     // Services
-    protected $translationAPI;
-    protected $feedbackMessageStore;
-    protected $queryParser;
+    protected TranslationAPIInterface $translationAPI;
+    protected FeedbackMessageStoreInterface $feedbackMessageStore;
+    protected QueryParserInterface $queryParser;
 
     public const ALIAS_POSITION_KEY = 'pos';
     public const ALIAS_LENGTH_KEY = 'length';

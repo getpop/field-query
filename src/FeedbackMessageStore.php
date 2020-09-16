@@ -6,7 +6,10 @@ namespace PoP\FieldQuery;
 
 class FeedbackMessageStore implements FeedbackMessageStoreInterface
 {
-    protected $queryErrors = [];
+    /**
+     * @var array<string, array>
+     */
+    protected array $queryErrors = [];
 
     /**
      * $extensions is optional. It is used by GraphQL to pass the location with "line" and "column" (as a string)
