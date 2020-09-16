@@ -10,18 +10,48 @@ use PoP\QueryParsing\QueryParserInterface;
 class FieldQueryInterpreter implements FieldQueryInterpreterInterface
 {
     // Cache the output from functions
-    private $fieldNamesCache = [];
-    private $fieldArgsCache = [];
-    private $skipOutputIfNullCache = [];
-    private $fieldAliasesCache = [];
-    private $fieldAliasPositionSpansCache = [];
-    private $fieldDirectivesCache = [];
-    private $directivesCache = [];
-    private $extractedFieldDirectivesCache = [];
-    private $fieldOutputKeysCache = [];
+    /**
+     * @var array<string, array>
+     */
+    private array $fieldNamesCache = [];
+    /**
+     * @var array<string, array>
+     */
+    private array $fieldArgsCache = [];
+    /**
+     * @var array<string, array>
+     */
+    private array $skipOutputIfNullCache = [];
+    /**
+     * @var array<string, array>
+     */
+    private array $fieldAliasesCache = [];
+    /**
+     * @var array<string, array>
+     */
+    private array $fieldAliasPositionSpansCache = [];
+    /**
+     * @var array<string, array>
+     */
+    private array $fieldDirectivesCache = [];
+    /**
+     * @var array<string, array>
+     */
+    private array $directivesCache = [];
+    /**
+     * @var array<string, array>
+     */
+    private array $extractedFieldDirectivesCache = [];
+    /**
+     * @var array<string, array>
+     */
+    private array $fieldOutputKeysCache = [];
 
     // Cache vars to take from the request
-    private $variablesFromRequestCache;
+    /**
+     * @var array<string, array>
+     */
+    private array $variablesFromRequestCache;
 
     // Services
     protected TranslationAPIInterface $translationAPI;
