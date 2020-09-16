@@ -49,9 +49,9 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
 
     // Cache vars to take from the request
     /**
-     * @var array<string, array>
+     * @var array<string, array>|null
      */
-    private array $variablesFromRequestCache;
+    private ?array $variablesFromRequestCache = null;
 
     // Services
     protected TranslationAPIInterface $translationAPI;
