@@ -709,15 +709,8 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
     protected function isStringWrappedInQuotes(string $value): bool
     {
         return
-            substr(
-                $value,
-                0,
-                strlen(QuerySyntax::SYMBOL_FIELDARGS_ARGVALUESTRING_OPENING)
-            ) == QuerySyntax::SYMBOL_FIELDARGS_ARGVALUESTRING_OPENING
-            && substr(
-                $value,
-                -1 * strlen(QuerySyntax::SYMBOL_FIELDARGS_ARGVALUESTRING_CLOSING)
-            ) == QuerySyntax::SYMBOL_FIELDARGS_ARGVALUESTRING_CLOSING;
+            str_starts_with($value, QuerySyntax::SYMBOL_FIELDARGS_ARGVALUESTRING_OPENING)
+            && str_ends_with($value, QuerySyntax::SYMBOL_FIELDARGS_ARGVALUESTRING_CLOSING);
     }
 
     protected function maybeWrapStringInQuotes(string $value): string
