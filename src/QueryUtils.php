@@ -9,6 +9,11 @@ use PoP\QueryParsing\Facades\QueryParserFacade;
 
 class QueryUtils
 {
+    /**
+     * @param string[]|string|null $skipFromChars
+     * @param string[]|string|null $skipUntilChars
+     * @return int|false
+     */
     public static function findFirstSymbolPosition(
         string $haystack,
         string $needle,
@@ -46,6 +51,11 @@ class QueryUtils
         return false;
     }
 
+    /**
+     * @param string[]|string|null $skipFromChars
+     * @param string[]|string|null $skipUntilChars
+     * @return int|false
+     */
     public static function findLastSymbolPosition(
         string $haystack,
         string $needle,

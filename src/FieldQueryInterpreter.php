@@ -181,7 +181,7 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
         // We have field args. Extract them, including the brackets
         return substr(
             $field,
-            $fieldArgsOpeningSymbolPos,
+            (int)$fieldArgsOpeningSymbolPos,
             $fieldArgsClosingSymbolPos + strlen(QuerySyntax::SYMBOL_FIELDARGS_CLOSING) - $fieldArgsOpeningSymbolPos
         );
     }

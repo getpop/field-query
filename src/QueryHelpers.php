@@ -8,6 +8,9 @@ use PoP\QueryParsing\Facades\QueryParserFacade;
 
 class QueryHelpers
 {
+    /**
+     * @return array<int|false>
+     */
     public static function listFieldArgsSymbolPositions(string $field): array
     {
         return [
@@ -34,6 +37,9 @@ class QueryHelpers
         ];
     }
 
+    /**
+     * @return array<int|false>
+     */
     public static function listFieldBookmarkSymbolPositions(string $field): array
     {
         return [
@@ -64,6 +70,9 @@ class QueryHelpers
         ];
     }
 
+    /**
+     * @return int|false
+     */
     public static function findFieldAliasSymbolPosition(string $field)
     {
         return QueryUtils::findFirstSymbolPosition(
@@ -80,6 +89,9 @@ class QueryHelpers
         );
     }
 
+    /**
+     * @return int|false
+     */
     public static function findSkipOutputIfNullSymbolPosition(string $field)
     {
         return QueryUtils::findFirstSymbolPosition(
@@ -98,6 +110,9 @@ class QueryHelpers
         );
     }
 
+    /**
+     * @return array<int|false>
+     */
     public static function listFieldDirectivesSymbolPositions(string $field): array
     {
         return [
@@ -121,6 +136,9 @@ class QueryHelpers
         return QuerySyntax::SYMBOL_FIELDARGS_OPENING . QuerySyntax::SYMBOL_FIELDARGS_CLOSING;
     }
 
+    /**
+     * @return string[]
+     */
     public static function getFieldArgElements(?string $fieldArgsAsString): array
     {
         if ($fieldArgsAsString) {
@@ -158,16 +176,19 @@ class QueryHelpers
         return [];
     }
 
-    public static function getVariableQuery(string $variableName)
+    public static function getVariableQuery(string $variableName): string
     {
         return QuerySyntax::SYMBOL_VARIABLE_PREFIX . $variableName;
     }
 
-    public static function getExpressionQuery(string $expressionName)
+    public static function getExpressionQuery(string $expressionName): string
     {
         return QuerySyntax::SYMBOL_EXPRESSION_OPENING . $expressionName . QuerySyntax::SYMBOL_EXPRESSION_CLOSING;
     }
 
+    /**
+     * @return string[]
+     */
     public static function splitFieldDirectives(string $fieldDirectives): array
     {
         $queryParser = QueryParserFacade::getInstance();
