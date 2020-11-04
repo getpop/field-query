@@ -90,14 +90,14 @@ interface FieldQueryInterpreterInterface
     public function listField(string $field): array;
     /**
      * @param array<string, mixed> $fieldArgs
-     * @param array<array<string|null>> $fieldDirectives
+     * @param array<array<string|null>>|null $fieldDirectives
      */
     public function getField(
         string $fieldName,
         array $fieldArgs = [],
         ?string $fieldAlias = null,
         bool $skipOutputIfNull = false,
-        array $fieldDirectives = [],
+        ?array $fieldDirectives = [],
         bool $addFieldArgSymbolsIfEmpty = false
     ): string;
     public function composeField(

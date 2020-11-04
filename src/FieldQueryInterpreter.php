@@ -673,14 +673,14 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
 
     /**
      * @param array<string, mixed> $fieldArgs
-     * @param array<array<string|null>> $fieldDirectives
+     * @param array<array<string|null>>|null $fieldDirectives
      */
     public function getField(
         string $fieldName,
         array $fieldArgs = [],
         ?string $fieldAlias = null,
         bool $skipOutputIfNull = false,
-        array $fieldDirectives = [],
+        ?array $fieldDirectives = [],
         bool $addFieldArgSymbolsIfEmpty = false
     ): string {
         return
@@ -688,7 +688,7 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
             $this->getFieldArgsAsString($fieldArgs, $addFieldArgSymbolsIfEmpty) .
             $this->getFieldAliasAsString($fieldAlias) .
             $this->getFieldSkipOutputIfNullAsString($skipOutputIfNull) .
-            $this->getFieldDirectivesAsString($fieldDirectives);
+            $this->getFieldDirectivesAsString($fieldDirectives ?? []);
     }
 
     public function composeField(
