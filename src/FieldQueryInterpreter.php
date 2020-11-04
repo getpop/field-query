@@ -11,27 +11,27 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
 {
     // Cache the output from functions
     /**
-     * @var array<string, array>
+     * @var array<string, string>
      */
     private array $fieldNamesCache = [];
     /**
-     * @var array<string, array>
+     * @var array<string, string|null>
      */
     private array $fieldArgsCache = [];
     /**
-     * @var array<string, array>
+     * @var array<string, bool>
      */
     private array $skipOutputIfNullCache = [];
     /**
-     * @var array<string, array>
+     * @var array<string, string|null>
      */
     private array $fieldAliasesCache = [];
     /**
-     * @var array<string, array>
+     * @var array<string, array<string, int>|null>
      */
     private array $fieldAliasPositionSpansCache = [];
     /**
-     * @var array<string, array>
+     * @var array<string, string|null>
      */
     private array $fieldDirectivesCache = [];
     /**
@@ -43,13 +43,13 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
      */
     private array $extractedFieldDirectivesCache = [];
     /**
-     * @var array<string, array>
+     * @var array<string, string>
      */
     private array $fieldOutputKeysCache = [];
 
     // Cache vars to take from the request
     /**
-     * @var array<string, array>|null
+     * @var array<string, mixed>|null
      */
     private ?array $variablesFromRequestCache = null;
 
@@ -113,6 +113,9 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
         return trim($field);
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getVariablesFromRequest(): array
     {
         if (is_null($this->variablesFromRequestCache)) {
@@ -121,6 +124,9 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
         return $this->variablesFromRequestCache;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     protected function doGetVariablesFromRequest(): array
     {
         return array_merge(
@@ -211,7 +217,7 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
      * Replace the fieldArgs in the field
      *
      * @param string $field
-     * @param array $fieldArgs
+     * @param array<string, mixed> $fieldArgs
      * @return string
      */
     protected function replaceFieldArgs(string $field, array $fieldArgs = []): string
@@ -244,6 +250,9 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
         return $fieldName . $this->getFieldArgsAsString($fieldArgs) . substr($field, strlen($fieldName));
     }
 
+    /**
+     * @param mixed $fieldArgValue
+     */
     public function isFieldArgumentValueAField($fieldArgValue): bool
     {
         // If the result fieldArgValue is a string (i.e. not numeric), and it has brackets (...),
@@ -261,6 +270,9 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
             && strpos($fieldArgValue, QuerySyntax::SYMBOL_FIELDARGS_OPENING);
     }
 
+    /**
+     * @param mixed $fieldArgValue
+     */
     public function isFieldArgumentValueAnExpression($fieldArgValue): bool
     {
         // If it starts and ends with "%", it is an expression
@@ -277,6 +289,9 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
             ) == QuerySyntax::SYMBOL_EXPRESSION_CLOSING;
     }
 
+    /**
+     * @param mixed $fieldArgValue
+     */
     public function isFieldArgumentValueAVariable($fieldArgValue): bool
     {
         // If it starts with "$", it is a variable
@@ -289,6 +304,9 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
             ) == QuerySyntax::SYMBOL_VARIABLE_PREFIX;
     }
 
+    /**
+     * @param mixed $fieldArgValue
+     */
     public function isFieldArgumentValueDynamic($fieldArgValue): bool
     {
         return
@@ -297,6 +315,9 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
             $this->isFieldArgumentValueAVariable($fieldArgValue);
     }
 
+    /**
+     * @param mixed $fieldArgValue
+     */
     public function isFieldArgumentValueAnArrayRepresentedAsString($fieldArgValue): bool
     {
         // If it starts with "[" and finishes with "]"
@@ -361,8 +382,7 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
      * Return an array with the position where the alias starts (including the "@") and its length
      * Return null if the field has no alias
      *
-     * @param string $field
-     * @return array|null
+     * @return array<string, int>|null
      */
     public function getFieldAliasPositionSpanInField(string $field): ?array
     {
@@ -372,6 +392,9 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
         return $this->fieldAliasPositionSpansCache[$field];
     }
 
+    /**
+     * @return array<string, int>|null
+     */
     protected function doGetFieldAliasPositionSpanInField(string $field): ?array
     {
         $aliasSymbolPos = QueryHelpers::findFieldAliasSymbolPosition($field);
@@ -462,6 +485,9 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
         return substr($field, $fieldDirectiveOpeningSymbolStrPos, $fieldDirectiveClosingStrPos);
     }
 
+    /**
+     * @return array<array<string|null>>
+     */
     public function getDirectives(string $field): array
     {
         if (!isset($this->directivesCache[$field])) {
@@ -470,6 +496,9 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
         return $this->directivesCache[$field];
     }
 
+    /**
+     * @return array<array<string|null>>
+     */
     protected function doGetDirectives(string $field): array
     {
         $fieldDirectives = $this->getFieldDirectives($field, false);
@@ -479,6 +508,9 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
         return $this->extractFieldDirectives($fieldDirectives);
     }
 
+    /**
+     * @return array<array<string|null>>
+     */
     public function extractFieldDirectives(string $fieldDirectives): array
     {
         if (!isset($this->extractedFieldDirectivesCache[$fieldDirectives])) {
@@ -487,6 +519,9 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
         return $this->extractedFieldDirectivesCache[$fieldDirectives];
     }
 
+    /**
+     * @return array<array<string|null>>
+     */
     protected function doExtractFieldDirectives(string $fieldDirectives): array
     {
         if (!$fieldDirectives) {
@@ -513,11 +548,17 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
         );
     }
 
+    /**
+     * @param string[] $fieldDirectives
+     */
     public function composeFieldDirectives(array $fieldDirectives): string
     {
         return implode(QuerySyntax::SYMBOL_FIELDDIRECTIVE_SEPARATOR, $fieldDirectives);
     }
 
+    /**
+     * @param array<string|null> $directive
+     */
     public function convertDirectiveToFieldDirective(array $directive): string
     {
         $directiveArgs = $this->getDirectiveArgs($directive) ?? '';
@@ -525,6 +566,9 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
         return $this->getDirectiveName($directive) . $directiveArgs . $nestedDirectives;
     }
 
+    /**
+     * @return array<string|null>
+     */
     public function listFieldDirective(string $fieldDirective): array
     {
         // Each item is an array of up to 3 elements: 0 => name, 1 => args, 2 => composed directives
@@ -545,26 +589,38 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
         return $this->getFieldArgs($fieldDirective);
     }
 
-    public function getFieldDirectiveNestedDirectives(string $fieldDirective, $includeSyntaxDelimiters = false): ?string
+    public function getFieldDirectiveNestedDirectives(string $fieldDirective, bool $includeSyntaxDelimiters = false): ?string
     {
         return $this->getFieldDirectives($fieldDirective, $includeSyntaxDelimiters);
     }
 
+    /**
+     * @param array<string, mixed> $directiveArgs
+     */
     public function getFieldDirective(string $directiveName, array $directiveArgs = []): string
     {
         return $this->getField($directiveName, $directiveArgs);
     }
 
+    /**
+     * @param array<string|null> $directive
+     */
     public function getDirectiveName(array $directive): string
     {
-        return $directive[0];
+        return (string)$directive[0];
     }
 
+    /**
+     * @param array<string|null> $directive
+     */
     public function getDirectiveArgs(array $directive): ?string
     {
         return $directive[1];
     }
 
+    /**
+     * @param array<string|null> $directive
+     */
     public function getDirectiveNestedDirectives(array $directive): ?string
     {
         return $directive[2];
@@ -598,6 +654,9 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
         return $this->getFieldName($field) . $this->getFieldArgs($field);
     }
 
+    /**
+     * @return array<string|null>
+     */
     public function listField(string $field): array
     {
         if ($fieldAlias = $this->getFieldAlias($field)) {
@@ -612,12 +671,16 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
         ];
     }
 
+    /**
+     * @param array<string, mixed> $fieldArgs
+     * @param array<array<string|null>> $fieldDirectives
+     */
     public function getField(
         string $fieldName,
         array $fieldArgs = [],
         ?string $fieldAlias = null,
-        ?bool $skipOutputIfNull = false,
-        ?array $fieldDirectives = [],
+        bool $skipOutputIfNull = false,
+        array $fieldDirectives = [],
         bool $addFieldArgSymbolsIfEmpty = false
     ): string {
         return
@@ -638,6 +701,9 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
         return $fieldName . $fieldArgs . $fieldAlias . $skipOutputIfNull . $fieldDirectives;
     }
 
+    /**
+     * @return array<string|null>
+     */
     public function composeDirective(
         string $directiveName,
         ?string $directiveArgs = '',
@@ -650,6 +716,10 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
         ];
     }
 
+    /**
+     * @param array<string, mixed> $directiveArgs
+     * @return array<string|null>
+     */
     public function getDirective(
         string $directiveName,
         array $directiveArgs = [],
@@ -670,6 +740,9 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
         return $directiveName . $directiveArgs . $directiveNestedDirectives;
     }
 
+    /**
+     * @param array<string, mixed> $fieldArgs
+     */
     public function getFieldArgsAsString(
         array $fieldArgs = [],
         bool $addFieldArgSymbolsIfEmpty = false
@@ -701,6 +774,9 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
             QuerySyntax::SYMBOL_FIELDARGS_CLOSING;
     }
 
+    /**
+     * @param array<string, mixed> $directiveArgs
+     */
     public function getDirectiveArgsAsString(array $directiveArgs = []): string
     {
         return $this->getFieldArgsAsString($directiveArgs);
@@ -732,6 +808,9 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
         return $value;
     }
 
+    /**
+     * @param array<string, mixed> $fieldArgValue
+     */
     public function getArrayAsStringForQuery(array $fieldArgValue): string
     {
         // Iterate through all the elements of the array and, if they are an array themselves,
@@ -779,7 +858,10 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
         return QuerySyntax::SYMBOL_SKIPOUTPUTIFNULL;
     }
 
-    public function getFieldDirectivesAsString(?array $fieldDirectives = []): string
+    /**
+     * @param array<array<string|null>> $fieldDirectives
+     */
+    public function getFieldDirectivesAsString(array $fieldDirectives): string
     {
         if (!$fieldDirectives) {
             return '';
@@ -789,7 +871,7 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
             implode(QuerySyntax::SYMBOL_FIELDDIRECTIVE_SEPARATOR, array_map(
                 function ($fieldDirective) {
                     return $this->composeFieldDirective(
-                        $fieldDirective[0],
+                        (string)$fieldDirective[0],
                         $fieldDirective[1],
                         $fieldDirective[2]
                     );
