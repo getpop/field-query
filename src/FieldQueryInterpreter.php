@@ -129,9 +129,13 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
      */
     protected function doGetVariablesFromRequest(): array
     {
+        // Watch out! GraphiQL also uses the "variables" URL param, but as a string
+        // Hence, check if this param is an array, and only then process it
         return array_merge(
             $_REQUEST,
-            $_REQUEST['variables'] ?? []
+            isset($_REQUEST['variables']) && is_array($_REQUEST['variables']) ?
+                $_REQUEST['variables']
+                : []
         );
     }
 
