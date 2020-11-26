@@ -12,11 +12,14 @@ class FeedbackMessageStore implements FeedbackMessageStoreInterface
     protected array $queryErrors = [];
 
     /**
+     * @var array<string, array>
+     */
+    protected array $queryWarnings = [];
+
+    /**
      * $extensions is optional. It is used by GraphQL to pass the location with "line" and "column" (as a string)
      *
-     * @param string $error
      * @param mixed[] $extensions Adding extra information (eg: location error for GraphQL)
-     * @return void
      */
     public function addQueryError(string $error, array $extensions = []): void
     {
@@ -29,5 +32,22 @@ class FeedbackMessageStore implements FeedbackMessageStoreInterface
     {
         // return array_unique($this->queryErrors);
         return $this->queryErrors;
+    }
+
+    /**
+     * $extensions is optional
+     *
+     * @param mixed[] $extensions Adding extra information
+     */
+    public function addQueryWarning(string $warning, array $extensions = []): void
+    {
+        $this->queryWarnings[$warning] = $extensions;
+    }
+    /**
+     * @return array<string, array>
+     */
+    public function getQueryWarnings(): array
+    {
+        return $this->queryWarnings;
     }
 }
