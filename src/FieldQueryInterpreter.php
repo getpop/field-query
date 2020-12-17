@@ -619,7 +619,7 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
      */
     public function getDirectiveArgs(array $directive): ?string
     {
-        return $directive[1];
+        return $directive[1] ?? null;
     }
 
     /**
@@ -627,7 +627,7 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
      */
     public function getDirectiveNestedDirectives(array $directive): ?string
     {
-        return $directive[2];
+        return $directive[2] ?? null;
     }
 
     public function getDirectiveOutputKey(string $fieldDirective): string
@@ -702,7 +702,7 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
         ?string $skipOutputIfNull = '',
         ?string $fieldDirectives = ''
     ): string {
-        return $fieldName . $fieldArgs . $fieldAlias . $skipOutputIfNull . $fieldDirectives;
+        return $fieldName . ($fieldArgs ?? '') . ($fieldAlias ?? '') . ($skipOutputIfNull ?? '') . ($fieldDirectives ?? '');
     }
 
     /**
@@ -732,7 +732,7 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
         return $this->composeDirective(
             $directiveName,
             $this->getDirectiveArgsAsString($directiveArgs),
-            $directiveNestedDirectives
+            $directiveNestedDirectives ?? ''
         );
     }
 
@@ -741,7 +741,7 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
         ?string $directiveArgs = '',
         ?string $directiveNestedDirectives = ''
     ): string {
-        return $directiveName . $directiveArgs . $directiveNestedDirectives;
+        return $directiveName . ($directiveArgs ?? '') . ($directiveNestedDirectives ?? '');
     }
 
     /**
@@ -876,8 +876,8 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
                 function ($fieldDirective) {
                     return $this->composeFieldDirective(
                         (string)$fieldDirective[0],
-                        $fieldDirective[1],
-                        $fieldDirective[2]
+                        $fieldDirective[1] ?? null,
+                        $fieldDirective[2] ?? null
                     );
                 },
                 $fieldDirectives
