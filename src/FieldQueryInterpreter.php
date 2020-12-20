@@ -793,23 +793,27 @@ class FieldQueryInterpreter implements FieldQueryInterpreterInterface
             && str_ends_with($value, QuerySyntax::SYMBOL_FIELDARGS_ARGVALUESTRING_CLOSING);
     }
 
+    /**
+     * If it is not a function, then wrap the string between quotes to avoid
+     * special symbols inside of it generating trouble
+     * Eg: it if has a ",", it will split the element there
+     * when decoding again from string to array in `getField`
+     */
     protected function maybeWrapStringInQuotes(string $value): string
     {
-        // Check if it has the quotes already
-        if ($this->isStringWrappedInQuotes($value)) {
+        // Check if it has the quotes already, or if it is a function
+        if ($this->isStringWrappedInQuotes($value) || $this->isFieldArgumentValueDynamic($value)) {
             return $value;
         }
+        return $this->wrapStringInQuotes($value);
+    }
 
-        // If it is not a function, then wrap the string between quotes to avoid
-        // special symbols inside of it generating trouble
-        // Eg: it if has a ",", it will split the element there when decoding again from string to array in `getField`
-        if (!$this->isFieldArgumentValueDynamic($value)) {
-            $value =
-                QuerySyntax::SYMBOL_FIELDARGS_ARGVALUESTRING_OPENING .
-                $value .
-                QuerySyntax::SYMBOL_FIELDARGS_ARGVALUESTRING_CLOSING;
-        }
-        return $value;
+    public function wrapStringInQuotes(string $value): string
+    {
+        return
+            QuerySyntax::SYMBOL_FIELDARGS_ARGVALUESTRING_OPENING .
+            $value .
+            QuerySyntax::SYMBOL_FIELDARGS_ARGVALUESTRING_CLOSING;
     }
 
     /**

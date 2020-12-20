@@ -152,4 +152,5 @@ interface FieldQueryInterpreterInterface
      * @param array<string, mixed> $directiveArgs
      */
     public function getDirectiveArgsAsString(array $directiveArgs = []): string;
+    public function wrapStringInQuotes(string $value): string;
 }
